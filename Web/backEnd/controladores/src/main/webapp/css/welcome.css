@@ -1,0 +1,94 @@
+
+body {
+    background-color: rgb(12, 0, 56);/* Cambia este color al que prefieras */
+    color:antiquewhite;
+}
+
+
+#demo {
+  height: 30%; /* Altura inicial */
+  resize: none; /* Evitar el ajuste predeterminado del navegador */
+  transition: height 0.2s ease; /* Animación suave */
+  touch-action: none; /* Desactiva otros eventos de desplazamiento mientras arrastras */
+}
+
+/* Agregar un controlador visual de arrastre en el borde superior */
+.drag-handle {
+  width: 100%;
+  height: 5px;
+  background-color: #ddd;
+  cursor: ns-resize; /* Icono de arrastre vertical */
+}
+
+/* Estilos para ajustar el tamaño del cuadro de texto y el contador de líneas */
+.code-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 5px; /* Agrega un espacio entre el contador de líneas y el área de texto */
+}
+
+
+textarea {
+    width: calc(100% - 60px); /* Ajusta el ancho para tener en cuenta el ancho de .line-numbers y el margen */
+    height: 500px;
+    
+   /* font-size: 21rem;  Asegura que el tamaño de la fuente sea el mismo */
+    color: white;
+    border: 1px solid hsl(240, 93%, 11%);
+    background-color: #000080;
+    border-radius: 0.25rem;
+    margin-left: 45px; /* Añade un margen para la separación */
+    padding: 0.5rem;
+  }
+
+.code-container{
+
+ 
+  font-size: 18.3px;
+  font-family: monospace;
+}
+
+  
+  .line-numbers {
+    width: 50px;
+    background-color: #17202A;
+    color: #ddd;
+   
+    /* font-size: 21px; Asegura que el tamaño de la fuente sea el mismo */
+    text-align: right;
+    padding-right: 5px;
+    border-top-left-radius: 0.25rem;
+    border-bottom-left-radius: 0.25rem;
+    overflow: hidden; /* Evita que el contenido desborde */
+    padding: 0.5rem;
+  }
+
+
+
+.hidden {
+  display: none;
+}
+.code-container-container {
+  position: relative;
+}
+.line-numbers-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Estilos para el botón de alternar */
+/* Estilo por defecto del link del menú */
+.nav-link {
+  color: #000; /* Color original */
+  transition: background-color 0.3s ease, color 0.3s ease; /* Transición suave */
+}
+
+/* Cuando el mouse está sobre el link */
+.nav-link:hover {
+  background-color: #f8f9fa; /* Color de fondo al hacer hover */
+  color: #007bff; /* Color del texto al hacer hover */
+}
+

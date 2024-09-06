@@ -1,0 +1,4 @@
+com/app/LogoutServlet.class
+com/app/LoginServlet.class
+com/app/DAO/DatabaseConnection.class
+com/app/SolicitudServlet.class
