@@ -1,0 +1,162 @@
+package com.zapil.app.gramatica;
+
+import java_cup.runtime.Symbol;
+
+/* Archivo Lexer.flex */
+
+/* Opciones del lexer */
+
+%public
+%class LexerXson
+%cup
+%unicode
+%ignorecase
+
+/* Declaración de variables */
+
+dolar = [$]
+guion = [-]
+interrogacion = ["?"]
+exclamacion = [!]
+
+%init{ 
+    yyline = 1; 
+    yychar = 1; 
+    
+%init} 
+ 
+
+/* Definición de los símbolos del CUP */
+%{
+     int longitudToken=0;
+
+  /* Declaración de tokens que serán reconocidos por el analizador sintáctico */
+  private Symbol symbol(int type) {
+    return new Symbol(type);
+  }
+  
+%}
+
+/* Definición de patrones y tokens */
+%%
+
+
+// Configuración para que las etiquetas XML sean insensibles a mayúsculas
+%caseless
+
+
+/* Reglas para las etiquetas XML-like (case insensitive gracias a %ignorecase) */
+
+"xson"        {yychar+=4; System.out.println(yytext())  ; return symbol(sym.XSON, yyline,  (int)yychar, yytext());             }
+"version"     {yychar+=7; System.out.println(yytext())  ; return symbol(sym.VERSION, yyline,  (int)yychar, yytext());          }
+"="           {yychar+=1; System.out.println(yytext())  ; return symbol(sym.IGUAL, yyline,  (int)yychar, yytext());            }
+(["]1.0["])   {yychar+=3; System.out.println(yytext())  ; return symbol(sym.VERSION1, yyline,  (int)yychar, yytext());         }
+"<!"          {yychar+=2; System.out.println(yytext())  ; return symbol(sym.INICIO_SOLICITUD, yyline,  (int)yychar, yytext()); }
+"<?"          {yychar+=1; System.out.println(yytext())  ; return symbol(sym.INICIO_ETIQUETA, yyline,  (int)yychar, yytext());  }
+">"           {yychar+=1; System.out.println(yytext())  ; return symbol(sym.FIN_ETIQUETA, yyline,  (int)yychar, yytext());     }
+"!>"          {yychar+=2; System.out.println(yytext())  ; return symbol(sym.FIN_SOLICITUD, yyline,  (int)yychar, yytext());    }
+"realizar"    {yychar+=8 ; System.out.println(yytext()) ; return symbol(sym.REALIZAR, yyline,  (int)yychar, yytext());         }
+"solicitud"   {yychar+=9 ; System.out.println(yytext()) ; return symbol(sym.SOLICITUD, yyline,  (int)yychar, yytext());        }
+"solicitudes" {yychar+=11; System.out.println(yytext()) ; return symbol(sym.SOLICITUDES, yyline,  (int)yychar, yytext());      }
+"_"           {yychar+=1 ; System.out.println(yytext()) ; return symbol(sym.GUION_BAJO, yyline,  (int)yychar, yytext());       }
+"fin"         {yychar+=3 ; System.out.println(yytext()) ; return symbol(sym.FIN, yyline,  (int)yychar, yytext());              }
+"realizada"   {yychar+=9 ; System.out.println(yytext()) ; return symbol(sym.REALIZADA, yyline,  (int)yychar, yytext());        }
+"realizadas"  {yychar+=10; System.out.println(yytext()) ; return symbol(sym.REALIZADAS, yyline,  (int)yychar, yytext());       }
+
+
+/* Nombres de parámetros y valores JSON (case sensitive) */
+\"([^\"]*)\"                               { longitudToken = yytext().length(); yychar+=longitudToken; System.out.println("  valor de cadena : "+yytext());  return symbol(sym.VALOR_CADENA,yyline,(int)yychar, yytext());  }
+([_]|[$]|[-])+[a-zA-Z0-9]+([_]|[$]|[-])*   { longitudToken = yytext().length(); yychar+=longitudToken; System.out.println(" Ids : "+yytext());  return symbol(sym.IDS,yyline,(int)yychar, yytext()); }
+[0-9]+                                     { longitudToken = yytext().length(); yychar+=longitudToken; System.out.println(" numero : "+yytext());  return symbol(sym.VALOR_NUMERO, yyline, (int)yychar ,yytext()); }
+
+
+// Reset de %caseless para tokens case-sensitive
+%notcaseless
+ 
+/* Reglas para crear nuevo usuario  */
+"PARAMETROS"  {yychar+=10  ; System.out.println(yytext());  return symbol(sym.PARAMETROS,yyline, (int)yychar, yytext()); }
+"USUARIO"     {yychar+=7   ; System.out.println(yytext());  return symbol(sym.USUARIO,yyline, (int)yychar, yytext()); }
+"NUEVO"       {yychar+=5   ; System.out.println(yytext());  return symbol(sym.NUEVO,yyline, (int)yychar, yytext()); }
+"DATOS"       {yychar+=5   ; System.out.println(yytext());  return symbol(sym.DATOS,yyline, (int)yychar, yytext()); }
+"PASSWORD"    {yychar+=8   ; System.out.println(yytext());  return symbol(sym.PASSWORD,yyline, (int)yychar, yytext()); }
+"NOMBRE"      {yychar+=6   ; System.out.println(yytext());  return symbol(sym.NOMBRE,yyline, (int)yychar, yytext()); }
+"INSTITUCION" {yychar+=11  ; System.out.println(yytext());  return symbol(sym.INSTITUCION,yyline, (int)yychar, yytext()); }
+"FECHA"       {yychar+=5   ; System.out.println(yytext());  return symbol(sym.FFECHA,yyline, (int)yychar, yytext()); }
+"CREACION"    {yychar+=8   ; System.out.println(yytext());  return symbol(sym.CREACION,yyline, (int)yychar, yytext()); }
+
+/* Reglas para modificar un usuario */
+"MODIFICAR"   {yychar+=9 ; System.out.println(yytext()) ; return symbol(sym.MODIFICAR,yyline, (int)yychar, yytext()); }
+"ANTIGUO"     {yychar+=7 ; System.out.println(yytext()) ; return symbol(sym.ANTIGUO,yyline, (int)yychar, yytext()); }
+
+/* Reglas para eliminar un usuario */
+"ELIMINAR"    {yychar+=8 ; System.out.println(yytext()) ; return symbol(sym.ELIMINAR,yyline, (int)yychar, yytext()); }
+
+/* Reglas para el loggin  */
+"LOGIN"       {yychar+=5; System.out.println(yytext())  ; return symbol(sym.LOGIN,yyline, (int)yychar, yytext()); }
+
+/* Reglas para crear trivia   */
+"NUEVA"     {yychar+=5  ; System.out.println(yytext());   return symbol(sym.NUEVA,yyline, (int)yychar, yytext()); }
+"TRIVIA"    {yychar+=6  ; System.out.println(yytext());   return symbol(sym.TRIVIA,yyline, (int)yychar, yytext()); }
+"TIEMPO"    {yychar+=6  ; System.out.println(yytext());   return symbol(sym.TIEMPO,yyline, (int)yychar, yytext()); }
+"PREGUNTA"  {yychar+=8  ; System.out.println(yytext());   return symbol(sym.PREGUNTA,yyline, (int)yychar, yytext()); }
+"TEMA"      {yychar+=4  ; System.out.println(yytext());   return symbol(sym.TEMA,yyline, (int)yychar, yytext()); }
+"ID"        {yychar+=2  ; System.out.println(yytext());   return symbol(sym.ID,yyline, (int)yychar, yytext()); }
+
+/* Reglas para eliminar una trivia */
+
+
+/* Reglas para modificar una trivia */
+
+
+/* Reglas para agregar componentes a una trivia  */
+
+"AGREGAR"    {yychar+=7  ; System.out.println(yytext())  ;    return symbol(sym.AGREGAR, yyline, (int)yychar, yytext());   }
+"COMPONENTE" {yychar+=10 ; System.out.println(yytext())  ;    return symbol(sym.COMPONENTE, yyline, (int)yychar, yytext());   }
+"CLASE"      {yychar+=5  ; System.out.println(yytext())  ;    return symbol(sym.CLASE, yyline, (int)yychar, yytext());   }
+"CAMPO"      {yychar+=5  ; System.out.println(yytext())  ;    return symbol(sym.CAMPO, yyline, (int)yychar, yytext());   }
+"TEXTO"      {yychar+=5  ; System.out.println(yytext())  ;    return symbol(sym.TEXTO, yyline, (int)yychar, yytext());   }
+"VISIBLE"    {yychar+=7  ; System.out.println(yytext())  ;    return symbol(sym.VISIBLE, yyline, (int)yychar, yytext());   }
+"RESPUESTA"  {yychar+=9  ; System.out.println(yytext())  ;    return symbol(sym.RESPUESTA, yyline, (int)yychar, yytext());   }
+"AREA"       {yychar+=4  ; System.out.println(yytext())  ;    return symbol(sym.AREA, yyline, (int)yychar, yytext());   }
+"CHECKBOX"   {yychar+=8  ; System.out.println(yytext())  ;    return symbol(sym.CHECKBOX, yyline, (int)yychar, yytext());   }
+"RADIO"      {yychar+=5  ; System.out.println(yytext())  ;    return symbol(sym.RADIO, yyline, (int)yychar, yytext());   }
+"COMBO"      {yychar+=5  ; System.out.println(yytext())  ;    return symbol(sym.COMBO, yyline, (int)yychar, yytext());   }
+"FICHERO"    {yychar+=7  ; System.out.println(yytext())  ;    return symbol(sym.FICHERO, yyline, (int)yychar, yytext());   }
+"OPCIONES"   {yychar+=8  ; System.out.println(yytext())  ;    return symbol(sym.OPCIONES, yyline, (int)yychar, yytext());   }
+"FILAS"      {yychar+=5  ; System.out.println(yytext())  ;    return symbol(sym.FILAS, yyline, (int)yychar, yytext());   }
+"COLUMNAS"   {yychar+=8  ; System.out.println(yytext())  ;    return symbol(sym.COLUMNAS, yyline, (int)yychar, yytext());   }
+
+/* Reglas para modificar componentes de una trivia  */
+"INDICE"                {yychar+=6  ; System.out.println(yytext());  return symbol(sym.INDICE,yyline, (int)yychar, yytext()); }
+
+[a-zA-Z|][a-zA-Z0-9|]*  {longitudToken = yytext().length();  yychar+=longitudToken ;  System.out.println(yytext());  return symbol(sym.OPTIONS,yyline, (int)yychar, yytext()); }
+
+/* Reglas para eliminar componentes de una trivia  */
+
+
+
+
+
+
+("\"") {yychar+=1  ; System.out.println(yytext()); /* return symbol(sym.COMILLAS);*/ }
+
+/* Reglas para el contenido JSON (case sensitive) */
+
+"{"      {yychar+=1 ; System.out.println(yytext())  ;  return symbol(sym.LLAVE_IZQ, yyline, (int)yychar, yytext());  }
+"}"      {yychar+=1 ; System.out.println(yytext())  ;  return symbol(sym.LLAVE_DER, yyline, (int)yychar, yytext());  }
+"["      {yychar+=1 ; System.out.println(yytext())  ;  return symbol(sym.CORCHETE_IZQ, yyline, (int)yychar, yytext());  }
+"]"      {yychar+=1 ; System.out.println(yytext())  ;  return symbol(sym.CORCHETE_DER, yyline, (int)yychar, yytext());  }
+":"      {yychar+=1 ; System.out.println(yytext())  ;  return symbol(sym.DOS_PUNTOS, yyline, (int)yychar, yytext());  }
+","      {yychar+=1 ; System.out.println(yytext())  ;  return symbol(sym.COMA, yyline, (int)yychar, yytext());  }
+" "      {yychar+=1 ; }
+
+/* Ignorar espacios en blanco */
+[ \t\n\r]                          { yychar+=1; yyline++; }
+
+
+
+
+/* Manejo de errores */
+[^]   {yychar+=1; System.out.println("Caracter no reconocido: " + yytext()); } 
+
+// Método yyerror para personalizar el manejo de errores

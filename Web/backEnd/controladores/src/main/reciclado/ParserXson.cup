@@ -1,0 +1,204 @@
+
+
+import java_cup.runtime.*;
+
+// definir las funciones que va tener el cup
+
+parser code{:
+
+ /**
+     * Método al que se llama automáticamente ante algún error sintactico.
+     **/ 
+    public void syntax_error(Symbol s){ 
+        System.out.println("Error Sintáctico en la Línea " + (s.left) +
+        " Columna "+s.right+ ". No se esperaba este componente: " +s.value+"."); 
+
+       // PanelReporte.agregarError(new Errores("Sintactico",String.valueOf(s.value),"no se esperaba: "+String.valueOf( s.value), s.left, s.right));
+    } 
+    /**
+     * Método al que se llama cuando se identifica un error sintáctico en el que 
+     * ya no es posible una recuperación de errores.
+     **/ 
+    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{ 
+        System.out.println("Error síntactico irrecuperable en la Línea " + 
+        (s.left)+ " Columna "+s.right+". Componente " + s.value + " no reconocido.");
+
+    } 
+
+:}
+
+// Definición de los símbolos terminales
+terminal VALOR_CADENA, PARAMETROS,  USUARIO, NUEVO, DATOS, PASSWORD;
+terminal NOMBRE, INSTITUCION, FECHA, CREACION, MODIFICAR, ANTIGUO, ELIMINAR, LOGIN, NUEVA, TRIVIA, TIEMPO, PREGUNTA, TEMA, AGREGAR, COMPONENTE;
+terminal CLASE, CAMPO, TEXTO, VISIBLE, RESPUESTA, AREA, CHECKBOX, RADIO, COMBO, FICHERO, OPCIONES, FILAS, COLUMNAS, OPTIONS, INDICE;
+terminal COMILLAS, LLAVE_IZQ, LLAVE_DER, CORCHETE_IZQ, CORCHETE_DER, DOS_PUNTOS, COMA, ID, IDS, VALOR_NUMERO;
+
+// Definición de los símbolos no terminales
+non terminal instrucciones, tipo, soli, masSolicitudes, nuevo_usuario, newusuario, par_clave_usu, modificar_usuario, modusuario, par_clave_modusu;
+non terminal eliminar_usuario, elimusuario, par_clave_eliusu, login, loggin, par_clave_login, nueva_trivia, new_trivia, par_clave_trivia; 
+non terminal eliminar_trivia, eli_trivia, par_clave_elimtrivia, modificar_trivia, mod_trivia, par_clave_modtrivia, agregar_componente; 
+non terminal agregar_comp, par_clave_agrecom, clase, eliminar_componente, eliminar_comp, par_clave_elicom, finEtiqueta;
+
+
+
+// inicio de la instruccion
+start with instrucciones;
+
+
+// Definir gramatica
+
+
+instrucciones ::= INICIO_ETIQUETA  XSON VERSION IGUAL COMILLAS VERSION1 COMILLAS INTERROGACION FIN_ETIQUETA tipo
+
+tipo ::= INICIO_SOLICITUD REALIZAR GUION_BAJO SOLICITUDES FIN_ETIQUETA masSolicitudes
+        | soli
+        | error 
+
+masSolicitudes ::= soli masSolicitudes
+                | error soli
+
+            // para un nuevo usuario 
+soli ::= INICIO_SOLICITUD  REALIZAR GUION_BAJO SOLICITUD DOS_PUNTOS COMILLAS USUARIO GUION_BAJO NUEVO  COMILLAS FIN_ETIQUETA nuevo_usuario  finEtiqueta
+                /// para modificar un usuario
+        | INICIO_SOLICITUD  REALIZAR GUION_BAJO SOLICITUD DOS_PUNTOS COMILLAS  MODIFICAR GUION_BAJO USUARIO COMILLAS FIN_ETIQUETA modificar_usuario finEtiqueta
+                /// eliminar un usuario
+        | INICIO_SOLICITUD  REALIZAR GUION_BAJO SOLICITUD DOS_PUNTOS COMILLAS  ELIMINAR GUION_BAJO USUARIO COMILLAS FIN_ETIQUETA eliminar_usuario finEtiqueta
+                ///  Login usuario 
+        | INICIO_SOLICITUD  REALIZAR GUION_BAJO SOLICITUD DOS_PUNTOS COMILLAS  LOGIN GUION_BAJO USUARIO COMILLAS FIN_ETIQUETA login finEtiqueta
+                /// solicitud para crear una trivia 
+        | INICIO_SOLICITUD  REALIZAR GUION_BAJO SOLICITUD DOS_PUNTOS COMILLAS  NUEVA GUION_BAJO TRIVIA COMILLAS FIN_ETIQUETA nueva_trivia finEtiqueta
+                /// solicitud para eliminar una trivia 
+        | INICIO_SOLICITUD  REALIZAR GUION_BAJO SOLICITUD DOS_PUNTOS COMILLAS  ELIMINAR GUION_BAJO TRIVIA COMILLAS FIN_ETIQUETA eliminar_trivia finEtiqueta
+                /// solicitud para modificar una trivia
+        | INICIO_SOLICITUD  REALIZAR GUION_BAJO SOLICITUD DOS_PUNTOS COMILLAS  MODIFICAR GUION_BAJO TRIVIA COMILLAS FIN_ETIQUETA modificar_trivia finEtiqueta
+                /// solicitud para agregar componente
+        | INICIO_SOLICITUD  REALIZAR GUION_BAJO SOLICITUD DOS_PUNTOS COMILLAS  AGREGAR GUION_BAJO COMPONENTE COMILLAS FIN_ETIQUETA agregar_componente finEtiqueta
+                /// solicitud para eliminar componente
+        | INICIO_SOLICITUD  REALIZAR GUION_BAJO SOLICITUD DOS_PUNTOS COMILLAS  ELIMINAR GUION_BAJO COMPONENTE COMILLAS FIN_ETIQUETA eliminar_componente finEtiqueta
+                /// solicitud para modificar componente
+        | INICIO_SOLICITUD  REALIZAR GUION_BAJO SOLICITUD DOS_PUNTOS COMILLAS  MODIFICAR GUION_BAJO COMPONENTE COMILLAS FIN_ETIQUETA modificar_componente finEtiqueta;
+                /// error
+        
+
+
+
+nuevo_usuario ::= LLAVE_IZQ COMILLAS DATOS GUION_BAJO USUARIO COMILLAS DOS_PUNTOS CORCHETE_IZQ LLAVE_IZQ newusuario LLAVE_DER CORCHETE_DER LLAVE_DER;
+
+newusuario ::= par_clave_usu
+            | newusuario COMA par_clave_usu;
+    
+par_clave_usu ::= COMILLAS USUARIO COMILLAS DOS_PUNTOS COMILLAS VALOR_CADENA COMILLAS
+                | COMILLAS PASSWORD COMILLAS DOS_PUNTOS COMILLAS VALOR_CADENA COMILLAS
+                | COMILLAS NOMBRE COMILLAS DOS_PUNTOS COMILLAS VALOR_CADENA COMILLAS
+                | COMILLAS INSTITUCION COMILLAS DOS_PUNTOS COMILLAS VALOR_CADENA COMILLAS
+                | COMILLAS FECHA GUION_BAJO CREACION COMILLAS DOS_PUNTOS COMILLAS VALOR_CADENA COMILLAS
+                | error par_clave_usu;
+
+
+
+modificar_usuario ::= LLAVE_IZQ COMILLAS DATOS GUION_BAJO USUARIO COMILLAS DOS_PUNTOS CORCHETE_IZQ LLAVE_IZQ modusuario LLAVE_DER CORCHETE_DER LLAVE_DER;
+
+modusuario ::= par_clave_modusu
+            | modusuario COMA par_clave_modusu;
+
+
+par_clave_modusu ::= COMILLAS USUARIO GUION_BAJO ANTIGUO COMILLAS DOS_PUNTOS COMILLAS VALOR_CADENA COMILLAS
+                  | COMILLAS USUARIO GUION_BAJO NUEVO COMILLAS DOS_PUNTOS COMILLAS VALOR_CADENA COMILLAS
+                  | COMILLAS NUEVO GUION_BAJO PASSWORD COMILLAS DOS_PUNTOS COMILLAS VALOR_CADENA COMILLAS 
+                  | error par_clave_modusu;
+              
+
+eliminar_usuario ::=  LLAVE_IZQ COMILLAS DATOS GUION_BAJO USUARIO COMILLAS DOS_PUNTOS CORCHETE_IZQ LLAVE_IZQ elimusuario LLAVE_DER CORCHETE_DER LLAVE_DER;
+
+
+elimusuario ::= par_clave_eliusu
+            | elimusuario COMA par_clave_eliusu;
+
+par_clave_eliusu ::= COMILLAS USUARIO COMILLAS DOS_PUNTOS COMILLAS VALOR_CADENA COMILLAS
+                | error par_clave_eliusu;
+
+
+login ::=  LLAVE_IZQ COMILLAS DATOS GUION_BAJO USUARIO COMILLAS DOS_PUNTOS CORCHETE_IZQ LLAVE_IZQ loggin LLAVE_DER CORCHETE_DER LLAVE_DER;
+
+loggin ::= par_clave_login
+            | loggin COMA par_clave_login;
+
+par_clave_login ::= COMILLAS USUARIO COMILLAS DOS_PUNTOS COMILLAS VALOR_CADENA COMILLAS
+                | COMILLAS PASSWORD COMILLAS DOS_PUNTOS COMILLAS VALOR_CADENA COMILLAS
+                | error par_clave_login;
+
+nueva_trivia ::= LLAVE_IZQ COMILLAS PARAMETROS GUION_BAJO TRIVIA COMILLAS DOS_PUNTOS CORCHETE_IZQ LLAVE_IZQ new_trivia LLAVE_DER CORCHETE_DER LLAVE_DER;
+
+new_trivia ::= par_clave_trivia
+            | new_trivia COMA par_clave_trivia;
+
+par_clave_trivia ::= COMILLAS ID GUION_BAJO TRIVIA COMILLAS DOS_PUNTOS COMILLAS IDS COMILLAS
+                | COMILLAS TIEMPO GUION_BAJO PREGUNTA COMILLAS DOS_PUNTOS VALOR_NUMERO 
+                | COMILLAS NOMBRE COMILLAS DOS_PUNTOS COMILLAS VALOR_CADENA COMILLAS
+                | COMILLAS TEMA COMILLAS DOS_PUNTOS COMILLAS VALOR_CADENA COMILLAS
+                | error par_clave_trivia;
+
+
+
+eliminar_trivia ::= LLAVE_IZQ COMILLAS PARAMETROS GUION_BAJO TRIVIA COMILLAS DOS_PUNTOS CORCHETE_IZQ LLAVE_IZQ eli_trivia LLAVE_DER CORCHETE_DER LLAVE_DER;
+
+eli_trivia ::= par_clave_elimtrivia
+            | eli_trivia COMA par_clave_elimtrivia;
+
+par_clave_elimtrivia ::= COMILLAS ID GUION_BAJO TRIVIA COMILLAS DOS_PUNTOS COMILLAS IDS COMILLAS
+                | error par_clave_elimtrivia;
+
+modificar_trivia ::= LLAVE_IZQ COMILLAS PARAMETROS GUION_BAJO TRIVIA COMILLAS DOS_PUNTOS CORCHETE_IZQ LLAVE_IZQ mod_trivia LLAVE_DER CORCHETE_DER LLAVE_DER;
+
+mod_trivia ::= par_clave_modtrivia
+            | mod_trivia COMA par_clave_modtrivia;
+
+par_clave_modtrivia ::= COMILLAS ID GUION_BAJO TRIVIA COMILLAS DOS_PUNTOS COMILLAS IDS COMILLAS
+                | COMILLAS TIEMPO GUION_BAJO PREGUNTA COMILLAS DOS_PUNTOS VALOR_NUMERO 
+                | COMILLAS NOMBRE COMILLAS DOS_PUNTOS COMILLAS VALOR_CADENA COMILLAS
+                | COMILLAS TEMA COMILLAS DOS_PUNTOS COMILLAS VALOR_CADENA COMILLAS
+                | error par_clave_modtrivia; 
+
+
+agregar_componente ::= LLAVE_IZQ COMILLAS PARAMETROS GUION_BAJO COMPONENTE COMILLAS DOS_PUNTOS CORCHETE_IZQ LLAVE_IZQ agregar_comp LLAVE_DER CORCHETE_DER LLAVE_DER;
+
+agregar_comp ::= par_clave_agrecom
+            | agregar_comp COMA par_clave_agrecom;
+
+par_clave_agrecom ::= COMILLAS ID COMILLAS DOS_PUNTOS COMILLAS IDS COMILLAS
+                  | COMILLAS TRIVIA COMILLAS DOS_PUNTOS COMILLAS IDS COMILLAS
+                  | COMILLAS CLASE COMILLAS DOS_PUNTOS COMILLAS clase COMILLAS
+                  | COMILLAS TEXTO GUION_BAJO VISIBLE COMILLAS DOS_PUNTOS COMILLAS VALOR_CADENA COMILLAS
+                  | COMILLAS RESPUESTA COMILLAS DOS_PUNTOS COMILLAS VALOR_CADENA COMILLAS
+                  | COMILLAS OPCIONES COMILLAS DOS_PUNTOS COMILLAS OPTIONS COMILLAS
+                  | COMILLAS FILAS COMILLAS DOS_PUNTOS VALOR_NUMERO
+                  | COMILLAS COLUMNAS COMILLAS DOS_PUNTOS VALOR_NUMERO
+                  | error par_clave_agrecom;
+
+
+clase ::= CAMPO GUION_BAJO TEXTO
+        | AREA GUION_BAJO TEXTO
+        | CHECKBOX
+        | RADIO
+        | FICHERO
+        | COMBO 
+        | error;
+
+
+
+
+
+eliminar_componente ::= LLAVE_IZQ COMILLAS PARAMETROS GUION_BAJO COMPONENTE COMILLAS DOS_PUNTOS CORCHETE_IZQ LLAVE_IZQ eliminar_comp LLAVE_DER CORCHETE_DER LLAVE_DER;
+
+eliminar_comp ::= par_clave_elicom
+            | eliminar_comp COMA par_clave_elicom;
+
+par_clave_elicom ::= COMILLAS ID COMILLAS DOS_PUNTOS COMILLAS IDS COMILLAS
+                  | COMILLAS TRIVIA COMILLAS DOS_PUNTOS COMILLAS IDS COMILLAS
+                  | error par_clave_elicom;
+
+
+finEtiqueta ::= INICIO_ETIQUETA FIN GUION_BAJO SOLICITUD GUION_BAJO REALIZADA FIN_SOLICITUD
+
+
+

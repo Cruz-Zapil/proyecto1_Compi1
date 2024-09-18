@@ -1,0 +1,174 @@
+
+
+import java_cup.runtime.*;
+
+// definir las funciones que va tener el cup
+
+parser code{:
+
+ /**
+     * Método al que se llama automáticamente ante algún error sintactico.
+     **/ 
+    public void syntax_error(Symbol s){ 
+        System.out.println("Error Sintáctico en la Línea " + (s.left) +
+        " Columna "+s.right+ ". No se esperaba este componente: " +s.value+"."); 
+
+       // PanelReporte.agregarError(new Errores("Sintactico",String.valueOf(s.value),"no se esperaba: "+String.valueOf( s.value), s.left, s.right));
+    } 
+    /**
+     * Método al que se llama cuando se identifica un error sintáctico en el que 
+     * ya no es posible una recuperación de errores.
+     **/ 
+    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{ 
+        System.out.println("Error síntactico irrecuperable en la Línea " + 
+        (s.left)+ " Columna "+s.right+". Componente " + s.value + " no reconocido.");
+
+    } 
+
+    /// metodo para encontrar usuario
+
+    private String pass="";
+    private String user="";
+    private String nombre="";
+    private String codigo="";
+
+    public void setPass(String pass, String user){
+        this.nombre=user;
+        this.codigo=pass;
+    }
+    
+
+:}
+
+// Definición de los símbolos terminales
+terminal INTERROGACION, XSON, VERSION, IGUAL, VERSION1, INICIO_SOLICITUD, INICIO_ETIQUETA, FIN_ETIQUETA, FIN_SOLICITUD, REALIZAR;
+terminal SOLICITUD, SOLICITUDES, GUION_BAJO, FIN, REALIZADA, REALIZADAS, VALOR_CADENA, PARAMETROS,  USUARIO, NUEVO, DATOS, PASSWORD;
+terminal NOMBRE, INSTITUCION, FECHA, CREACION, MODIFICAR, ANTIGUO, ELIMINAR, LOGIN, NUEVA, TRIVIA, TIEMPO, PREGUNTA, TEMA, AGREGAR, COMPONENTE;
+terminal CLASE, CAMPO, TEXTO, VISIBLE, RESPUESTA, AREA, CHECKBOX, RADIO, COMBO, FICHERO, OPCIONES, FILAS, COLUMNAS, OPTIONS, INDICE;
+terminal COMILLAS, LLAVE_IZQ, LLAVE_DER, CORCHETE_IZQ, CORCHETE_DER, DOS_PUNTOS, COMA, ID, IDS, VALOR_NUMERO;
+terminal ESTRUCTURA, REGISTRO, DB, PUNTO,DBTRIVIA, DBUSUARIO, DBREGISTRO, PARENT_IZQ, PARENT_DER;
+
+// Definición de los símbolos no terminales
+non terminal instrucciones, db_trivia, deb_usuario, db_registro, tipo, soli, masSolicitudes, nuevo_usuario, newusuario, par_clave_usu, modificar_usuario, modusuario, par_clave_modusu;
+non terminal eliminar_usuario, elimusuario, par_clave_eliusu, login, loggin, par_clave_login, nueva_trivia, new_trivia, par_clave_trivia; 
+non terminal eliminar_trivia, eli_trivia, par_clave_elimtrivia, modificar_trivia, mod_trivia, par_clave_modtrivia, agregar_componente; 
+non terminal agregar_comp, par_clave_agrecom, clase, eliminar_componente, eliminar_comp, par_clave_elicom, finEtiqueta;
+non terminal inf_trivia, par_clave_trivia, estruct;
+
+
+
+// inicio de la instruccion
+start with instrucciones;
+
+
+// Definir gramatica
+
+
+instrucciones ::= DB PUNTO TRIVIA db_trivia
+                | DB PUNTO USUARIO db_usuario
+                | DB PUNTO REGISTRO db_registro
+                | error instrucciones;
+
+db_trivia ::= PARENT_IZQ LLAVE_IZQ inf_trivia LLAVE_DER PARENT_DER;
+
+
+
+inf_trivia ::= par_clave_trivia
+            | inf_trivia COMA par_clave_trivia;
+    
+par_clave_trivia ::= COMILLAS ID GUION_BAJO TRIVIA COMILLAS DOS_PUNTOS COMILLAS IDS COMILLAS
+                | COMILLAS NOMBRE COMILLAS DOS_PUNTOS COMILLAS VALOR_CADENA COMILLAS
+                | COMILLAS TEMA COMILLAS DOS_PUNTOS COMILLAS VALOR_CADENA COMILLAS
+                | COMILLAS TIEMPO COMILLAS DOS_PUNTOS COMILLAS VALOR_NUMERO COMILLAS
+                | COMILLAS USUARIO GUION_BAJO CREACION COMILLAS DOS_PUNTOS COMILLAS VALOR_CADENA COMILLAS
+                | COMILLAS FECHA GUION_BAJO CREACION COMILLAS DOS_PUNTOS COMILLAS VALOR_CADENA COMILLAS
+                | COMILLAS ESTRUCTURA COMILLAS DOS_PUNTOS PARENT_IZQ LLAVE_IZQ  estruct LLAVE_DER PARENT_DER
+                | error par_clave_trivia;
+
+    
+estruct ::= LLAVE_IZQ component LLAVE_DER 
+        | estruct COMA LLAVE_IZQ component LLAVE_DER;
+
+component ::= COMILLAS ID COMILLAS DOS_PUNTOS COMILLAS IDS COMILLAS
+            | COMILLAS TRIVIA COMILLAS DOS_PUNTOS COMILLAS IDS COMILLAS
+            | COMILLAS CLASE COMILLAS DOS_PUNTOS COMILLAS clase COMILLAS
+            | COMILLAS INDICE COMILLAS DOS_PUNTOS VALOR_NUMERO
+            | COMILLAS TEXTO GUION_BAJO VISIBLE COMILLAS DOS_PUNTOS COMILLAS VALOR_CADENA COMILLAS
+            | COMILLAS RESPUESTA COMILLAS DOS_PUNTOS COMILLAS VALOR_CADENA COMILLAS
+            | COMILLAS OPCIONES COMILLAS DOS_PUNTOS COMILLAS OPTIONS COMILLAS
+            | COMILLAS FILAS COMILLAS DOS_PUNTOS VALOR_NUMERO
+            | COMILLAS COLUMNAS COMILLAS DOS_PUNTOS VALOR_NUMERO
+            | error component;
+
+
+
+
+
+clase ::= CAMPO GUION_BAJO TEXTO
+        | AREA GUION_BAJO TEXTO
+        | CHECKBOX
+        | RADIO
+        | FICHERO
+        | COMBO 
+        | error;
+
+
+
+
+db_usuario ::= PARENT_IZQ LLAVE_IZQ inf_usu  LLAVE_DER PARENT_DER;
+
+
+inf_usu ::= LLAVE_IZQ par_clave_usu LLAVE_DER {: System.out.println(" un nuevo paquete de datos") :}
+            | inf_usu COMA LLAVE_IZQ par_clave_usu LLAVE_DER;
+
+
+par_clave_usu ::= COMILLAS USUARIO:us COMILLAS DOS_PUNTOS COMILLAS VALOR_CADENA:vc COMILLAS {: System.out.println( (String)us+ " - " + (String) vc ) :}
+                | COMILLAS PASSWORD:pass COMILLAS DOS_PUNTOS COMILLAS VALOR_CADENA:vc COMILLAS {: System.out.println((String)pass+ " - " + (String) vc) :}
+                | COMILLAS NOMBRE:name COMILLAS DOS_PUNTOS COMILLAS VALOR_CADENA COMILLAS:vc {: System.out.println((String)name+ " - " + (String) vc) :}
+                | COMILLAS INSTITUCION:inst COMILLAS DOS_PUNTOS COMILLAS VALOR_CADENA COMILLAS:vc {: System.out.println((String)inst+ " - " + (String) vc) :}
+                | error par_clave_usu;
+
+
+
+
+db_registro ::= PARENT_IZQ LLAVE_IZQ inf_reg  LLAVE_DER PARENT_DER;
+
+inf_reg ::= LLAVE_IZQ par_clave_reg LLAVE_DER
+            | inf_reg COMA LLAVE_DER par_clave_reg LLAVE_DER;
+
+par_clave_reg ::= COMILLAS ID GUION_BAJO TRIVIA COMILLAS DOS_PUNTOS COMILLAS IDS COMILLAS
+                | COMILLAS USUARIO GUION_BAJO CREACION COMILLAS DOS_PUNTOS COMILLAS VALOR_CADENA COMILLAS
+                | COMILLAS RESPUESTAS COMILLAS DOS_PUNTOS registros 
+                | error par_clave_reg;
+
+registros ::= LLAVE_IZQ par_clave_resp LLAVE_DER
+            | registros COMA LLAVE_IZQ par_clave_resp LLAVE_DER;
+
+par_clave_resp ::= COMILLAS ID COMILLAS DOS_PUNTOS COMILLAS IDS COMILLAS
+                | COMILLAS REGISTRO COMILLAS DOS_PUNTOS COMILLAS VALOR_CADENA COMILLAS
+                | COMILLAS RESPUESTA COMILLAS DOS_PUNTOS COMILLAS VALOR_CADENA COMILLAS
+                | error par_clave_resp;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

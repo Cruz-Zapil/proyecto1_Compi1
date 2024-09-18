@@ -24,12 +24,19 @@
 
   <dependencies>
 
-        <!-- Dependencia para MySQL JDBC -->
-        <dependency>
-          <groupId>mysql</groupId>
-          <artifactId>mysql-connector-java</artifactId>
-          <version>8.0.33</version>
-      </dependency>
+    <!-- EDependencia de CUP-->
+    <dependency>
+      <groupId>com.github.vbmacher</groupId>
+      <artifactId>java-cup-runtime</artifactId>
+      <version>11b-20160615-3</version>
+    </dependency>
+
+    <!-- Dependencia para MySQL JDBC -->
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>8.0.33</version>
+    </dependency>
 
 
     <!-- Servlet API -->
@@ -46,6 +53,14 @@
       <artifactId>javax.servlet.jsp-api</artifactId>
       <version>2.3.1</version>
       <scope>provided</scope>
+    </dependency>
+
+    <!-- MultiMap -->
+
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>32.1.2-jre</version> <!-- Puedes cambiar la versión a la más reciente disponible -->
     </dependency>
 
 
@@ -80,6 +95,57 @@
           <failOnMissingWebXml>false</failOnMissingWebXml>
         </configuration>
       </plugin>
+
+      <!--   plugin de CUP   -->
+<!--
+      <plugin>
+        <groupId>com.github.vbmacher</groupId>
+        <artifactId>cup-maven-plugin</artifactId>
+        <version>11b-20160615-3</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <outputDirectory>${project.build.directory}/generated-sources/cup</outputDirectory>
+        </configuration>
+      </plugin>
+    -->
+
+      <!--   plugin de ANTLR   -->
+      <plugin>
+        <groupId>org.antlr</groupId>
+        <artifactId>antlr4-maven-plugin</artifactId>
+        <version>4.3</version>
+        <executions>
+          <execution>
+            <id>antlr</id>
+            <phase>generated-sources</phase>
+            <goals>
+              <goal>antlr4</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!--   plugin de JFLEX   -->
+
+      <plugin>
+        <groupId>de.jflex</groupId>
+        <artifactId>jflex-maven-plugin</artifactId>
+        <version>1.9.1</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
     </plugins>
   </build>
 

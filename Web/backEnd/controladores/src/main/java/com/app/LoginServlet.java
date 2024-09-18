@@ -1,47 +1,78 @@
 package com.app;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.io.PrintWriter;
+import java.io.Reader;
+import java.io.StringReader;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import com.app.DAO.DatabaseConnection;
+import com.app.gramaticas.xson.LexerXson;
+import com.app.gramaticas.xson.parserXson;
+import com.app.recursos.MetodoUsuario;
 
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
-    private static final long serialVersionUID = 1L;
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
-        try (Connection conn = DatabaseConnection.initializeDatabase()) {
-            String query = "SELECT * FROM users WHERE username = ? AND password = ?";
-            PreparedStatement pstmt = conn.prepareStatement(query);
-            pstmt.setString(1, username);
-            pstmt.setString(2, password);
-            
-            ResultSet rs = pstmt.executeQuery();
-            
-            if (rs.next()) { // Si el usuario existe
-                HttpSession session = request.getSession();
-                session.setAttribute("username", username);
-                response.sendRedirect("welcome.jsp");
-            } else {
-            //    response.sendRedirect("index.jsp?message=Invalid%20username%20or%20password");
-            response.sendRedirect("welcome.jsp");
+        // Leer el texto enviado desde el formulario
+        String textoIngresado = request.getParameter("textoIngresado");
+
+        // Configurar la respuesta para que sea HTML
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+
+        // Verificar si se ha recibido el valor o es null
+        if (textoIngresado != null) {
+
+            try {
+                // usar el analizador Xson
+                Reader input = new StringReader(textoIngresado);
+
+                LexerXson lexer = new LexerXson(input);
+                parserXson parser = new parserXson(lexer);
+
+                parser.parse();
+
+                // Conexión a la base de datos
+
+                MetodoUsuario metodoUsuario = new MetodoUsuario();
+                String resultado = metodoUsuario.loginUsuario(parser.getLoginUsuario());
+
+
+                if ("Usuario logeado".equals(resultado)) {
+                    // Redirigir a welcome.jsp
+                    response.sendRedirect("welcome.jsp");
+                } else {
+                    // Si el usuario no está autenticado, redirige de nuevo al formulario con un mensaje
+                    response.sendRedirect("index.jsp?message=Usuario no autenticado");
+                }
+
+               
+                response.setContentType("text/html");
+                response.getWriter().println("<h2>Texto ingresado: " + textoIngresado + "</h2>");
+                response.getWriter().println("<h2>Resultado del análisis: " + resultado + "</h2>");
+                 // No escribas más contenido después de sendRedirect
+                 return;
+
+            } catch (Exception e) {
+
+                e.printStackTrace();
+
+                response.getWriter().println("Error al crear el archivo: " + e.getMessage());
             }
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-          //  response.sendRedirect("index.jsp?message=Error%20in%20database%20connection");
-          response.sendRedirect("welcome.jsp");
+
+        } else {
+            // Respuesta al cliente indicando que no se recibió el texto
+            response.setContentType("text/html");
+            response.getWriter().println("<h2>No se recibió el texto ingresado.</h2>");
         }
+
     }
 }

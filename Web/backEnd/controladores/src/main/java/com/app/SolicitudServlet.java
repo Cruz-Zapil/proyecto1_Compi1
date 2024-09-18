@@ -18,9 +18,23 @@ public class SolicitudServlet extends HttpServlet {
         // Leer el texto enviado desde el formulario
         String textoIngresado = request.getParameter("textoIngresado");
         
+        
         // Verificar si se ha recibido el valor o es null
         if (textoIngresado != null) {
-            System.out.println("Texto ingresado: " + textoIngresado);
+            
+            try {
+                
+
+
+
+            } catch (Exception e) {
+                
+
+                
+            }
+
+
+
         } else {
             System.out.println("No se recibió el texto");
         }
@@ -31,3 +45,4 @@ public class SolicitudServlet extends HttpServlet {
         response.getWriter().println("<p>" + textoIngresado + "</p>");
     }
 }
+            

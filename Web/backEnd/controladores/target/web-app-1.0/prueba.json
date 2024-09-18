@@ -1,0 +1,88 @@
+
+db.trivia1 ({
+    "ID_TRIVIA": "$id_trivia1",  // id de la trivia 
+    "NOMBRE": "cultura general",  // nombre de la trivia 
+    "TEMA": "cultura", // tema de la trivia
+    "TIEMPO": 10, // tiempo en segundos
+    "USUARIO_CREACION": "hola mundo 1", // usuario que creo la trivia
+    "FECHA_CREACION": "2021-07-01",  // fecha de creacion
+    "ESTRUCTURA": ({  // estructura de la trivia
+    
+        // primer componente 
+        {
+            "ID": "$_soldado", // id del componente 
+            "TRIVIA": "$id_trivia1",  // id de la trivia
+            "CLASE": "CHECKBOX",  // tipo de componente
+            "INDICE": 1, // indice del componente
+            "TEXTO_VISIBLE": "Quienes fueron parte de la revolucion del 20 de octubre? ",  // pregunta
+            "OPCIONES": "Jacobo Arbenz|Jose Arebalo|Jorge Ubico|Maria Chichilla", // opciones 
+            "RESPUESTA": "Jacobo Arbenz|Jose Arebalo" // respuesta correcta
+        },
+        // segundo componente
+        {
+            "ID": "$_soldado_presidente",  // id del componente
+            "TRIVIA": "$trivia1",  // id de la trivia
+            "RESPUESTA": "Jacobo Arbenz", // respuesta correcta
+            "INDICE": 2,  // indice del componente
+            "CLASE": "RADIO",  // tipo de componente
+            "TEXTO_VISIBLE": "A quie se le conoce como el soldado del pueblo? ",  // pregunta
+            "OPCIONES": "Jacobo Arbenz|Jose Arebalo|Jorge Ubico|Otro"  // opciones
+        }
+    })
+});
+
+
+db.usuario1 ({
+    {
+        "USUARIO": "juanitos donVergas ",
+        "CONTRASENA": "123456",
+        "NOMBRE": "Juanito",
+        "INSTITUCION": " Universidad de San Carlos"
+    },{
+        "USUARIO": "MariaMMQ",
+        "CONTRASENA": "123456",
+        "NOMBRE": "Maria Zapil",
+        "INSTITUCION": "Casa de la cultura"
+    },
+})
+
+
+
+
+db.registro3 ({  // datos recopilados de los usuarios
+
+        { 
+            // primer registro
+
+            "ID_TRIVIA": "$id_trivia1", // id de la trivia
+            "USUARIO": "hola mundo 1",  // usuario que respondio
+            "RESPUESTAS": {  // respuestas
+                {
+                    "ID": "$_soldado",  // id del componente
+                    "REGISTRO": "Maria Chichilla",  // respuesta ingresada
+                    "RESPUESTA": "Jose Arebalo|Jose Arebalo"  // respuesta correcta
+                },
+                {
+                    "ID": "$_soldado_presidente", // id del componente
+                    "REGISTRO": "Jorge Ubico | Otro", // respuesta ingresada
+                    "RESPUESTA": "Jacobo Arbenz" // respuesta correcta
+                }
+            }
+        },
+        {
+            /// segundo registro 
+
+            "ID_TRIVIA": "$id_trivia1", // id de la trivia
+            "USUARIO": "hola mundo 2",  
+            "RESPUESTAS": {
+                {
+                    "ID": "$_soldado",
+                    "RESPUESTA": "Jacobo Arbenz"
+                },
+                {
+                    "ID": "$_soldado_presidente",
+                    "RESPUESTA": "Jacobo Arbenz"
+                }
+            }
+        }
+    })
