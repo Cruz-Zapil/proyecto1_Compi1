@@ -52,11 +52,7 @@ public class Usuario {
         return institucion;
     }
 
-    public String getFechaCreacion() {
-        return fechaCreacion;
-    }
-  
-
+ 
     public void setNombre(String usuario) {
         this.usuario = usuario;
     }
@@ -73,8 +69,26 @@ public class Usuario {
         this.fechaCreacion = fechaCreacion;
     }
 
+    
 
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
 
+    
+
+    public void setFechaMod(String fechaModificacion) {
+        this.fechaModificacion = fechaModificacion;
+    }
+
+    public String getFechaCreacion(){
+        return this.fechaCreacion;
+
+    }
+
+    public String getFechaMod(){
+        return this.fechaModificacion;
+    }
 
 
 }

@@ -1,2 +1,3 @@
 # Ignorar archivos compilados
 Web/backEnd/controladores/target/classes/*.class
+*.class

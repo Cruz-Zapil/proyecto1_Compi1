@@ -49,10 +49,7 @@ public class ConexionDB {
                         usuario = String.join("\n", lineas);
                     } else if (archivo.getName().equals("trivia.db")) {
                         trivia = String.join("\n", lineas);
-                    } else {
-                        // Si hay otros archivos que no sean de tipo db, puedes manejarlos aquí
-                        mensaj_Prueba += String.join("\n", lineas) + "\n";
-                    }
+                    } 
 
                 } catch (IOException e) {
                     System.out.println("Error al leer el archivo: " + archivo.getName());
@@ -90,7 +87,6 @@ public class ConexionDB {
 
         if (!usuario.isEmpty()) {
             // analizar
-
             analizadorDB(usuario);
 
         } else {

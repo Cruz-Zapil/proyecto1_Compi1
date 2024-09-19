@@ -10,43 +10,43 @@ public interface simbol {
   /* terminals */
   public static final int REGISTRO = 37;
   public static final int ID_TRIVIA = 33;
-  public static final int DB = 38;
   public static final int NOMBRE = 7;
   public static final int CHECKBOX = 18;
   public static final int DOS_PUNTOS = 30;
   public static final int RESPUESTA = 16;
+  public static final int CORCHETE_DER = 42;
   public static final int ESTRUCTURA = 36;
   public static final int INDICE = 26;
-  public static final int DBREGISTRO = 42;
+  public static final int FECHA = 12;
+  public static final int DBREGISTRO = 40;
   public static final int LLAVE_IZQ = 28;
   public static final int USUARIO = 3;
-  public static final int RESPUESTAS = 45;
+  public static final int RESPUESTAS = 43;
   public static final int VALOR_CADENA = 2;
-  public static final int TRIVIA = 10;
-  public static final int DBUSUARIO = 41;
+  public static final int TRIVIA = 9;
+  public static final int DBUSUARIO = 39;
   public static final int ID = 31;
   public static final int FICHERO = 21;
   public static final int IDS = 34;
-  public static final int PARENT_IZQ = 43;
   public static final int EOF = 0;
   public static final int CLASE = 13;
   public static final int COMILLAS = 27;
   public static final int error = 1;
   public static final int COMA = 32;
+  public static final int FECHA_MODIFICACION = 44;
   public static final int PASSWORD = 5;
-  public static final int FECHA_CREACION = 9;
+  public static final int FECHA_CREACION = 45;
   public static final int USUARIO_CREACION = 4;
-  public static final int TEMA = 12;
+  public static final int TEMA = 11;
   public static final int RADIO = 19;
-  public static final int PUNTO = 39;
   public static final int LLAVE_DER = 29;
   public static final int INSTITUCION = 8;
+  public static final int CORCHETE_IZQ = 41;
   public static final int COMBO = 20;
   public static final int VALOR_NUMERO = 35;
-  public static final int TIEMPO = 11;
-  public static final int DBTRIVIA = 40;
+  public static final int TIEMPO = 10;
+  public static final int DBTRIVIA = 38;
   public static final int COLUMNAS = 24;
-  public static final int PARENT_DER = 44;
   public static final int FILAS = 23;
   public static final int AREA_TEXTO = 17;
   public static final int VISIBLE = 15;
@@ -64,10 +64,10 @@ public interface simbol {
   "TEXTO_VISIBLE",
   "NOMBRE",
   "INSTITUCION",
-  "FECHA_CREACION",
   "TRIVIA",
   "TIEMPO",
   "TEMA",
+  "FECHA",
   "CLASE",
   "CAMPO_TEXTO",
   "VISIBLE",
@@ -93,14 +93,14 @@ public interface simbol {
   "VALOR_NUMERO",
   "ESTRUCTURA",
   "REGISTRO",
-  "DB",
-  "PUNTO",
   "DBTRIVIA",
   "DBUSUARIO",
   "DBREGISTRO",
-  "PARENT_IZQ",
-  "PARENT_DER",
-  "RESPUESTAS"
+  "CORCHETE_IZQ",
+  "CORCHETE_DER",
+  "RESPUESTAS",
+  "FECHA_MODIFICACION",
+  "FECHA_CREACION"
   };
 }
 
