@@ -13,12 +13,15 @@ import java.util.List;
 import com.app.gramaticas.db.LexerDB;
 import com.app.gramaticas.db.parserDB;
 import com.app.recursosdb.Usuario;
+import com.app.recursosdb.trivia.Componente;
+import com.app.recursosdb.trivia.Trivia;
 
 public class ConexionDB {
 
     private ArrayList<Usuario> listaUsuario = new ArrayList<Usuario>();
-    // public ArrayList<Usuario> listaTriva = new ArrayList<Usuario>();
-    // public ArrayList<Usuario> listaRegistro = new ArrayList<Usuario>();
+    private ArrayList<Trivia> listaTriva = new ArrayList<Trivia>();
+    private ArrayList<Componente> listaRegistro = new ArrayList<Componente>();
+   // public ArrayList<> listaRegistro = new ArrayList<Usuario>();
 
     /// recopilar los string de los archivos almacenados en la compu
     private String usuario = "";
@@ -123,6 +126,8 @@ public class ConexionDB {
             /// obtener todo los registros de la base de datos
 
             listaUsuario = parser.getUsuarios();
+            listaTriva = parser.getTrivias();
+            listaRegistro = parser.getComponentes();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -131,11 +136,18 @@ public class ConexionDB {
 
     }
 
-  
 
     public ArrayList<Usuario> getListaUsuario() {
-
         return listaUsuario;
+    }
+    public String getMensaj_Prueba() {
+        return mensaj_Prueba;
+    }
+    public ArrayList<Trivia> getListaTriva() {
+        return listaTriva;
+    }
+    public ArrayList<Componente> getListaRegistro() {
+        return listaRegistro;
     }
 
 }

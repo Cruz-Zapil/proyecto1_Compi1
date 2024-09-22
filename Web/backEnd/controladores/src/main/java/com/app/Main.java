@@ -15,7 +15,8 @@ public class Main {
 
         String solicitud1 = "<?xson version=\"1.0\" ?>\n" +
                 "<!realizar_solicitud: \"ELIMINAR_USUARIO\" >\n" +
-                "{ \"DATOS_USUARIO\":[{ \"USUARIO\": \"SexZapil\"\n" +
+                "{ \"DATOS_USUARIO\":[{ \"USUARIO\": \"juanitos\"\n" +
+                " \"NOMBRE\": \"Ruiz\" "+
                 "}\n" +
                 "]}\n" +
                 "<fin_solicitud_realizada!>";
@@ -34,6 +35,7 @@ public class Main {
                 "]}\n" +
                 "<fin_solicitud_realizada!>";
 
+                
 
         ConexionXson conexionXson = new ConexionXson();
         conexionXson.analizadorGeneral(solicitud1);

@@ -2,7 +2,6 @@ package com.app.recursos;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,6 +14,7 @@ public class MetodoUsuario {
 
     private Multimap<String, String> parametros = ArrayListMultimap.create();
     private Multimap<String, String> loginUsuario = ArrayListMultimap.create();
+    private String mensaje = "";
 
     private boolean existeUsuarioNuevo;
     private boolean existeUsuarioAntiguo;
@@ -38,7 +38,9 @@ public class MetodoUsuario {
 
     private ConexionDB db = new ConexionDB();
 
-
+    public String getRespuesta() {
+        return mensaje;
+    }
 
     public void analizarParametros() {
 
@@ -66,8 +68,6 @@ public class MetodoUsuario {
 
     }
 
-
-
     public void parametros(Multimap<String, String> parametros) {
         this.parametros = parametros;
         db.recopilarArchivos();
@@ -75,14 +75,11 @@ public class MetodoUsuario {
     }
 
     public String loginUsuario(Multimap<String, String> loginUsuario) {
-
         db.recopilarArchivos();
         db.analizarUsuario();
-
         this.loginUsuario = loginUsuario;
         return analizarDatosLogin();
     }
-
     // analizar datos: ver errores Sintacticos y Semanticos
     // ver si existe usuario en DB
     // datos obligatorios: el usuario antiguo y minimo un parametro
@@ -91,7 +88,6 @@ public class MetodoUsuario {
     public void analizarDatosMod() {
 
         if (!db.getListaUsuario().isEmpty()) {
-
             boolean usuarioExistente = false;
             boolean parametrosModificados = false;
             Usuario usuarioModificado = null;
@@ -115,8 +111,6 @@ public class MetodoUsuario {
                     }
 
                     if (usuarioExistente) {
-
-
                         if (sizeUsuarioNuevo && sizePasswordNuevo && sizeInstitucion && sizeFechaModificacion) {
 
                             if (existeUsuarioNuevo) {
@@ -141,7 +135,7 @@ public class MetodoUsuario {
                                 // crear la fecha de modificacion
                                 String fecha = parametros.get("FECHA_MODIFICACION").iterator().next();
                                 usuarioModificado.setFechaMod(fecha);
-    
+
                             } else {
                                 // Obtener la fecha actual
                                 LocalDate fechaActual = LocalDate.now();
@@ -163,29 +157,23 @@ public class MetodoUsuario {
                             }
 
                         } else {
-
                             if (!sizeUsuarioNuevo) {
                                 // Error semántico
                                 System.out.println("Error Semántico: usuario nuevo ya fue declarado");
                             }
-
                             if (!sizePasswordNuevo) {
                                 // Error semántico
                                 System.out.println("Error Semántico: password nuevo ya fue declarado");
                             }
-
                             if (!sizeInstitucion) {
                                 // Error semántico
                                 System.out.println("Error Semántico: institucion ya fue declarado");
                             }
-
                             if (!sizeFechaModificacion) {
                                 // Error semántico
                                 System.out.println("Error Semántico: fecha de modificacion ya fue declarado");
                             }
-
                         }
-
                     } else {
                         System.out.println("Usuario no existe");
                     }
@@ -199,7 +187,6 @@ public class MetodoUsuario {
             }
         }
     }
-
     /// analizar datos: ver errores Sintacticos y Semanticos
     // ver si existe en el DB
     // datos obligatorios: el usuario
@@ -208,11 +195,8 @@ public class MetodoUsuario {
 
         if (!db.getListaUsuario().isEmpty()) {
             boolean usuarioExistente = false;
-
             if (existeUsuario) {
-
                 if (sizeUsuario) {
-
                     // Analizar si existe en la DB
                     String usu = parametros.get("USUARIO").iterator().next();
 
@@ -222,10 +206,10 @@ public class MetodoUsuario {
                         if (usuario.getUsuario().equals(usu)) {
                             db.getListaUsuario().remove(usuario);
                             usuarioExistente = true;
+                            System.out.println("Usuario eliminado");
                             break;
                         }
                     }
-
                     if (usuarioExistente) {
                         LecturaArchivo la = new LecturaArchivo();
                         la.enListarUsu(db.getListaUsuario());
@@ -234,7 +218,6 @@ public class MetodoUsuario {
                     } else {
                         System.out.println("Usuario no existe en la base de datos");
                     }
-
                 } else {
                     System.out.println("Error Semántico: usuario ya fue declarado");
                 }
@@ -243,19 +226,14 @@ public class MetodoUsuario {
                 // Error sintáctico
                 System.out.println("Error Sintáctico: usuario no fue declarado");
             }
-
         } else {
             System.out.println("No hay usuarios en la base de datos");
-
         }
-
     }
 
     // analizar datos: ver errores sintacticos y semanticos
     // ver si existe en el DB
     // datos obligatoriso: usuario, password, nombre e institucion
-
-
 
     public void analizarDatosNew() {
 
@@ -280,7 +258,6 @@ public class MetodoUsuario {
                     } else {
                         // Obtener la fecha actual
                         LocalDate fechaActual = LocalDate.now();
-
                         // Formatear la fecha en el formato deseado
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                         fecha = fechaActual.format(formatter);
@@ -297,7 +274,6 @@ public class MetodoUsuario {
                     }
 
                     if (!usuarioExistente) {
-
                         Map<String, String> listaUsuario = new HashMap<String, String>();
                         listaUsuario.put("USUARIO", usu);
                         listaUsuario.put("PASSWORD", pass);
@@ -308,7 +284,6 @@ public class MetodoUsuario {
                         LecturaArchivo la = new LecturaArchivo();
                         la.enListarUsu(db.getListaUsuario());
                         la.agregarUsuario(listaUsuario);
-
                     }
 
                 } else {
@@ -357,9 +332,7 @@ public class MetodoUsuario {
                     // Error sintáctico
                     System.out.println("Error Sintáctico: institucion no fue declarado");
                 }
-
             }
-
         } else {
             System.out.println("No hay usuarios en la base de datos");
         }
@@ -381,29 +354,31 @@ public class MetodoUsuario {
         boolean loggin = false;
 
         if (!db.getListaUsuario().isEmpty()) {
+            mensaje += "  existe Usuarios en la DB\n";
 
             if (existePassword && existeUsuario) {
                 // Ambos parámetros existen
                 if (sizePassword && sizeUsuario) {
                     // Analizar si existe en la DB
-                    Collection<String> usu = loginUsuario.get("USUARIO");
-                    Collection<String> pass = loginUsuario.get("PASSWORD");
+                    String usu = parametros.get("USUARIO").iterator().next();
+                    String pass = parametros.get("PASSWORD").iterator().next();
+                    mensaje += "\n\n usu:  " + usu;
+                    mensaje += "\n\n pass:" + pass;
 
                     for (Usuario usuario : db.getListaUsuario()) {
                         // Iterar sobre los usuarios y contraseñas del Multimap
-                        for (String user : usu) {
-                            for (String password : pass) {
-                                if (usuario.getUsuario().equals(user) && usuario.getPassword().equals(password)) {
-                                    System.out.println("Usuario logeado");
-                                    loggin = true;
-                                    break;
-                                }
-                            }
-                        }
-                    }
 
+                        if (usuario.getUsuario().equals(usu) && usuario.getPassword().equals(pass)) {
+                            System.out.println("Usuario logeado");
+                            mensaje += "   <Usuario logeado>\n";
+                            loggin = true;
+                            break;
+                        }
+
+                    }
                     if (!loggin) {
                         System.out.println("Usuario o contraseña incorrecta");
+                        mensaje += "<Usuario o contraseña incorrecta>\n";
                     }
                 } else {
                     if (!sizePassword) {
@@ -430,15 +405,16 @@ public class MetodoUsuario {
 
         } else {
             // No hay usuarios en la DB
+            mensaje += "No hay usuarios en la DB\n";
             return "No hay usuarios en la base de datos";
 
         }
 
         if (loggin) {
+            mensaje += "Usuario logeado\n";
             return "Usuario logeado";
         } else {
             return "Usuario o contraseña incorrecta";
         }
     }
-
 }
