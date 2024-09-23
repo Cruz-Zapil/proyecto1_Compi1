@@ -360,8 +360,8 @@ public class MetodoUsuario {
                 // Ambos parámetros existen
                 if (sizePassword && sizeUsuario) {
                     // Analizar si existe en la DB
-                    String usu = parametros.get("USUARIO").iterator().next();
-                    String pass = parametros.get("PASSWORD").iterator().next();
+                    String usu = loginUsuario.get("USUARIO").iterator().next();
+                    String pass = loginUsuario.get("PASSWORD").iterator().next();
                     mensaje += "\n\n usu:  " + usu;
                     mensaje += "\n\n pass:" + pass;
 

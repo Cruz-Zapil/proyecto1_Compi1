@@ -16,29 +16,38 @@ public class Main {
         String solicitud1 = "<?xson version=\"1.0\" ?>\n" +
                 "<!realizar_solicitud: \"ELIMINAR_USUARIO\" >\n" +
                 "{ \"DATOS_USUARIO\":[{ \"USUARIO\": \"juanitos\"\n" +
-                " \"NOMBRE\": \"Ruiz\" "+
+                " \"NOMBRE\": \"Ruiz\" " +
                 "}\n" +
                 "]}\n" +
                 "<fin_solicitud_realizada!>";
 
-                String solicitud2 = "<?xson version=\"1.0\" ?>\n" +
+        String solicitud2 = "<?xson version=\"1.0\" ?>\n" +
                 "<!realizar_solicitud: \"MODIFICAR_USUARIO\" >\n" +
                 "{ \"DATOS_USUARIO\":[{ \"USUARIO_ANTIGUO\": \"SexZapil\", \"INSTITUCION\": \"MONARCA cRUZ\"\n" +
                 "}\n" +
                 "]}\n" +
                 "<fin_solicitud_realizada!>";
 
-                String solicitud3 = "<?xson version=\"1.0\" ?>\n" +
+        String solicitud3 = "<?xson version=\"1.0\" ?>\n" +
                 "<!realizar_solicitud: \"ELMINAR_USUARIO\" >\n" +
                 "{ \"DATOS_USUARIO\":[{ \"USUARIO\": \"SexZapil\"\n" +
                 "}\n" +
                 "]}\n" +
                 "<fin_solicitud_realizada!>";
 
-                
-
         ConexionXson conexionXson = new ConexionXson();
-        conexionXson.analizadorGeneral(solicitud1);
+        // conexionXson.analizadorGeneral(solicitud1);
+
+        String login = " <?xson version=\"1.0\"?>" +
+                "<!realizar_solicitud: \"LOGIN_USUARIO\">" +
+                "{\"DATOS_USUARIO\":[{" +
+                "\"USUARIO\":\"MariaMMQ\"," +
+                "\"PASSWORD\":\"1asdf23456\"" +
+                "}]" +
+                "}" +
+                "<fin_solicitud_realizada!>";
+
+        conexionXson.analizarLogin(login);
 
     }
 

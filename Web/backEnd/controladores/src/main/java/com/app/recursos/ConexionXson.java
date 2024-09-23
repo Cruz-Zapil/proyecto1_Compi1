@@ -34,12 +34,13 @@ public class ConexionXson {
 
             /// enviar los datos de clave valor para analizar
 
-            String hoa = metodoUsuario.loginUsuario(datos);
+            String result = metodoUsuario.loginUsuario(datos);
 
-            return hoa;
+            return result;
 
         } catch (Exception e) {
             System.out.println("Error al analizar el texto");
+            e.printStackTrace();
         }
 
         return "Error con el xson";
