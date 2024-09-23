@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_trivias"
+        android:icon="@drawable/quiz"
+        android:title="Lista de Trivias" />
+    <item
+        android:id="@+id/nav_profile"
+        android:icon="@drawable/pirate"
+        android:title="Perfil de Usuario" />
+</menu>

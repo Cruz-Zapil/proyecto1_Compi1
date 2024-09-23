@@ -45,10 +45,10 @@ public class ClientHandler implements Runnable {
 
                         if ("Usuario logeado".equals(result)) {
                             // mostrar que existe el usuario
-                            salida.writeUTF("Usuario logeado"+ respuesta+ peticion);
+                            salida.writeUTF("Usuario logeado"+ result);
                         } else {
                             // Si el usuario no está autenticado, redirige de nuevo al formulario con un
-                            salida.writeUTF("Usuario no logeado " + respuesta+  " +++++  " + peticion);
+                            salida.writeUTF("Usuario no logeado " + result);
                         }
                     } catch (Exception e) {
 

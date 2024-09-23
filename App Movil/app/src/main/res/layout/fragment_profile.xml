@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/profileTitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Perfil de Usuario"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:paddingBottom="16dp" />
+
+    <TextView
+        android:id="@+id/profileDescriptionTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Aquí puedes ver y editar la información de tu perfil."
+        android:textSize="18sp" />
+
+    <!-- Aquí podrías agregar más elementos, como un botón para editar el perfil, una foto de perfil, etc. -->
+
+</LinearLayout>
