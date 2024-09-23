@@ -39,7 +39,7 @@
                 <h2 class="text-center my-4">Iniciar Sesión</h2>
                 
                 <!-- Formulario de login -->
-                <form action="LoginServlet" method="get" class="border p-4 bg-light shadow rounded" >
+                <form action="LoginServlet" method="GET" class="border p-4 bg-light shadow rounded" >
                     <div class="mb-3">
                         <label for="codeArea" class="form-label">Ingrese su código:</label>
                         <div class="code-container-container">

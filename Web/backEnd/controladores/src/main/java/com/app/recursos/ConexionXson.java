@@ -14,6 +14,9 @@ public class ConexionXson {
     private MetodoTrivia metodoTrivia = new MetodoTrivia();
     private MetodoComponente metodoComponente = new MetodoComponente();
     Multimap<String, String> datos = ArrayListMultimap.create();
+    private String nombreUsuario;
+    public String mensaje ="";
+
 
 
     public String analizarLogin(String textoIngresado) {
@@ -35,6 +38,10 @@ public class ConexionXson {
             /// enviar los datos de clave valor para analizar
 
             String result = metodoUsuario.loginUsuario(datos);
+            nombreUsuario = metodoUsuario.getNombreUsu();
+            mensaje = metodoUsuario.getRespuesta();
+
+
 
             return result;
 
@@ -44,6 +51,10 @@ public class ConexionXson {
         }
 
         return "Error con el xson";
+    }
+
+    public String getNombreUsuario() {
+        return nombreUsuario;
     }
 
     public void analizadorGeneral(String textoIngresado) {

@@ -15,6 +15,7 @@ public class MetodoUsuario {
     private Multimap<String, String> parametros = ArrayListMultimap.create();
     private Multimap<String, String> loginUsuario = ArrayListMultimap.create();
     private String mensaje = "";
+    private String nombreUsu="";
 
     private boolean existeUsuarioNuevo;
     private boolean existeUsuarioAntiguo;
@@ -40,6 +41,9 @@ public class MetodoUsuario {
 
     public String getRespuesta() {
         return mensaje;
+    }
+    public String getNombreUsu() {
+        return nombreUsu;
     }
 
     public void analizarParametros() {
@@ -354,7 +358,7 @@ public class MetodoUsuario {
         boolean loggin = false;
 
         if (!db.getListaUsuario().isEmpty()) {
-            mensaje += "  existe Usuarios en la DB\n";
+            mensaje += "  existe Usuarios en la DataBase\n";
 
             if (existePassword && existeUsuario) {
                 // Ambos parámetros existen
@@ -370,6 +374,7 @@ public class MetodoUsuario {
 
                         if (usuario.getUsuario().equals(usu) && usuario.getPassword().equals(pass)) {
                             System.out.println("Usuario logeado");
+                            nombreUsu=usuario.getNombre();
                             mensaje += "   <Usuario logeado>\n";
                             loggin = true;
                             break;
@@ -414,6 +419,7 @@ public class MetodoUsuario {
             mensaje += "Usuario logeado\n";
             return "Usuario logeado";
         } else {
+            mensaje += "Usuario o contraseña incorrecta\n";
             return "Usuario o contraseña incorrecta";
         }
     }

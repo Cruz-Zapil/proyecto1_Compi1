@@ -8,13 +8,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.app.recursos.ConexionXson;
+
 
 @WebServlet("/solicitud")
 public class SolicitudServlet extends HttpServlet {
     
     private static final long serialVersionUID = 1L;
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Leer el texto enviado desde el formulario
         String textoIngresado = request.getParameter("textoIngresado");
         
@@ -24,9 +26,9 @@ public class SolicitudServlet extends HttpServlet {
             
             try {
                 
-
-                
-
+                // Procesar el texto recibido
+                ConexionXson conexionXson = new ConexionXson();
+                conexionXson.analizadorGeneral(textoIngresado);
 
 
             } catch (Exception e) {

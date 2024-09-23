@@ -6,6 +6,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import com.app.recursos.ConexionXson;
 
 @WebServlet("/LoginServlet")
@@ -26,33 +28,36 @@ public class LoginServlet extends HttpServlet {
                 // usar el analizador Xson
                 ConexionXson conexionXson = new ConexionXson();
                 String resultado = conexionXson.analizarLogin(textoIngresado);
+                
 
                 if ("Usuario logeado".equals(resultado)) {
                     // Redirigir a welcome.jsp
+                    String nombreUsuario = conexionXson.getNombreUsuario();
+
+
+                    /// almacenar el nombre de usuario en la sesion
+                    HttpSession session = request.getSession();
+                    session.setAttribute("nombreUsuario", nombreUsuario);
+
                     response.sendRedirect("welcome.jsp");
                 } else {
                     // Si el usuario no está autenticado, redirige de nuevo al formulario con un mensaje
-                    response.sendRedirect("index.jsp?message=Usuario no autenticado" +"   " + textoIngresado);
+                    response.sendRedirect("index.jsp?message=Usuario no autenticado" );
                    
                 }
 
-               
-                response.setContentType("text/html");
-                response.getWriter().println("<h2>Texto ingresado: " + textoIngresado + "</h2>");
-                response.getWriter().println("<h2>Resultado del análisis: " + resultado + "</h2>");
-                 // No escribas más contenido después de sendRedirect
                  return;
 
             } catch (Exception e) {
 
                 e.printStackTrace();
-                response.getWriter().println("Error al conectar al xson:  " + e.getMessage()+  "    " + textoIngresado);
+                response.getWriter().println("Error al conectar al xson:  " + e.getMessage());
             }
 
         } else {
             // Respuesta al cliente indicando que no se recibió el texto
-            response.setContentType("text/html");
-            response.getWriter().println("<h2>No se recibió el texto ingresado.</h2>");
+            response.sendRedirect("index.jsp?message=Hubo un error al enviar el texto" );
+                   
         }
 
     }

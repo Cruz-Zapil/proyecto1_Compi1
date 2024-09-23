@@ -3,13 +3,9 @@ package com.app;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.Reader;
-import java.io.StringReader;
 import java.net.Socket;
+import com.app.recursos.ConexionXson;
 
-import com.app.gramaticas.xson.LexerXson;
-import com.app.gramaticas.xson.parserXson;
-import com.app.recursos.MetodoUsuario;
 
 public class ClientHandler implements Runnable {
 
@@ -31,7 +27,7 @@ public class ClientHandler implements Runnable {
 
             String mensaje = entrada.readUTF();
 
-            String[] partes = mensaje.split(":");
+            String[] partes = mensaje.split("#");
             String comando = partes[0];
 
             /// verificar el comando o tipo de peticion que se realizo
@@ -42,23 +38,17 @@ public class ClientHandler implements Runnable {
 
                     try {
                         // usar el analizador Xson
-                        Reader input = new StringReader(peticion);
+                        ConexionXson conexionXson = new ConexionXson();
+                        String result = conexionXson.analizarLogin(peticion);
+                        String respuesta = conexionXson.mensaje;
 
-                        LexerXson lexer = new LexerXson(input);
-                        parserXson parser = new parserXson(lexer);
-                        parser.parse();
 
-                        // Conexión a la base de datos
-                        MetodoUsuario metodoUsuario = new MetodoUsuario();
-                        String resultado = metodoUsuario.loginUsuario(parser.getLoginUsuario());
-                        String respuesta = metodoUsuario.getRespuesta();
-
-                        if ("Usuario logeado".equals(resultado)) {
+                        if ("Usuario logeado".equals(result)) {
                             // mostrar que existe el usuario
-                            salida.writeUTF("Usuario logeado"+ respuesta);
+                            salida.writeUTF("Usuario logeado"+ respuesta+ peticion);
                         } else {
                             // Si el usuario no está autenticado, redirige de nuevo al formulario con un
-                            salida.writeUTF("Usuario no logeado" + respuesta);
+                            salida.writeUTF("Usuario no logeado " + respuesta+  " +++++  " + peticion);
                         }
                     } catch (Exception e) {
 
