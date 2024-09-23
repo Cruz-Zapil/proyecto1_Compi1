@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity() {
                 socket.connect()
 
                 // realizar la peticion:
-                socket.enviarPeticion("LOGIN:$peticion")
+                socket.enviarPeticion("LOGIN#$peticion")
                 // Mostrar el texto en un Toast (mensaje temporal en pantalla)
                  mensaje = socket.recibirMensaje().toString()
                  System.out.println(" dato recopilados "+ mensaje );
