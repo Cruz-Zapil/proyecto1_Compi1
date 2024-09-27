@@ -7,7 +7,7 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Hello, World!");
 
-        String xsonString = "<?xson version=\"1.0\" ?> <!realizar_solicitud: \"USUARIO_NUEVO\" >\n"
+        String nuevoUsu= "<?xson version=\"1.0\" ?> <!realizar_solicitud: \"USUARIO_NUEVO\" >\n"
                 + "{ \"DATOS_USUARIO\":[{ \"USUARIO\": \"Crucito\", \"PASSWORD\": \"1*5678\", \"NOMBRE\": \"Cruz Quij\", \"INSTITUCION\": \"USAC\"\n }\n"
                 + "]\n"
                 + "}\n"
@@ -47,7 +47,7 @@ public class Main {
                 "}" +
                 "<fin_solicitud_realizada!>";
 
-        conexionXson.analizarLogin(login);
+        conexionXson.analizadorGeneral(nuevoUsu);
 
     }
 

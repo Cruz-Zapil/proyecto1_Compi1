@@ -34,11 +34,9 @@ public class LoginServlet extends HttpServlet {
                     // Redirigir a welcome.jsp
                     String nombreUsuario = conexionXson.getNombreUsuario();
 
-
                     /// almacenar el nombre de usuario en la sesion
                     HttpSession session = request.getSession();
                     session.setAttribute("nombreUsuario", nombreUsuario);
-
                     response.sendRedirect("welcome.jsp");
                 } else {
                     // Si el usuario no está autenticado, redirige de nuevo al formulario con un mensaje

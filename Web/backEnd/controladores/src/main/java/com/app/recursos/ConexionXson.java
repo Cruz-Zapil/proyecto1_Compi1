@@ -142,7 +142,6 @@ public class ConexionXson {
                 System.out.println("Hay datos de nueva trivia---->");
 
                 metodoTrivia.parametros(parserXson.getNuevaTrivia());
-                metodoTrivia.analizarParametros();
                 metodoTrivia.crearTrivia();
             }
 
@@ -161,7 +160,6 @@ public class ConexionXson {
                 System.out.println("Hay datos de modificar trivia---->");
 
                 metodoTrivia.parametros(parserXson.getModificarTrivia());
-                metodoTrivia.analizarParametros();
                 metodoTrivia.modificarTrivia();
             }
 
@@ -180,7 +178,6 @@ public class ConexionXson {
                 System.out.println("Hay datos de eliminar trivia---->");
 
                 metodoTrivia.parametros(parserXson.getEliminarTrivia());
-                metodoTrivia.analizarParametros();
                 metodoTrivia.eliminarTrivia();
             }
 

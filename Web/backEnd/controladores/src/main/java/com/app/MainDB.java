@@ -2,11 +2,14 @@ package com.app;
 
 import java.io.Reader;
 import java.io.StringReader;
+import java.util.ArrayList;
 
 import org.checkerframework.checker.units.qual.s;
 
 import com.app.gramaticas.db.LexerDB;
 import com.app.gramaticas.db.parserDB;
+import com.app.recursos.ConexionDB;
+import com.app.recursos.ConexionXson;
 import com.app.recursosdb.trivia.Componente;
 import com.app.recursosdb.trivia.Trivia;
 
@@ -44,45 +47,41 @@ public class MainDB {
         "    }\n" +
         "]";
 
+        String nuevaTrivia = "<?xson version=\"1.0\" ?>\n" +
+                "<!realizar_solicitud: \"NUEVA_TRIVIA\" >" +
+                "{ \"PARAMETROS_TRIVIA\":[" +
+                "{ \"ID_TRIVIA\": \"$trivia1\", " +
+                "\"TIEMPO_PREGUNTA\": 45, " +
+                "\"NOMBRE\": \"Cultura de Guatemala\", " +
+                "\"TEMA\": \"cultura\" " +
+                "}" +
+                "]}" +
+                "<fin_solicitud_realizada!>";
+
+                String eliminarTrivia = "<?xson version=\"1.0\" ?>\n" +
+
+                "<!realizar_solicitud: \"ELIMINAR_TRIVIA\" >\n" +
+                   "{\n" +
+                   "    \"PARAMETROS_TRIVIA\":[{\n" +
+                   "        \"ID_TRIVIA\": \"$idtrivia1\"\n" +
+                   "    }]\n" +
+                   "}\n" +
+                   "<fin_solicitud_realizada!>";
+
+
+
+
+
+        ConexionXson conexionXson = new ConexionXson();
+        conexionXson.analizadorGeneral(eliminarTrivia);
+
+
         
 
 
-        Reader  triviaReader = new StringReader(trivia1);
-        LexerDB lexerDB = new LexerDB(triviaReader);
-        parserDB parserDB = new parserDB(lexerDB);
-        parserDB.parse();
 
 
 
-        if (!parserDB.getTrivias().isEmpty()) {
-
-        // Mostrar el contenido de cada trivia y sus componentes
-        for (Trivia trivia : parserDB.getTrivias()) {
-            System.out.println("Trivia:");
-            System.out.println("ID: " + trivia.getId());
-            System.out.println("Nombre: " + trivia.getNombre());
-            System.out.println("Tema: " + trivia.getTema());
-            System.out.println("Tiempo: " + trivia.getTiempo_pre() + " segundos");
-            System.out.println("Usuario: " + trivia.getUsuario());
-
-            // Mostrar los componentes de cada trivia
-            System.out.println("Componentes:");
-            for (Componente componente : trivia.getComponentes()) {
-                System.out.println("  ID Componente: " + componente.getIdComp());
-                System.out.println("  ID Trivia: " + componente.getTrivia());
-                System.out.println("  Clase: " + componente.getClase());
-                System.out.println("  Texto Visible: " + componente.getTextoVisible());
-                System.out.println("  Opciones: " + componente.getOpciones());
-                System.out.println("  Respuesta: " + componente.getRespuesta());
-                System.out.println("  Fila: "+ componente.getFila());
-                System.out.println("  Columna: "+ componente.getColumna());
-            }
-            System.out.println();
-        }
-
-        }else {
-            System.out.println("No se encontró el archivo de trivia.");
-        }
 
 
     }

@@ -5,7 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.app.recursos.util.LecturaArchivo;
+import com.app.recursos.util.GuardarInfo;
 import com.app.recursosdb.Usuario;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
@@ -151,7 +151,7 @@ public class MetodoUsuario {
                             }
                             if (parametrosModificados) {
 
-                                LecturaArchivo la = new LecturaArchivo();
+                                GuardarInfo la = new GuardarInfo();
                                 db.getListaUsuario().add(usuarioModificado);
                                 la.enListarUsu(db.getListaUsuario());
                                 la.agregarUsuario(null);
@@ -215,7 +215,7 @@ public class MetodoUsuario {
                         }
                     }
                     if (usuarioExistente) {
-                        LecturaArchivo la = new LecturaArchivo();
+                        GuardarInfo la = new GuardarInfo();
                         la.enListarUsu(db.getListaUsuario());
                         la.agregarUsuario(null);
 
@@ -278,6 +278,9 @@ public class MetodoUsuario {
                     }
 
                     if (!usuarioExistente) {
+
+                        if (!usu.isEmpty() && !pass.isEmpty() && !nom.isEmpty() && !inst.isEmpty()) {
+
                         Map<String, String> listaUsuario = new HashMap<String, String>();
                         listaUsuario.put("USUARIO", usu);
                         listaUsuario.put("PASSWORD", pass);
@@ -285,9 +288,14 @@ public class MetodoUsuario {
                         listaUsuario.put("INSTITUCION", inst);
                         listaUsuario.put("FECHA_CREACION", fecha);
 
-                        LecturaArchivo la = new LecturaArchivo();
+                        GuardarInfo la = new GuardarInfo();
                         la.enListarUsu(db.getListaUsuario());
                         la.agregarUsuario(listaUsuario);
+
+                        }else{
+                            System.err.println("Error semantico: faltan parametros obligatorios");
+                        }
+
                     }
 
                 } else {

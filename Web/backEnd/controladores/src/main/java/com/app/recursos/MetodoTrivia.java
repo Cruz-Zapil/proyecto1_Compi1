@@ -1,10 +1,11 @@
 package com.app.recursos;
 
+import java.security.Guard;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.Map;
 
+import com.app.recursos.util.GuardarInfo;
+import com.app.recursosdb.trivia.Componente;
 import com.app.recursosdb.trivia.Trivia;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
@@ -32,11 +33,10 @@ public class MetodoTrivia {
     public void parametros(Multimap<String, String> parametros) {
         this.parametros = parametros;
         db.recopilarArchivos();
-        db.analizarUsuario();
+        db.analizarTrivia();
     }
 
     public void analizarParametros() {
-
         exiIdTrivia = parametros.containsKey("ID_TRIVIA");
         exiTmpPregunta = parametros.containsKey("TIEMPO_PREGUNTA");
         exiNomTrivia = parametros.containsKey("NOMBRE");
@@ -60,8 +60,8 @@ public class MetodoTrivia {
 
     public void crearTrivia() {
         analizarParametros();
-
         if (!db.getListaTriva().isEmpty()) {
+
 
             boolean triviaExistente = false;
 
@@ -70,11 +70,11 @@ public class MetodoTrivia {
                 if (sizeIdTrivia && sizeTmpPregunta && sizeNomTrivia && sizeTemaTrivia && sizeUsuCreacion
                         && sizeFecCreacion) {
 
-                    String id = parametros.get("ID_TRIVA").iterator().next();
+                    String id = parametros.get("ID_TRIVIA").iterator().next();
                     String nombre = parametros.get("NOMBRE").iterator().next();
                     int tmpPregunta = Integer.parseInt(parametros.get("TIEMPO_PREGUNTA").iterator().next());
                     String tema = parametros.get("TEMA").iterator().next();
-                    String usuCreacion = parametros.get("USUARIO_CREACION").iterator().next();
+                    String usuCreacion ="";
                     String fecCreacion = "";
 
                     if (exiFecCreacion) {
@@ -88,7 +88,12 @@ public class MetodoTrivia {
                         fecCreacion = fechaActual.format(formatter);
                     }
 
-                    parametros.get("FECHA_CREACION").iterator().next();
+                    if (exiUsuCreacion) {
+                        usuCreacion = parametros.get("USUARIO_CREACION").iterator().next();
+                    }else {
+                        usuCreacion = "Invitado";
+
+                    }
 
                     for (Trivia trivia : db.getListaTriva()) {
                         if (trivia.getId().equals(id)) {
@@ -100,15 +105,18 @@ public class MetodoTrivia {
                     }
 
                     if (!triviaExistente) {
+                    
+                        // crear la trivia :)
+                        Trivia nueva =  new Trivia(id, nombre, tmpPregunta, usuCreacion, tema, fecCreacion, null);
+                        db.getListaTriva().add(nueva);
+                         // enviar la lista a Guardar info
 
-                        Map<String, String> nuevaTrivia = new HashMap<String, String>();
-                        nuevaTrivia.put("ID_TRIVA", id);
-                        nuevaTrivia.put("NOMBRE", nombre);
-                        nuevaTrivia.put("TIEMPO_PREGUNTA", String.valueOf(tmpPregunta));
-                        nuevaTrivia.put("TEMA", tema);
-                        nuevaTrivia.put("USUARIO_CREACION", usuCreacion);
-                        nuevaTrivia.put("FECHA_CREACION", fecCreacion);
+                        GuardarInfo guardar = new GuardarInfo();
+                        guardar.guardarDatoTrivia(db.getListaTriva());
 
+                    }else {
+                        System.out.println("Trivia ya existe");
+                        System.out.println("Cabia de ID: ");
                     }
 
                 } else {
@@ -123,7 +131,7 @@ public class MetodoTrivia {
 
         } else {
 
-            System.out.println(" No hy datos en la DB");
+            System.out.println(" No hay datos en la DB");
         }
 
     }
@@ -133,6 +141,7 @@ public class MetodoTrivia {
     // datos obligatorios: id
     // datos opcionales: nombre, tiempoPregunta, tema
 
+    @SuppressWarnings("null")
     public void modificarTrivia() {
         analizarParametros();
 
@@ -159,7 +168,7 @@ public class MetodoTrivia {
 
                     if (triviaExistente) {
 
-                        if (sizeNomTrivia && sizeTmpPregunta && sizeTemaTrivia) {
+                        if (sizeNomTrivia || sizeTmpPregunta || sizeTemaTrivia) {
 
                             if (exiNomTrivia) {
                                 String nombre = parametros.get("NOMBRE").iterator().next();
@@ -186,8 +195,8 @@ public class MetodoTrivia {
                             if (parametrosModificados) {
 
                                 //// lectura del archivo y escritura
-
-
+                                GuardarInfo guardar = new GuardarInfo();
+                                guardar.guardarDatoTrivia(db.getListaTriva());
 
                             }else {
                                 System.out.println("Error Sintáctico: Se esperaba un parametro para modificar");
@@ -196,36 +205,27 @@ public class MetodoTrivia {
                         } else {
 
                             /// errores semanticos 
-
                             if(!sizeNomTrivia){
                                 System.out.println("Error Semántico: Nombre de la trivia ya fue declarado");
                             }
-
                             if(!sizeTmpPregunta){
                                 System.out.println("Error Semántico: Tiempo de la pregunta ya fue declarado");
                             }
-
                             if(!sizeTemaTrivia){
                                 System.out.println("Error Semántico: Tema de la trivia ya fue declarado");
                             }
-
                         }
-
                     } else {
                         System.out.println("No se encontro la trivia en la DB");
 
                     }
-
                 }else {
                     System.out.println("Error Semántico: ID trivia ya fue declarado");
                 }
-
             }else {
                 
                 System.out.println("Error Sintáctico: falta el ID de la trivia");
-
             }
-
         }else {
             System.out.println(" No hay datos de trivia en la DB");
         }
@@ -244,7 +244,7 @@ public class MetodoTrivia {
 
                     // analizar si existe la trivia en la DB
 
-                    String id = parametros.get("ID_TRIVA").iterator().next();
+                    String id = parametros.get("ID_TRIVIA").iterator().next();
 
                     for (Trivia trivia : db.getListaTriva()) {
 
@@ -257,8 +257,9 @@ public class MetodoTrivia {
                     }
 
                     if (triviaExistente) {
-
                         /// la lectura del archivo y la nueva escritura
+                        GuardarInfo guardar = new GuardarInfo();
+                        guardar.guardarDatoTrivia(db.getListaTriva());
 
                     } else {
                         System.out.println("Trivia no existe en la DB");

@@ -4,8 +4,10 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
-import com.app.recursos.ConexionXson;
 
+import com.app.recursos.ConexionDB;
+import com.app.recursos.ConexionXson;
+import com.google.gson.Gson;
 
 public class ClientHandler implements Runnable {
 
@@ -40,15 +42,14 @@ public class ClientHandler implements Runnable {
                         // usar el analizador Xson
                         ConexionXson conexionXson = new ConexionXson();
                         String result = conexionXson.analizarLogin(peticion);
-                        String respuesta = conexionXson.mensaje;
-
+                        String nomUsua = conexionXson.getNombreUsuario();
 
                         if ("Usuario logeado".equals(result)) {
                             // mostrar que existe el usuario
-                            salida.writeUTF("Usuario logeado"+ result);
+                            salida.writeUTF("Usuario logeado#" + nomUsua);
                         } else {
                             // Si el usuario no está autenticado, redirige de nuevo al formulario con un
-                            salida.writeUTF("Usuario no logeado " + result);
+                            salida.writeUTF("Usuario no logeado#" + result);
                         }
                     } catch (Exception e) {
 
@@ -58,6 +59,24 @@ public class ClientHandler implements Runnable {
 
                     break;
                 case "TRIVIAS":
+
+                    try {
+
+                        ConexionDB conexionDB = new ConexionDB();
+                        conexionDB.recopilarArchivos();
+                        conexionDB.analizarTrivia();
+
+                        /// enviar la respuesta al cliente
+                        Gson gson = new Gson();
+                        String trivias = gson.toJson(conexionDB.getListaTriva());
+                        salida.writeUTF(trivias);
+
+                    } catch (Exception e) {
+
+                        e.printStackTrace();
+                        salida.writeUTF("Error de parseo: " + e.getMessage());
+
+                    }
                     break;
 
                 case "SAVE_INFO":

@@ -70,13 +70,6 @@ public class ConexionDB {
             analizadorDB(registro);
             mensaj_Prueba += "Se encontró el archivo de registro y fue analizado.\n";
 
-            for (Usuario usu : listaUsuario) {
-                mensaj_Prueba += "Usuario: " + usu.getUsuario() + "\n";
-                mensaj_Prueba += "Password: " + usu.getPassword() + "\n";
-                mensaj_Prueba += "Nombre: " + usu.getNombre() + "\n";
-
-            }
-
         } else {
             mensaj_Prueba = " No se encontró el archivo de registro.\n ";
             System.out.println("No se encontró el archivo de registro.");
@@ -103,7 +96,6 @@ public class ConexionDB {
 
         if (!trivia.isEmpty()) {
             // analizar
-
             analizadorDB(trivia);
             mensaj_Prueba += "Se encontró el archivo de trivia y fue analizado.\n";
 
@@ -118,7 +110,10 @@ public class ConexionDB {
 
         try {
 
-            Reader reader = new StringReader(usuario);
+            System.out.println("\n\n\n"+contendio+"\n\n\n" );
+
+
+            Reader reader = new StringReader(contendio);
             LexerDB lexer = new LexerDB(reader);
             parserDB parser = new parserDB(lexer);
             parser.parse();
@@ -127,10 +122,14 @@ public class ConexionDB {
 
             listaUsuario = parser.getUsuarios();
             listaTriva = parser.getTrivias();
-            listaRegistro = parser.getComponentes();
+
+
+           // listaRegistro = parser.getComponentes();
 
         } catch (Exception e) {
+            System.out.println("Error al analizar el TEXTO DB");
             e.printStackTrace();
+            
 
         }
 

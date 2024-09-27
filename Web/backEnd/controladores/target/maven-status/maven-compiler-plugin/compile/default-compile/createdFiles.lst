@@ -6,6 +6,7 @@ com/app/recursosdb/trivia/Componente.class
 com/app/Servidor.class
 com/app/gramaticas/xson/parserXson$CUP$parser$actions.class
 com/app/SocketServer.class
+com/app/recursos/util/GuardarInfo.class
 com/app/LoginServlet.class
 com/app/ClientHandler.class
 com/app/recursosdb/Usuario.class
@@ -18,7 +19,6 @@ com/app/gramaticas/db/LexerDB.class
 com/app/gramaticas/db/parserDB.class
 com/app/recursos/MetodoTrivia.class
 com/app/Main.class
-com/app/recursos/util/LecturaArchivo.class
 com/app/recursosdb/trivia/Trivia.class
 com/app/gramaticas/xson/parserXson.class
 com/app/recursos/MetodoComponente.class

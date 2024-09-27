@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">AppMovilTrivia</string>
+    <string name="navigation_drawer_open">Abrir menú</string>
+    <string name="navigation_drawer_close">Cerrar menú</string>
+    <string name="bienvenido">Bienvenido</string>
+
 </resources>

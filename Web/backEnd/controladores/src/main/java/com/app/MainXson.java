@@ -22,9 +22,9 @@ public class MainXson {
                 "]}\n" +
                 "<fin_solicitud_realizada!>";
 
-                String solicitud2 = "<?xson version=\"1.0\" ?>\n" +
+                String modUsu = "<?xson version=\"1.0\" ?>\n" +
                 "<!realizar_solicitud: \"MODIFICAR_USUARIO\" >\n" +
-                "{ \"DATOS_USUARIO\":[{ \"USUARIO_ANTIGUO\": \"SexZapil\", \"INSTITUCION\": \"MONARCA cRUZ\"\n" +
+                "{ \"DATOS_USUARIO\":[{ \"USUARIO_ANTIGUO\": \"juanitos\", \"INSTITUCION\": \"MONARCA cRUZ\"\n" +
                 "}\n" +
                 "]}\n" +
                 "<fin_solicitud_realizada!>";
@@ -39,8 +39,7 @@ public class MainXson {
                 
 
         ConexionXson conexionXson = new ConexionXson();
-        conexionXson.analizadorGeneral(solicitud1);
-
+        conexionXson.analizadorGeneral(modUsu);
 
     }
     
