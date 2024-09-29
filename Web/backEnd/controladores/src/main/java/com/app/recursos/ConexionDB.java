@@ -13,15 +13,14 @@ import java.util.List;
 import com.app.gramaticas.db.LexerDB;
 import com.app.gramaticas.db.parserDB;
 import com.app.recursosdb.Usuario;
-import com.app.recursosdb.trivia.Componente;
+import com.app.recursosdb.registro.Registro;
 import com.app.recursosdb.trivia.Trivia;
 
 public class ConexionDB {
 
     private ArrayList<Usuario> listaUsuario = new ArrayList<Usuario>();
     private ArrayList<Trivia> listaTriva = new ArrayList<Trivia>();
-    private ArrayList<Componente> listaRegistro = new ArrayList<Componente>();
-   // public ArrayList<> listaRegistro = new ArrayList<Usuario>();
+    private ArrayList<Registro> listRegistro = new ArrayList<Registro>();
 
     /// recopilar los string de los archivos almacenados en la compu
     private String usuario = "";
@@ -110,9 +109,6 @@ public class ConexionDB {
 
         try {
 
-            System.out.println("\n\n\n"+contendio+"\n\n\n" );
-
-
             Reader reader = new StringReader(contendio);
             LexerDB lexer = new LexerDB(reader);
             parserDB parser = new parserDB(lexer);
@@ -122,9 +118,8 @@ public class ConexionDB {
 
             listaUsuario = parser.getUsuarios();
             listaTriva = parser.getTrivias();
+            listRegistro = parser.getRegistros();
 
-
-           // listaRegistro = parser.getComponentes();
 
         } catch (Exception e) {
             System.out.println("Error al analizar el TEXTO DB");
@@ -145,8 +140,14 @@ public class ConexionDB {
     public ArrayList<Trivia> getListaTriva() {
         return listaTriva;
     }
-    public ArrayList<Componente> getListaRegistro() {
-        return listaRegistro;
+
+    public ArrayList<Registro> getListRegistro() {
+        return listRegistro;
     }
 
+    public void setListRegistro(ArrayList<Registro> listRegistro) {
+        this.listRegistro = listRegistro;
+    }
+
+    
 }

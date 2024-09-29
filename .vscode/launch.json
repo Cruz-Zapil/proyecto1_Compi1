@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "MetodoRegistro",
+            "request": "launch",
+            "mainClass": "com.app.recursos.MetodoRegistro",
+            "projectName": "web-app"
+        },
+        {
+            "type": "java",
             "name": "Main",
             "request": "launch",
             "mainClass": "com.app.zzz.Main",

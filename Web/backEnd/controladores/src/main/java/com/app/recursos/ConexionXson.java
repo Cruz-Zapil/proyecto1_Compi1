@@ -2,6 +2,7 @@ package com.app.recursos;
 
 import java.io.Reader;
 import java.io.StringReader;
+import java.util.Map;
 
 import com.app.gramaticas.xson.LexerXson;
 import com.app.gramaticas.xson.parserXson;
@@ -76,14 +77,9 @@ public class ConexionXson {
             // se conecto con el el metodo Usuario
             // verficar si es un nuevo usuario
 
-            // Iterar sobre las entradas (clave-valor)
-            for (String clave : parserXson.getNuevoUsuario().keySet()) {
-                System.out.println("Clave: " + clave);
-                // Obtener todos los valores asociados a la clave
-                for (String valor : parserXson.getNuevoUsuario().get(clave)) {
-                    System.out.println("  Valor: " + valor);
-                }
-            }
+   
+            /* 
+
 
             if (!parserXson.getNuevoUsuario().isEmpty()) {
                 System.out.println("Hay datos de usuario---->");
@@ -94,13 +90,7 @@ public class ConexionXson {
 
             }
 
-            for (String clave : parserXson.getModUsuario().keySet()) {
-                System.out.println("Clave: " + clave);
-                // Obtener todos los valores asociados a la clave
-                for (String valor : parserXson.getModUsuario().get(clave)) {
-                    System.out.println("  Valor: " + valor);
-                }
-            }
+   
 
             // verficar si es un modificar usuario
             if (!parserXson.getModUsuario().isEmpty()) {
@@ -113,14 +103,7 @@ public class ConexionXson {
              
             }
 
-            for (String clave : parserXson.getEliminarUsuario().keySet()) {
-                System.out.println("Clave: " + clave);
-                // Obtener todos los valores asociados a la clave
-                for (String valor : parserXson.getEliminarUsuario().get(clave)) {
-                    System.out.println("  Valor: " + valor);
-                }
-            }
-
+        
             // verficar si es un eliminar usuario
             if (!parserXson.getEliminarUsuario().isEmpty()) {
 
@@ -128,15 +111,6 @@ public class ConexionXson {
                 metodoUsuario.parametros(parserXson.getEliminarUsuario());
                 metodoUsuario.analizarParametros();
                 metodoUsuario.analizarDatosDelete();
-            }
-
-
-            for (String clave : parserXson.getNuevaTrivia().keySet()) {
-                System.out.println("Clave: " + clave);
-                // Obtener todos los valores asociados a la clave
-                for (String valor : parserXson.getNuevaTrivia().get(clave)) {
-                    System.out.println("  Valor: " + valor);
-                }
             }
 
 
@@ -150,14 +124,7 @@ public class ConexionXson {
                 metodoTrivia.crearTrivia();
             }
 
-            for (String clave : parserXson.getModificarTrivia().keySet()) {
-                System.out.println("Clave: " + clave);
-                // Obtener todos los valores asociados a la clave
-                for (String valor : parserXson.getModificarTrivia().get(clave)) {
-                    System.out.println("  Valor: " + valor);
-                }
-            }
-
+   
             // verficar si es una modificar trivia
 
             if (!parserXson.getModificarTrivia().isEmpty()) {
@@ -166,14 +133,6 @@ public class ConexionXson {
 
                 metodoTrivia.parametros(parserXson.getModificarTrivia());
                 metodoTrivia.modificarTrivia();
-            }
-
-            for (String clave : parserXson.getEliminarTrivia().keySet()) {
-                System.out.println("Clave: " + clave);
-                // Obtener todos los valores asociados a la clave
-                for (String valor : parserXson.getEliminarTrivia().get(clave)) {
-                    System.out.println("  Valor: " + valor);
-                }
             }
 
             // verficar si es una eliminar trivia
@@ -185,14 +144,8 @@ public class ConexionXson {
                 metodoTrivia.parametros(parserXson.getEliminarTrivia());
                 metodoTrivia.eliminarTrivia();
             }
-
-            for (String clave : parserXson.getAgregarComponente().keySet()) {
-                System.out.println("Clave: " + clave);
-                // Obtener todos los valores asociados a la clave
-                for (String valor : parserXson.getAgregarComponente().get(clave)) {
-                    System.out.println("  Valor: " + valor);
-                }
-            }
+*/
+     
 
             // verficar si es una agregar componente
 
@@ -200,20 +153,14 @@ public class ConexionXson {
 
                 System.out.println("Hay datos de agregar componente---->");
 
-               // metodoUsuario.parametros(parserXson.getAgregarComponente());
-               // metodoUsuario.analizarParametros();
-               // metodoUsuario.analizarDatosAddComponente();
+                metodoComponente.parametros(parserXson.getAgregarComponente());
+
+                metodoComponente.crearComponente();
 
             }
 
 
-            for (String clave : parserXson.getModificarComponente().keySet()) {
-                System.out.println("Clave: " + clave);
-                // Obtener todos los valores asociados a la clave
-                for (String valor : parserXson.getModificarComponente().get(clave)) {
-                    System.out.println("  Valor: " + valor);
-                }
-            }
+       
 
             // verficar si es una modificar componente
 
@@ -221,32 +168,22 @@ public class ConexionXson {
 
                 System.out.println("Hay datos de modificar componente---->");
 
-               // metodoUsuario.parametros(parserXson.getModificarComponente());
-               // metodoUsuario.analizarParametros();
-               // metodoUsuario.analizarDatosModComponente();
+                metodoComponente.parametros(parserXson.getModificarComponente());
+                metodoComponente.modificarComponente();
+             
             }
 
-            for (String clave : parserXson.getEliminarComponente().keySet()) {
-                System.out.println("Clave: " + clave);
-                // Obtener todos los valores asociados a la clave
-                for (String valor : parserXson.getEliminarComponente().get(clave)) {
-                    System.out.println("  Valor: " + valor);
-                }
-            }
+
 
             // verficar si es una eliminar componente
 
             if (!parserXson.getEliminarComponente().isEmpty()) {
 
                 System.out.println("Hay datos de eliminar componente---->");
+                metodoComponente.parametros(parserXson.getEliminarComponente());
+                metodoComponente.eliminarComponente();
 
-               // metodoUsuario.parametros(parserXson.getEliminarComponente());
-               // metodoUsuario.analizarParametros();
-               // metodoUsuario.analizarDatosDeleteComponente();
             }
-
-
-
 
 
         } catch (Exception e) {

@@ -1,5 +1,6 @@
 package com.app.recursosdb.trivia;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
@@ -41,7 +42,10 @@ public class Trivia {
     }
 
     public void setComponente(Componente componente) {
-        componentes.add(componente);
+      if (componentes == null) {
+        componentes = new ArrayList<>();
+    }
+    componentes.add(componente);
     }
 
     public String getId() {

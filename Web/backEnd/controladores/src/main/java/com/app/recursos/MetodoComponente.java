@@ -51,8 +51,8 @@ public class MetodoComponente {
         exiTextoVisible = parametros.containsKey("TEXTO_VISIBLE");
         exiRespuesta = parametros.containsKey("RESPUESTA");
         exiOpciones = parametros.containsKey("OPCIONES");
-        exiFila = parametros.containsKey("FILA");
-        exiColumna = parametros.containsKey("COLUMNA");
+        exiFila = parametros.containsKey("FILAS");
+        exiColumna = parametros.containsKey("COLUMNAS");
 
         sizeIdTriv = !exiIdTriv || parametros.get("TRIVIA").size() < 2;
         sizeIdComp = !exiIdComp || parametros.get("ID").size() < 2;
@@ -61,8 +61,8 @@ public class MetodoComponente {
         sizeTextoVisible = !exiTextoVisible || parametros.get("TEXTO_VISIBLE").size() < 2;
         sizeRespuesta = !exiRespuesta || parametros.get("RESPUESTA").size() < 2;
         sizeOpciones = !exiOpciones || parametros.get("OPCIONES").size() < 2;
-        sizeFila = !exiFila || parametros.get("FILA").size() < 2;
-        sizeColumna = !exiColumna || parametros.get("COLUMNA").size() < 2;
+        sizeFila = !exiFila || parametros.get("FILAS").size() < 2;
+        sizeColumna = !exiColumna || parametros.get("COLUMNAS").size() < 2;
 
     }
 
@@ -101,6 +101,9 @@ public class MetodoComponente {
                             triviaSelect = trivia;
 
                             triviaExistente = true;
+                            
+                            if (triviaSelect.getComponentes() != null) {
+                            
                             for (Componente component : triviaSelect.getComponentes()) {
 
                                 if (component.getIdComp().equals(idComp)) {
@@ -109,6 +112,9 @@ public class MetodoComponente {
                                     break;
                                 }
                             }
+                        }
+
+
                         }
                     }
 
@@ -119,10 +125,21 @@ public class MetodoComponente {
                             String idTriviaC = parametros.get("TRIVIA").iterator().next();
                             String textoVisible = parametros.get("TEXTO_VISIBLE").iterator().next();
                             String clase = parametros.get("CLASE").iterator().next();
-                            String opciones = parametros.get("OPCIONES").iterator().next();
+                            String opciones = "";
+                            String columna="";
+                            String fila="";
+                            if (exiOpciones){
+                                 opciones = parametros.get("OPCIONES").iterator().next();
+                            }
+
                             String respuesta = parametros.get("RESPUESTA").iterator().next();
-                            String fila = parametros.get("FILA").iterator().next();
-                            String columna = parametros.get("COLUMNA").iterator().next();
+
+                            if (exiFila) {
+                               fila= parametros.get("FILAS").iterator().next();
+                            }
+                            if (exiColumna) {
+                               columna =  parametros.get("COLUMNAS").iterator().next();
+                            }
 
                             if (clase.equals("CHECKBOX") || clase.equals("RADIO") || clase.equals("COMBO")) {
                                 if (!opciones.isEmpty()) {
@@ -143,7 +160,8 @@ public class MetodoComponente {
 
                             } else if (clase.equals("CAMPO_TEXTO") || clase.equals("AREA_TEXTO")) {
 
-                                if (!fila.isEmpty() || !columna.isEmpty()) {
+
+                                if (!fila.isEmpty() && !columna.isEmpty()) {
                                     Componente componente = new Componente(idCompo, idTrivia, clase, textoVisible,
                                             respuesta, null,
                                             Integer.parseInt(fila), Integer.parseInt(columna));
@@ -260,14 +278,14 @@ public class MetodoComponente {
                                 }
 
                                 if (exiFila) {
-                                    String fila = parametros.get("FILA").iterator().next();
+                                    String fila = parametros.get("FILAS").iterator().next();
                                     componenteSelect.setFila(Integer.parseInt(fila));
                                     System.out.println("Fila modificada");
                                     parametrosMod = true;
                                 }
 
                                 if (exiColumna) {
-                                    String columna = parametros.get("COLUMNA").iterator().next();
+                                    String columna = parametros.get("COLUMNAS").iterator().next();
                                     componenteSelect.setColumna(Integer.parseInt(columna));
                                     System.out.println("Columna modificada");
                                     parametrosMod = true;

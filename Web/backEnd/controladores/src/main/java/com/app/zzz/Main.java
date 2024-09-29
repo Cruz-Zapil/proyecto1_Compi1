@@ -52,7 +52,7 @@ public class Main {
 
                 
 
-        conexionXson.analizadorGeneral(nuevoUsu);
+   
 
         System.out.println("Errores: _____________________------ \n\n\n");
 
@@ -63,6 +63,88 @@ public class Main {
 
         }
  
+        String solicitudasdf= "<?xson version=\"1.0\" ?>\n" +
+        "<!realizar_solicitudes>\n" +
+        "<!realizar_solicitud: \"USUARIO_NUEVO\">\n" +
+        "{ \"DATOS_USUARIO\":[{ \n" +
+        "\"USUARIO\": \"Crucito\",\n" +
+        "\"PASSWORD\": \"SD15678\",\n" +
+        "\"NOMBRE\": \"Cruz Quij\",\n" +
+        "\"INSTITUCION\": \"USAC\"\n" +
+        "}]\n" +
+        "}\n" +
+        "<fin_solicitud_realizada!>\n" +
+        "<!realizar_solicitud: \"USUARIO_NUEVO\" >\n" +
+        "{\n" +
+        "\"DATOS_USUARIO\":[{ \n" +
+        "\"USUARIO\": \"HECTORH\",\n" +
+        "\"PASSWORD\": \"SD156A\",\n" +
+        "\"NOMBRE\": \"Herctor fort\",\n" +
+        "\"INSTITUCION\": \"Barca\"\n" +
+        "}]\n" +
+        "}\n" +
+        "<fin_solicitud_realizada!>\n" +
+        "<!fin_solicitudes_realizada>";
+
+
+
+        String triviaComponet= "<?xson version=\"1.0\" ?>\n" +
+        "<!realizar_solicitudes>\n" +
+        "<!realizar_solicitud: \"NUEVA_TRIVIA\">\n" +
+        "{ \"PARAMETROS_TRIVIA\":[{ \n" +
+        "\"ID_TRIVIA\": \"_trivUsac\",\n" +
+        "\"TIEMPO_PREGUNTA\": 56,\n" +
+        "\"NOMBRE\": \"Encueta usac\",\n" +
+        "\"TEMA\": \"USAC\"\n" +
+        "}]\n" +
+        "}\n" +
+        "<fin_solicitud_realizada!>\n" +
+        "<!realizar_solicitud: \"USUARIO_NUEVO\" >\n" +
+        "{\n" +
+        "\"DATOS_USUARIO\":[{ \n" +
+        "\"USUARIO\": \"auxiPreba\",\n" +
+        "\"PASSWORD\": \"SD156A\",\n" +
+        "\"NOMBRE\": \"Herctor fort\",\n" +
+        "\"INSTITUCION\": \"Barca\"\n" +
+        "}]\n" +
+        "}\n" +
+        "<fin_solicitud_realizada!>\n" +
+        "<!realizar_solicitud: \"AGREGAR_COMPONENTE\" >\n" +
+        "{\n" +
+        "\"PARAMETROS_COMPONENTE\":[{ \n" +
+        "\"ID\": \"_auxi_Preba\",\n" +
+        "\"TRIVIA\": \"_trivUsac\",\n" +
+        "\"CLASE\": \"CAMPO_TEXTO\",\n" +
+        "\"TEXTO_VISIBLE\": \"año de de la usac\",\n"+
+        "\"RESPUESTA\": \"346 años\",\n" +
+        "\"FILAS\": 23,\n" +
+        "\"COLUMNAS\": 10 \n" +
+        "}]\n" +
+        "}\n" +
+        "<fin_solicitud_realizada!>\n" +
+
+        "<!fin_solicitudes_realizada>";
+        
+
+        String componet= "<?xson version=\"1.0\" ?>\n" +
+        "<!realizar_solicitudes>\n" +
+        "<!realizar_solicitud: \"MODIFICAR_COMPONENTE\" >\n" +
+        "{\n" +
+        "\"PARAMETROS_COMPONENTE\":[{ \n" +
+        "\"ID\": \"_auxi_Preba\",\n" +
+        "\"TRIVIA\": \"_trivUsac\",\n" +
+        "\"CLASE\": \"CAMPO_TEXTO\",\n" +
+        "\"TEXTO_VISIBLE\": \"Funcacion de la Usac?\",\n"+
+        "\"RESPUESTA\": \"1800\",\n" +
+        "\"FILAS\": 23,\n" +
+        "\"COLUMNAS\": 10 \n" +
+        "}]\n" +
+        "}\n" +
+        "<fin_solicitud_realizada!>\n" +
+        "<!fin_solicitudes_realizada>";
+        
+        conexionXson.analizadorGeneral(componet);
+
 
 
     }

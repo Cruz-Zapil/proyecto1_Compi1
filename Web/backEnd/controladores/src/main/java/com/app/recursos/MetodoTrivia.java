@@ -1,11 +1,9 @@
 package com.app.recursos;
 
-import java.security.Guard;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import com.app.recursos.util.GuardarInfo;
-import com.app.recursosdb.trivia.Componente;
 import com.app.recursosdb.trivia.Trivia;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
