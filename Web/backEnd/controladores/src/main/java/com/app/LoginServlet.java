@@ -18,33 +18,36 @@ public class LoginServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+
         // Leer el texto enviado desde el formulario
         String textoIngresado = request.getParameter("textoIngresado");
-     
+
         // Verificar si se ha recibido el valor o es null
         if (!textoIngresado.isEmpty()) {
-            
+
             try {
                 // usar el analizador Xson
                 ConexionXson conexionXson = new ConexionXson();
                 String resultado = conexionXson.analizarLogin(textoIngresado);
-                
 
                 if ("Usuario logeado".equals(resultado)) {
                     // Redirigir a welcome.jsp
-                    String nombreUsuario = conexionXson.getNombreUsuario();
+                    String userName = conexionXson.getNombreUsuario();
+                    String idUser  = conexionXson.getIdUser();
 
                     /// almacenar el nombre de usuario en la sesion
                     HttpSession session = request.getSession();
-                    session.setAttribute("nombreUsuario", nombreUsuario);
+                    session.setAttribute("nombreUsuario", userName);
+                    session.setAttribute("idUser", idUser);
                     response.sendRedirect("welcome.jsp");
                 } else {
-                    // Si el usuario no está autenticado, redirige de nuevo al formulario con un mensaje
-                    response.sendRedirect("index.jsp?message=Usuario no autenticado" );
-                   
+                    // Si el usuario no está autenticado, redirige de nuevo al formulario con un
+                    // mensaje
+                    response.sendRedirect("index.jsp?message=Usuario no autenticado");
+
                 }
 
-                 return;
+                return;
 
             } catch (Exception e) {
 
@@ -54,8 +57,8 @@ public class LoginServlet extends HttpServlet {
 
         } else {
             // Respuesta al cliente indicando que no se recibió el texto
-            response.sendRedirect("index.jsp?message=Hubo un error al enviar el texto" );
-                   
+            response.sendRedirect("index.jsp?message=Hubo un error al enviar el texto");
+
         }
 
     }

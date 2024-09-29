@@ -5,11 +5,18 @@ body {
 }
 
 
-#demo {
-  height: 30%; /* Altura inicial */
-  resize: none; /* Evitar el ajuste predeterminado del navegador */
-  transition: height 0.2s ease; /* Animación suave */
-  touch-action: none; /* Desactiva otros eventos de desplazamiento mientras arrastras */
+/* para el offcanvas  */
+/* Permite redimensionar el offcanvas-bottom */
+.offcanvas-bottom {
+  height: 30%; /* Altura inicial del offcanvas */
+  max-height: 80%; /* Máxima altura permitida */
+  overflow-y: auto; /* Añadir scroll si es necesario */
+  resize: vertical; /* Permite redimensionar verticalmente */
+}
+
+/* Agregar un estilo a la tabla para que se ajuste */
+#erroresTable {
+  width: 100%;
 }
 
 /* Agregar un controlador visual de arrastre en el borde superior */
@@ -79,8 +86,9 @@ textarea {
   overflow: hidden;
 }
 
-/* Estilos para el botón de alternar */
-/* Estilo por defecto del link del menú */
+
+
+
 .nav-link {
   color: #000; /* Color original */
   transition: background-color 0.3s ease, color 0.3s ease; /* Transición suave */

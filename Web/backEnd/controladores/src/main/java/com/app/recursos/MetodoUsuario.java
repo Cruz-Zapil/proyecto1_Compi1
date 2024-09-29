@@ -16,6 +16,7 @@ public class MetodoUsuario {
     private Multimap<String, String> loginUsuario = ArrayListMultimap.create();
     private String mensaje = "";
     private String nombreUsu="";
+    private String idUser="";
 
     private boolean existeUsuarioNuevo;
     private boolean existeUsuarioAntiguo;
@@ -44,6 +45,10 @@ public class MetodoUsuario {
     }
     public String getNombreUsu() {
         return nombreUsu;
+    }
+
+    public String getIdUser() {
+        return idUser;
     }
 
     public void analizarParametros() {
@@ -383,6 +388,7 @@ public class MetodoUsuario {
                         if (usuario.getUsuario().equals(usu) && usuario.getPassword().equals(pass)) {
                             System.out.println("Usuario logeado");
                             nombreUsu=usuario.getNombre();
+                            idUser=usuario.getUsuario();
                             mensaje += "   <Usuario logeado>\n";
                             loggin = true;
                             break;

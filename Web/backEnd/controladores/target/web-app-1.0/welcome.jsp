@@ -23,19 +23,19 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#solicitud" onclick="mostrarSeccion('solicitud')">Realizar solicitudes</a>
+                        <a class="nav-link" href="?seccion=solicitud">Realizar solicitudes</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#demo">Realizar consultas</a>
+                        <a class="nav-link" href="?seccion=consulta">Realizar consultas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#demo">Ver trivias</a>
+                        <a class="nav-link" href="?seccion=verTrivia">Ver trivias</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#demo">Exportar trivias</a>
+                        <a class="nav-link" href="?seccion=export">Exportar trivias</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#demo">Importar trivias</a>
+                        <a class="nav-link" href="?seccion=import">Importar trivias</a>
                     </li>
                 </ul>
                 <form class="d-flex" action="LogoutServlet" method="post">
@@ -61,36 +61,34 @@
             </h1>
         </div>
 
-        <!-- Sección de Solicitudes (Oculta por defecto) -->
-        <div id="solicitud" class="hidden mt-5">
-            <h3>Realizar Solicitud</h3>
-            <form action="solicitud" method="GET">
-                <div class="code-container-container">
-                    <div class="code-container">
-                        <div id="lineNumbers" class="line-numbers-container">
-                            <pre id="lineNumbersContent" class="line-numbers">1</pre>
-                        </div>
-                        <textarea id="codeArea" name="textoIngresado" class="form-control" 
-                                  oninput="updateLineNumbers()" onscroll="syncScroll()" 
-                                  onkeyup="updateCursorPosition(event)" 
-                                  onclick="updateCursorPosition(event)">
-                        </textarea>
-                    </div>
-                </div>
+        <div id="contenido-dinamico" class="mt-5">
 
-                <div class="row mt-3">
-                    <div class="col-md-12">
-                        <p id="cursorPosition">Línea: 1, Columna: 1</p>
-                    </div>
-                </div>
+            <div id="contenido-dinamico" class="mt-5">
+                <%
+                    String seccion = request.getParameter("seccion");
+                    if (seccion != null) {
+                        if (seccion.equals("solicitud")) {
+                            %><jsp:include page="solicitud.jsp" /> <%
+                        } else if (seccion.equals("consulta")) {
+                            %><jsp:include page="consulta.jsp" /> <%
+                        } else if (seccion.equals("verTrivia")) {
+                            %><jsp:include page="verTrivias.jsp" /> <%
+                        }else if (seccion.equals("export")) {
+                            %><jsp:include page="export.jsp" /> <%
+                        }else if (seccion.equals("import")) {
+                            %><jsp:include page="import.jsp" /> <%
+                        }
+                    }
+                %>
+            </div>
 
-                <div class="row mt-3">
-                    <div class="col-md-12">
-                        <button class="btn btn-primary" type="submit">Enviar Solicitud</button>
-                    </div>
-                </div>
-            </form>
+            <p>
+            <p>
+            </p>
+            </p>
+
         </div>
+
     </div>
 
     <script src="js/welcome.js"></script>

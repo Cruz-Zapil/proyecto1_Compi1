@@ -15,6 +15,7 @@ public class ConexionXson {
     private MetodoComponente metodoComponente = new MetodoComponente();
     Multimap<String, String> datos = ArrayListMultimap.create();
     private String nombreUsuario;
+    private String idUser;
     public String mensaje ="";
 
 
@@ -40,7 +41,7 @@ public class ConexionXson {
             String result = metodoUsuario.loginUsuario(datos);
             nombreUsuario = metodoUsuario.getNombreUsu();
             mensaje = metodoUsuario.getRespuesta();
-
+            idUser = metodoUsuario.getIdUser();
 
 
             return result;
@@ -55,6 +56,10 @@ public class ConexionXson {
 
     public String getNombreUsuario() {
         return nombreUsuario;
+    }
+
+    public String getIdUser() {
+        return idUser;
     }
 
     public void analizadorGeneral(String textoIngresado) {

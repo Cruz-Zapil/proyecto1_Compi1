@@ -20,15 +20,6 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <!-- Corregido el enlace al servlet -->
-                        <a class="nav-link active" aria-current="page" href="actualizarDatos">Actualizar datos</a>
-                    </li>
-                </ul>
-            </div>
         </div>
     </nav>
 
@@ -86,7 +77,6 @@
         var textarea = document.getElementById('codeArea');
         textarea.value = encodeURIComponent(textarea.value);
     }
-
 
         document.querySelector("form").addEventListener("submit", function(event) {
             const codeArea = document.getElementById("codeArea").value.trim();

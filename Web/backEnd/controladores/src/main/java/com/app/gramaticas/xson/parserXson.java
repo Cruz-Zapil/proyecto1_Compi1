@@ -8,6 +8,8 @@ package com.app.gramaticas.xson;
 
 import java_cup.runtime.*;
 import com.google.common.collect.Multimap;
+import com.app.gramaticas.Errorx;
+import com.app.gramaticas.ReporteError;
 import com.google.common.collect.ArrayListMultimap;
 
 import java_cup.runtime.XMLElement;
@@ -512,7 +514,9 @@ public class parserXson extends java_cup.runtime.lr_parser {
         System.out.println("Error Sintáctico en la Línea " + (s.left) +
         " Columna "+s.right+ ". No se esperaba este componente: " +s.value+"."); 
 
-       // PanelReporte.agregarError(new Errores("Sintactico",String.valueOf(s.value),"no se esperaba: "+String.valueOf( s.value), s.left, s.right));
+      ReporteError.agregarError(new Errorx("Sintactico",String.valueOf(s.value),"no se esperaba: "+String.valueOf( s.value), s.left, s.right));
+
+   
     } 
     /**
      * Método al que se llama cuando se identifica un error sintáctico en el que 
@@ -521,6 +525,9 @@ public class parserXson extends java_cup.runtime.lr_parser {
     public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{ 
         System.out.println("Error síntactico irrecuperable en la Línea " + 
         (s.left)+ " Columna "+s.right+". Componente " + s.value + " no reconocido.");
+
+        ReporteError.agregarError(new Errorx("Sintactico irrecuperable",String.valueOf(s.value),"no reconocido", s.left, s.right));
+
 
     } 
         //// DATOS RECOPILADOS: 
@@ -1247,8 +1254,10 @@ class CUP$parser$actions {
 		int idsleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
 		int idsright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		Object ids = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+
 		 eliminarTrivia.put("ID_TRIVIA", (String)ids );
-              CUP$parser$result = parser.getSymbolFactory().newSymbol("par_clave_elimtrivia",21, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-6)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
+             
+     CUP$parser$result = parser.getSymbolFactory().newSymbol("par_clave_elimtrivia",21, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-6)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
 
