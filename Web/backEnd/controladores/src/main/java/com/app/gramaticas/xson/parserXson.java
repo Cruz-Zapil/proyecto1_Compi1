@@ -8,7 +8,7 @@ package com.app.gramaticas.xson;
 import java_cup.runtime.*;
 import com.google.common.collect.Multimap;
 import com.app.gramaticas.Errorx;
-import com.app.gramaticas.ReporteError;
+import com.app.gramaticas.Reporte;
 import com.google.common.collect.ArrayListMultimap;
 import com.app.recursos.MetodoTrivia;
 import com.app.recursos.MetodoUsuario;
@@ -575,7 +575,7 @@ public class parserXson extends java_cup.runtime.lr_parser {
         System.out.println("Error Sintáctico en la Línea " + (s.left) +
         " Columna "+s.right+ ". No se esperaba este componente: " +s.value+"."); 
 
-       ReporteError.agregarError(new Errorx("Sintactico",String.valueOf(s.value),"no se esperaba: "+String.valueOf( s.value), s.left, s.right));
+       Reporte.agregarError(new Errorx("Sintactico",String.valueOf(s.value),"no se esperaba: "+String.valueOf( s.value), s.left, s.right));
     
     } 
     /**
@@ -586,7 +586,7 @@ public class parserXson extends java_cup.runtime.lr_parser {
         System.out.println("Error síntactico irrecuperable en la Línea " + 
         (s.left)+ " Columna "+s.right+". Componente " + s.value + " no reconocido.");
 
-        ReporteError.agregarError(new Errorx("Sintactico irrecuperable",String.valueOf(s.value),"no reconocido", s.left, s.right));
+        Reporte.agregarError(new Errorx("Sintactico irrecuperable",String.valueOf(s.value),"no reconocido", s.left, s.right));
 
 
     } 

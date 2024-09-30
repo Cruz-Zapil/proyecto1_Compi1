@@ -1,7 +1,7 @@
 package com.app.zzz;
 
 import com.app.gramaticas.Errorx;
-import com.app.gramaticas.ReporteError;
+import com.app.gramaticas.Reporte;
 import com.app.recursos.ConexionXson;
 
 public class Main {
@@ -49,15 +49,14 @@ public class Main {
                 "}" +
                 "<fin_solicitud_realizada!>";
 
-
-                
+                conexionXson.analizarLogin(login);
 
    
 
         System.out.println("Errores: _____________________------ \n\n\n");
 
         
-        for (Errorx error : ReporteError.getListaErrores()) {
+        for (Errorx error : Reporte.getListaErrores()) {
                 
                 System.out.println(error.toString());
 
@@ -143,7 +142,7 @@ public class Main {
         "<fin_solicitud_realizada!>\n" +
         "<!fin_solicitudes_realizada>";
         
-        conexionXson.analizadorGeneral(componet);
+  //      conexionXson.analizadorGeneral(componet);
 
 
 

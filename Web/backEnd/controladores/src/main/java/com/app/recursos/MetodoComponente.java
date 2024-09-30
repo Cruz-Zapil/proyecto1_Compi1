@@ -1,5 +1,7 @@
 package com.app.recursos;
 
+import com.app.gramaticas.Errorx;
+import com.app.gramaticas.Reporte;
 import com.app.recursos.util.GuardarInfo;
 import com.app.recursosdb.trivia.Componente;
 import com.app.recursosdb.trivia.Trivia;
@@ -156,6 +158,9 @@ public class MetodoComponente {
 
                                 } else {
                                     System.out.println("Error Sintactico: El componente debe tener opciones");
+                                    Errorx error = new Errorx("Sintáctico", "OPCIONES",
+                                            "El componente debe tener opciones", 0, 0);
+                                    Reporte.agregarError(error);
                                 }
 
                             } else if (clase.equals("CAMPO_TEXTO") || clase.equals("AREA_TEXTO")) {
@@ -174,6 +179,10 @@ public class MetodoComponente {
 
                                 } else {
                                     System.out.println("Error Sintactico: El componente debe tener fila y columna");
+                                    Errorx error = new Errorx("Sintáctico", "FILA-COLUMNA",
+                                            "El componente debe tener fila y columna", 0, 0);
+                                    Reporte.agregarError(error);
+
                                 }
                             }
 
@@ -186,14 +195,64 @@ public class MetodoComponente {
                 } else {
                     if (!sizeIdComp) {
                         System.out.println("Error Semantico: El ID del componente ya fue declarado");
+                        Errorx error = new Errorx("Semántico", "ID_COMPONENTE", "ID_COMPONENTE ya fue declarado", 0, 0);
+                        Reporte.agregarError(error);
                     }
 
-                    /// agregar mas errores
+                    if (!sizeIdTriv) {
+                        System.out.println("Error Semantico: El ID de la trivia ya  fue declarado");
+                        Errorx error = new Errorx("Semántico", "ID_TRIVIA", "ID_TRIVIA ya fue declarado", 0, 0);
+                        Reporte.agregarError(error);
+                    }
+
+                    if (!sizeTipoComp) {
+                        System.out.println("Error Semantico: El tipo de componente ya fue declarado");
+                        Errorx error = new Errorx("Semántico", "TIPO_COMPONENTE", "TIPO_COMPONENTE ya fue declarado", 0, 0);
+                        Reporte.agregarError(error);
+                    }
+
+                    if (!sizeTextoVisible) {
+                        System.out.println("Error Semantico: El texto visible ya fue declarado");
+                        Errorx error = new Errorx("Semántico", "TEXTO_VISIBLE", "TEXTO_VISIBLE ya fue declarado", 0, 0);
+                        Reporte.agregarError(error);
+                    }
+
+                    if (!sizeRespuesta) {
+                        System.out.println("Error Semantico: La respuesta ya fue declarado");
+                        Errorx error = new Errorx("Semántico", "RESPUESTA", "RESPUESTA ya fue declarado", 0, 0);
+                        Reporte.agregarError(error);
+                    }
+
+                    
 
                 }
             } else {
 
-                /// agregar mas errores
+                if (!exiIdTriv) {
+                    System.out.println("Error Sintactico: Se esperaba el ID de la trivia");
+                    Errorx error = new Errorx("Sintáctico", "ID_TRIVIA", "ID_TRIVIA no fue declarado", 0, 0);
+                    Reporte.agregarError(error);
+                }
+                if (!exiIdComp) {
+                    System.out.println("Error sintaico: Se esperaba el ID del componente");
+                    Errorx error = new Errorx("Sintáctico", "ID_COMPONENTE", "ID_COMPONENTE no fue declarado", 0, 0);
+                    Reporte.agregarError(error);
+                }
+                if (!exiTipoComp) {
+                    System.out.println("Error Sintactico: Se esperaba el tipo de componente");
+                    Errorx error = new Errorx("Sintáctico", "TIPO_COMPONENTE", "TIPO_COMPONENTE no fue declarado", 0, 0);
+                    Reporte.agregarError(error);
+                }
+                if (!exiTextoVisible) {
+                    System.out.println("Error Sintactico: Se esperaba el texto visible");
+                    Errorx error = new Errorx("Sintáctico", "TEXTO_VISIBLE", "TEXTO_VISIBLE no fue declarado", 0, 0);
+                    Reporte.agregarError(error);
+                }
+                if (!exiRespuesta) {
+                    System.out.println("Error Sintactico: Se esperaba la respuesta");
+                    Errorx error = new Errorx("Sintáctico", "RESPUESTA", "RESPUESTA no fue declarado", 0, 0);
+                    Reporte.agregarError(error);
+                }
 
             }
         }
@@ -301,6 +360,9 @@ public class MetodoComponente {
 
                                 } else {
                                     System.out.println("Error Sintactico: No hay parametros para modificar");
+                                    Errorx error = new Errorx("Sintáctico", "PARAMETROS",
+                                            "No hay parametros para modificar", 0, 0);
+                                    Reporte.agregarError(error);
                                 }
 
                             } else {
@@ -322,9 +384,13 @@ public class MetodoComponente {
 
                     if (!sizeIdComp) {
                         System.out.println("Error Semantico: El ID del componente ya fue declarado");
+                        Errorx error = new Errorx("Semántico", "ID_COMPONENTE", "ID_COMPONENTE ya fue declarado", 0, 0);
+                        Reporte.agregarError(error);
                     }
                     if (!sizeIdTriv) {
                         System.out.println("Error Semantico: El ID de la trivia ya  fue declarado");
+                        Errorx error = new Errorx("Semántico", "ID_TRIVIA", "ID_TRIVIA ya fue declarado", 0, 0);
+                        Reporte.agregarError(error);
                     }
                 }
             } else {
@@ -332,9 +398,13 @@ public class MetodoComponente {
 
                 if (!exiIdTriv) {
                     System.out.println("Error Sintacico: Se esperaba el ID de la trivia");
+                    Errorx error = new Errorx("Sintáctico", "ID_TRIVIA", "ID_TRIVIA no fue declarado", 0, 0);
+                    Reporte.agregarError(error);
                 }
                 if (!exiIdComp) {
                     System.out.println("Error sintaico: Se esperaba el ID del componente");
+                    Errorx error = new Errorx("Sintáctico", "ID_COMPONENTE", "ID_COMPONENTE no fue declarado", 0, 0);
+                    Reporte.agregarError(error);
                 }
 
             }
@@ -394,18 +464,26 @@ public class MetodoComponente {
 
                     if (!sizeIdComp) {
                         System.out.println("Error Semantico: El ID del componente ya fue declarado");
+                        Errorx error = new Errorx("Semántico", "ID_COMPONENTE", "ID_COMPONENTE ya fue declarado", 0, 0);
+                        Reporte.agregarError(error);
                     }
                     if (!sizeIdTriv) {
                         System.out.println("Error Semantico: El ID de la trivia ya  fue declarado");
+                        Errorx error = new Errorx("Semántico", "ID_TRIVIA", "ID_TRIVIA ya fue declarado", 0, 0);
+                        Reporte.agregarError(error);
                     }
 
                 }
             } else {
                 if (!exiIdTriv) {
-                    System.out.println("Error Semantico: El ID de la trivia ya fue declarado");
+                    System.out.println("Error Sintactico: El ID de la trivia ya fue declarado");
+                    Errorx error = new Errorx("Sintáctico", "ID_TRIVIA", "ID_TRIVIA no fue declarado", 0, 0);
+                    Reporte.agregarError(error);
                 }
                 if (!exiIdComp) {
-                    System.out.println("Error Semantico: El ID componente ya fue declarado");
+                    System.out.println("Error Sintactico: El ID componente ya fue declarado");
+                    Errorx error = new Errorx("Sintáctico", "ID_COMPONENTE", "ID no fue declarado", 0, 0);
+                    Reporte.agregarError(error);
                 }
             }
         } else {

@@ -14,6 +14,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import model.UserSession
 import socket.SocketLoggin
 
 class MainActivity : AppCompatActivity() {
@@ -66,6 +67,11 @@ class MainActivity : AppCompatActivity() {
                 withContext(Dispatchers.Main) {
 
                     if (partes[0] == "Usuario logeado") { // Cambia esto por tu condición
+
+                        if (partes.size>2){
+                            UserSession.username = partes[2]
+                        }
+
                         val ventana = Intent(this@MainActivity, HomeActivity::class.java)
                         ventana.putExtra("username", partes[1]) // Mensaje para pasar a la nueva actividad
                         startActivity(ventana)

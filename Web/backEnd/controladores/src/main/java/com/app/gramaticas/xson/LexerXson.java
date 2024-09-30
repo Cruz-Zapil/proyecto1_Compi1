@@ -3,7 +3,7 @@ package com.app.gramaticas.xson;
 import java_cup.runtime.Symbol;
 
 import com.app.gramaticas.Errorx;
-import com.app.gramaticas.ReporteError;
+import com.app.gramaticas.Reporte;
 
 /* Archivo Lexer.flex */
 
@@ -1218,7 +1218,7 @@ public class LexerXson implements java_cup.runtime.Scanner {
             longitudToken = yytext().length();
             yychar += longitudToken;
 
-            ReporteError.agregarError(
+            Reporte.agregarError(
                 new Errorx("Lexico", yytext(), "Caracter no reconocido" + yytext(), yyline, (int) yychar));
           }
           // fall through

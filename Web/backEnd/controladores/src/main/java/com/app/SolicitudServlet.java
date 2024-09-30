@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.app.gramaticas.Errorx;
-import com.app.gramaticas.ReporteError;
+import com.app.gramaticas.Reporte;
 import com.app.recursos.ConexionXson;
 import com.google.gson.Gson;
 
@@ -38,7 +38,7 @@ public class SolicitudServlet extends HttpServlet {
                 // Procesar el texto recibido
                 ConexionXson conexionXson = new ConexionXson();
                 conexionXson.analizadorGeneral(textoIngresado);
-                listaErrores =  ReporteError.getListaErrores();
+                listaErrores =  Reporte.getListaErrores();
                 
                 
 

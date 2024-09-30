@@ -5,6 +5,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.app.gramaticas.Errorx;
+import com.app.gramaticas.Reporte;
 import com.app.recursos.util.GuardarInfo;
 import com.app.recursosdb.Usuario;
 import com.google.common.collect.ArrayListMultimap;
@@ -161,38 +163,57 @@ public class MetodoUsuario {
                                 la.enListarUsu(db.getListaUsuario());
                                 la.agregarUsuario(null);
 
+                                Reporte.agregarMensaje("MODIFICAR_USUARIO", "Usuario modificado correctamente");
+
                             } else {
                                 System.out.println("Error sintactico: se esperaba al menos un parametro a modificar");
+                                Errorx error = new Errorx("Sintáctico", "Parametros", "Se esperaba al menos un parametro a modificar", 0, 0);
+                                Reporte.agregarError(error);
                             }
 
                         } else {
                             if (!sizeUsuarioNuevo) {
                                 // Error semántico
                                 System.out.println("Error Semántico: usuario nuevo ya fue declarado");
+                                Errorx error = new Errorx("Semántico", "USUARIO_NUEVO", "Parametro  ya fue Declarado", 0, 0);
+                                Reporte.agregarError(error);
                             }
                             if (!sizePasswordNuevo) {
                                 // Error semántico
                                 System.out.println("Error Semántico: password nuevo ya fue declarado");
+                                Errorx error = new Errorx("Semántico", "PASSWORD_NUEVO", "Parametro ya fue Declarado", 0, 0);
+                                Reporte.agregarError(error);
                             }
                             if (!sizeInstitucion) {
                                 // Error semántico
                                 System.out.println("Error Semántico: institucion ya fue declarado");
+                                Errorx error = new Errorx("Semántico", "INSTITUCION", "Parametro  ya fue Declarado", 0, 0);
+                                Reporte.agregarError(error);
+
                             }
                             if (!sizeFechaModificacion) {
                                 // Error semántico
                                 System.out.println("Error Semántico: fecha de modificacion ya fue declarado");
+                                Errorx error = new Errorx("Semántico", "FECHA_MODIFICACION", "Parametro ya fue Declarado", 0, 0);
+                                Reporte.agregarError(error);
                             }
                         }
                     } else {
                         System.out.println("Usuario no existe");
+                        Reporte.agregarMensaje("MODIFICAR_USUARIO", "Usuario no existe");
                     }
 
                 } else {
                     System.out.println("Error Semántico: usuario antiguo ya fue declarado");
+                    Errorx error = new Errorx("Semántico", "USUARIO_ANTIGUO", "Parametro ya fue Declarado", 0, 0);
+                    Reporte.agregarError(error);
                 }
 
             } else {
                 System.out.println("No hay usuarios en la base de datos");
+
+                Reporte.agregarMensaje("MODIFICAR_USUARIO", "No hay usuarios en la base de datos");
+                
             }
         }
     }
@@ -215,7 +236,7 @@ public class MetodoUsuario {
                         if (usuario.getUsuario().equals(usu)) {
                             db.getListaUsuario().remove(usuario);
                             usuarioExistente = true;
-                            System.out.println("Usuario eliminado");
+                            
                             break;
                         }
                     }
@@ -223,20 +244,26 @@ public class MetodoUsuario {
                         GuardarInfo la = new GuardarInfo();
                         la.enListarUsu(db.getListaUsuario());
                         la.agregarUsuario(null);
-
+                        Reporte.agregarMensaje("ELIMINAR_USUARIO", "Usuario eliminado correctamente");
                     } else {
                         System.out.println("Usuario no existe en la base de datos");
+                        Reporte.agregarMensaje("ELIMINAR_USUARIO", "Usuario no existe en la base de datos");
                     }
                 } else {
-                    System.out.println("Error Semántico: usuario ya fue declarado");
+                    Errorx error = new Errorx("Semantico", "USUARIO", "Parametro ya fue Declarado", 0, 0);
+                    Reporte.agregarError(error);
                 }
 
             } else {
                 // Error sintáctico
-                System.out.println("Error Sintáctico: usuario no fue declarado");
+                Errorx error = new Errorx("Sintactico", "USUARIO", "Parametro no fue Declarado", 0, 0);
+                Reporte.agregarError(error);
             }
         } else {
             System.out.println("No hay usuarios en la base de datos");
+
+            Reporte.agregarMensaje("ELIMINAR_USUARIO", "No hay usuarios en la base de datos");
+
         }
     }
 
@@ -277,6 +304,8 @@ public class MetodoUsuario {
 
                         if (usuario.getUsuario().equals(usu)) {
                             System.out.println("Usuario ya existe cambia de usuario");
+                            Reporte.agregarMensaje("NUEVO_USUARIO", "Usuario ya existe cambia de usuario");
+
                             usuarioExistente = true;
                             break;
                         }
@@ -296,9 +325,12 @@ public class MetodoUsuario {
                         GuardarInfo la = new GuardarInfo();
                         la.enListarUsu(db.getListaUsuario());
                         la.agregarUsuario(listaUsuario);
+                        Reporte.agregarMensaje("NUEVO_USUARIO", "Usuario agregado correctamente");
 
                         }else{
                             System.err.println("Error semantico: faltan parametros obligatorios");
+                            Errorx error = new Errorx("Semántico", "Parametros", "Faltan parametros obligatorios", 0, 0);
+                            Reporte.agregarError(error);
                         }
 
                     }
@@ -307,51 +339,72 @@ public class MetodoUsuario {
                     if (!sizeUsuario) {
                         // Error semántico
                         System.out.println("Error Semántico: usuario ya fue declarado");
+                        Errorx error = new Errorx("Semántico", "Usuario", "Parametro Usuario ya fue Declarado", 0, 0);
+                        Reporte.agregarError(error);
                     }
 
                     if (!sizePassword) {
                         // Error semántico
                         System.out.println("Error Semántico: password ya fue declarado");
+                        Errorx error = new Errorx("Semántico", "Password", "Parametro Password ya fue Declarado", 0, 0);
+                        Reporte.agregarError(error);
                     }
 
                     if (!sizeNombre) {
                         // Error semántico
                         System.out.println("Error Semántico: nombre ya fue declarado");
+                        Errorx error = new Errorx("Semántico", "Nombre", "Parametro Nombre ya fue Declarado", 0, 0);
+                        Reporte.agregarError(error);
                     }
 
                     if (!sizeInstitucion) {
                         // Error semántico
                         System.out.println("Error Semántico: institucion ya fue declarado");
+                        Errorx error = new Errorx("Semántico", "Institucion", "Parametro Institucion ya fue Declarado", 0, 0);
+                        Reporte.agregarError(error);
                     }
 
                     if (!sizeFechaCreacion) {
                         // Error semántico
                         System.out.println("Error Semántico: fecha de creacion ya fue declarado");
+                        Errorx error = new Errorx("Semántico", "Fecha de Creacion", "Parametro Fecha de Creacion ya fue Declarado", 0, 0);
+                        Reporte.agregarError(error);
                     }
                 }
             } else {
                 if (!existeUsuario) {
                     // Error sintáctico
                     System.out.println("Error Sintáctico: usuario no fue declarado");
+                    Errorx error = new Errorx("Sintáctico", "Usuario", "Parametro Usuario no fue Declarado", 0, 0);
+                    Reporte.agregarError(error);
                 }
 
                 if (!existePassword) {
                     // Error sintáctico
                     System.out.println("Error Sintáctico: password no fue declarado");
+                    Errorx error = new Errorx("Sintáctico", "Password", "Parametro Password no fue Declarado", 0, 0);
+                    Reporte.agregarError(error);
                 }
 
                 if (!existeNombre) {
                     // Error sintáctico
                     System.out.println("Error Sintáctico: nombre no fue declarado");
+                    Errorx error = new Errorx("Sintáctico", "Nombre", "Parametro Nombre no fue Declarado", 0, 0);
+                    Reporte.agregarError(error);
                 }
 
                 if (!existeInstitucion) {
                     // Error sintáctico
                     System.out.println("Error Sintáctico: institucion no fue declarado");
+                    Errorx error = new Errorx("Sintáctico", "Institucion", "Parametro Institucion no fue Declarado", 0, 0);
+                    Reporte.agregarError(error);
                 }
             }
         } else {
             System.out.println("No hay usuarios en la base de datos");
+
+            Reporte.agregarMensaje("NUEVO_USUARIO", "No hay usuarios en la base de datos");
+
         }
 
     }

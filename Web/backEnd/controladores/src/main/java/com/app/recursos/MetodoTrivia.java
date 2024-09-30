@@ -3,6 +3,10 @@ package com.app.recursos;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import javax.servlet.http.HttpSession;
+
+import com.app.gramaticas.Errorx;
+import com.app.gramaticas.Reporte;
 import com.app.recursos.util.GuardarInfo;
 import com.app.recursosdb.trivia.Trivia;
 import com.google.common.collect.ArrayListMultimap;
@@ -60,19 +64,17 @@ public class MetodoTrivia {
         analizarParametros();
         if (!db.getListaTriva().isEmpty()) {
 
-
             boolean triviaExistente = false;
 
             if (exiIdTrivia && exiTmpPregunta && exiNomTrivia && exiTemaTrivia) {
 
-                if (sizeIdTrivia && sizeTmpPregunta && sizeNomTrivia && sizeTemaTrivia && sizeUsuCreacion
-                        && sizeFecCreacion) {
+                if (sizeIdTrivia && sizeTmpPregunta && sizeNomTrivia && sizeTemaTrivia && sizeUsuCreacion) {
 
                     String id = parametros.get("ID_TRIVIA").iterator().next();
                     String nombre = parametros.get("NOMBRE").iterator().next();
                     int tmpPregunta = Integer.parseInt(parametros.get("TIEMPO_PREGUNTA").iterator().next());
                     String tema = parametros.get("TEMA").iterator().next();
-                    String usuCreacion ="";
+                    String usuCreacion = "";
                     String fecCreacion = "";
 
                     if (exiFecCreacion) {
@@ -88,7 +90,10 @@ public class MetodoTrivia {
 
                     if (exiUsuCreacion) {
                         usuCreacion = parametros.get("USUARIO_CREACION").iterator().next();
-                    }else {
+                    } else {
+
+           
+
                         usuCreacion = "Invitado";
 
                     }
@@ -103,16 +108,16 @@ public class MetodoTrivia {
                     }
 
                     if (!triviaExistente) {
-                    
+
                         // crear la trivia :)
-                        Trivia nueva =  new Trivia(id, nombre, tmpPregunta, usuCreacion, tema, fecCreacion, null);
+                        Trivia nueva = new Trivia(id, nombre, tmpPregunta, usuCreacion, tema, fecCreacion, null);
                         db.getListaTriva().add(nueva);
-                         // enviar la lista a Guardar info
+                        // enviar la lista a Guardar info
 
                         GuardarInfo guardar = new GuardarInfo();
                         guardar.guardarDatoTrivia(db.getListaTriva());
 
-                    }else {
+                    } else {
                         System.out.println("Trivia ya existe");
                         System.out.println("Cabia de ID: ");
                     }
@@ -120,10 +125,64 @@ public class MetodoTrivia {
                 } else {
                     /// ver errores semanticos
 
+                    if (!sizeIdTrivia) {
+                        System.out.println("Error Semántico: ID trivia ya fue declarado");
+                        Errorx error = new Errorx("Semántico", "ID_TRIVIA", "Ya fue declarado", 0, 0);
+                        Reporte.agregarError(error);
+                    }
+
+                    if (!sizeTmpPregunta) {
+                        System.out.println("Error Semántico: Tiempo de la pregunta ya fue declarado");
+                        Errorx error = new Errorx("Semántico", "TIEMPO_PREGUNTA", "Ya fue declarado", 0, 0);
+                        Reporte.agregarError(error);
+                    }
+
+                    if (!sizeNomTrivia) {
+                        System.out.println("Error Semántico: Nombre de la trivia ya fue declarado");
+                        Errorx error = new Errorx("Semántico", "NOMBRE", "Ya fue declarado", 0, 0);
+                        Reporte.agregarError(error);
+                    }
+
+                    if (!sizeTemaTrivia) {
+                        System.out.println("Error Semántico: Tema de la trivia ya fue declarado");
+                        Errorx error = new Errorx("Semántico", "TEMA", "Ya fue declarado", 0, 0);
+                        Reporte.agregarError(error);
+                    }
+
+                    if (!sizeUsuCreacion) {
+                        System.out.println("Error Semántico: Usuario de creacion ya fue declarado");
+                        Errorx error = new Errorx("Semántico", "USUARIO_CREACION", "Ya fue declarado", 0, 0);
+                        Reporte.agregarError(error);
+                    }
+
                 }
 
             } else {
                 /// ver errores sintacticos
+
+                if (!exiIdTrivia) {
+                    System.out.println("Error Sintáctico: falta el ID de la trivia");
+                    Errorx error = new Errorx("Sintáctico", "ID_TRIVIA", "No fue declarado", 0, 0);
+                    Reporte.agregarError(error);
+                }
+
+                if (!exiTmpPregunta) {
+                    System.out.println("Error Sintáctico: falta el tiempo de la pregunta");
+                    Errorx error = new Errorx("Sintáctico", "TIEMPO_PREGUNTA", "No fue declarado", 0, 0);
+                    Reporte.agregarError(error);
+                }
+
+                if (!exiNomTrivia) {
+                    System.out.println("Error Sintáctico: falta el nombre de la trivia");
+                    Errorx error = new Errorx("Sintáctico", "NOMBRE", "No fue declarado", 0, 0);
+                    Reporte.agregarError(error);
+                }
+
+                if (!exiTemaTrivia) {
+                    System.out.println("Error Sintáctico: falta el tema de la trivia");
+                    Errorx error = new Errorx("Sintáctico", "TEMA", "No fue declarado", 0, 0);
+                    Reporte.agregarError(error);
+                }
 
             }
 
@@ -196,35 +255,48 @@ public class MetodoTrivia {
                                 GuardarInfo guardar = new GuardarInfo();
                                 guardar.guardarDatoTrivia(db.getListaTriva());
 
-                            }else {
+                            } else {
                                 System.out.println("Error Sintáctico: Se esperaba un parametro para modificar");
+                                Errorx error = new Errorx("Sintáctico", "PARAMETRO",
+                                        "Se esperaba un parametro para modificar", 0, 0);
                             }
 
                         } else {
 
-                            /// errores semanticos 
-                            if(!sizeNomTrivia){
+                            /// errores semanticos
+                            if (!sizeNomTrivia) {
                                 System.out.println("Error Semántico: Nombre de la trivia ya fue declarado");
+                                Errorx error = new Errorx("Semántico", "NOMBRE", "Ya fue declarado", 0, 0);
+                                Reporte.agregarError(error);
                             }
-                            if(!sizeTmpPregunta){
+                            if (!sizeTmpPregunta) {
                                 System.out.println("Error Semántico: Tiempo de la pregunta ya fue declarado");
+                                Errorx error = new Errorx("Semántico", "TIEMPO_PREGUNTA", "Ya fue declarado", 0, 0);
+                                Reporte.agregarError(error);
                             }
-                            if(!sizeTemaTrivia){
+                            if (!sizeTemaTrivia) {
                                 System.out.println("Error Semántico: Tema de la trivia ya fue declarado");
+                                Errorx error = new Errorx("Semántico", "TEMA", "Ya fue declarado", 0, 0);
+                                Reporte.agregarError(error);
                             }
                         }
                     } else {
                         System.out.println("No se encontro la trivia en la DB");
 
                     }
-                }else {
+                } else {
                     System.out.println("Error Semántico: ID trivia ya fue declarado");
+                    Errorx error = new Errorx("Semántico", "ID_TRIVIA", "Ya fue declarado", 0, 0);
+                    Reporte.agregarError(error);
                 }
-            }else {
-                
+            } else {
+
                 System.out.println("Error Sintáctico: falta el ID de la trivia");
+                Errorx error = new Errorx("Sintáctico", "ID_TRIVIA", "No fue declarado", 0, 0);
+                Reporte.agregarError(error);
+
             }
-        }else {
+        } else {
             System.out.println(" No hay datos de trivia en la DB");
         }
 
@@ -266,11 +338,15 @@ public class MetodoTrivia {
                 } else {
                     /// ver errores semanticos
                     System.out.println("Error Semántico: ID trivia ya fue declarado");
+                    Errorx error = new Errorx("Semántico", "ID_TRIVIA", "No fue declarado", 0, 0);
+                    Reporte.agregarError(error);
                 }
 
             } else {
                 /// ver errores sintacticos
                 System.out.println("Error Sintáctico: falta el ID de la trivia");
+                Errorx error = new Errorx("Sintáctico", "ID_TRIVIA", "No fue declarado", 0, 0);
+                Reporte.agregarError(error);
             }
 
         } else {

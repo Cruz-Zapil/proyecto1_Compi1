@@ -21,6 +21,17 @@
             android:paddingBottom="16dp"
             android:text="Nombre de la Trivia" />
 
+        <!-- Cronómetro -->
+        <TextView
+            android:id="@+id/cronometroTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tiempo restante: 00:00"
+            android:textSize="18sp"
+            android:textColor="@android:color/holo_red_dark"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="16dp" />
+
         <!-- Aquí se agregarán dinámicamente las preguntas y sus opciones -->
 
     </LinearLayout>

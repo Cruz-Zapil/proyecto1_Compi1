@@ -10,16 +10,19 @@ public class Registro {
     private String idTrivia;
     @SerializedName("USUARIO")
     private String usuario;
+    @SerializedName("TIEMPO")
+    private int tiempo;
     @SerializedName("RESPUESTAS")
     private List<RegComponent> listRegistroC;
     @SerializedName("PUNTEO")
     private int punteo;
 
-    public Registro(String idTrivia, String usuario, int punteo,List<RegComponent> listRegistroC) {
+    public Registro(String idTrivia, String usuario, int tiempo ,int punteo,List<RegComponent> listRegistroC) {
         this.idTrivia = idTrivia;
         this.usuario = usuario;
         this.listRegistroC = listRegistroC;
         this.punteo = punteo;
+        this.tiempo = tiempo;
     }
 
     public void setRespuesta(RegComponent componente) {
@@ -66,5 +69,11 @@ public class Registro {
         return "Registro [idTrivia=" + idTrivia + ", usuario=" + usuario + ", listRegistroC=" + listRegistroC
                 + ", punteo=" + punteo + "]";
     }
+
+    public int getTiempo() {
+        return tiempo;
+    }
+
+    
 
 }

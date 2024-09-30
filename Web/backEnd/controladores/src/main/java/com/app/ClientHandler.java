@@ -7,6 +7,7 @@ import java.net.Socket;
 
 import com.app.recursos.ConexionDB;
 import com.app.recursos.ConexionXson;
+import com.app.recursos.util.JsonConverter;
 import com.google.gson.Gson;
 
 public class ClientHandler implements Runnable {
@@ -43,10 +44,11 @@ public class ClientHandler implements Runnable {
                         ConexionXson conexionXson = new ConexionXson();
                         String result = conexionXson.analizarLogin(peticion);
                         String nomUsua = conexionXson.getNombreUsuario();
+                        String idUser = conexionXson.getIdUser();
 
                         if ("Usuario logeado".equals(result)) {
                             // mostrar que existe el usuario
-                            salida.writeUTF("Usuario logeado#" + nomUsua);
+                            salida.writeUTF("Usuario logeado#" + nomUsua+"#"+idUser);
                         } else {
                             // Si el usuario no está autenticado, redirige de nuevo al formulario con un
                             salida.writeUTF("Usuario no logeado#" + result);
@@ -79,7 +81,13 @@ public class ClientHandler implements Runnable {
                     }
                     break;
 
-                case "SAVE_INFO":
+                case "REGISTRO":
+                    
+                    String registro = partes[1];
+
+                    JsonConverter.fromJson(registro);
+
+
                     break;
 
                 default:
