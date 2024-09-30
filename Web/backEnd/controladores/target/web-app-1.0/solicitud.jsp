@@ -12,7 +12,7 @@
 
 <div id="solicitud">
     <h3>Realizar Solicitud</h3>
-    <form id="consultaForm">
+    <form id="consultaForm" action="solicitud" method="GET" >
         <div class="code-container-container">
             <div class="code-container">
                 <div id="lineNumbers" class="line-numbers-container">
@@ -30,18 +30,15 @@
                 <p id="cursorPosition">Línea: 1, Columna: 1</p>
             </div>
         </div>
-             
+
         <div class="row mt-3">
             <div class="col-md-12">
-                <button id="realizarConsultaBtn" class="btn btn-primary" type="button">Realizar Solicitud</button>
+                <button id="realizarConsultaBtn" class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#demo">Realizar Solicitud</button>
             </div>
         </div>
-             
-     
-
+  
     </form>
 </div>
-
 
 
     <!-- Offcanvas con manejador de arrastre -->
@@ -71,20 +68,14 @@
     </div>
 
         <!-- Offcanvas para mensajes -->
-    <div class="offcanvas offcanvas-bottom" id="mensajesCanvas" tabindex="-1" aria-labelledby="offcanvasMensajesLabel">
-        <div class="offcanvas-header">
-            <h5 id="offcanvasMensajesLabel">Mensajes Generados</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-            <ul id="mensajesList" class="list-group">
-                <!-- Aquí se agregarán los mensajes dinámicamente -->
-            </ul>
-        </div>
-    </div>
+   
 
-
-
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var offcanvasElement = document.getElementById('demo');
+            var offcanvas = new bootstrap.Offcanvas(offcanvasElement);
+        });
+    </script>
 
 
     <script src="js/welcome.js"></script>

@@ -26,7 +26,7 @@ function cargarTrivias() {
         })
         .catch(error => {
             console.error('Error al cargar las trivias:', error);
-            alert('Hubo un error al cargar las trivias. Ver la consola para más detalles.');
+            alert('Hubo un error al cargar las trivias.');
         });
 }
 

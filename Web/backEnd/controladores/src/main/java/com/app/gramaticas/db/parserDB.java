@@ -12,7 +12,6 @@ import com.app.recursosdb.registro.Registro;
 import com.app.recursosdb.trivia.Componente;
 import com.app.recursosdb.trivia.Trivia;
 import java_cup.runtime.*;
-import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
   */
@@ -630,7 +629,7 @@ class CUP$parser$actions {
 		int vnleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int vnright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Object vn = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		tiempoTri = Integer.parseInt(vn.toString()); 
+		tiempoTri = (Integer)(vn); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("par_clave_trivia",6, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -761,7 +760,9 @@ class CUP$parser$actions {
 		int vnleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int vnright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Object vn = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 System.out.println("--->" + (String)  vn); indiceComp = Integer.parseInt(vn.toString()); 
+
+
+      indiceComp = (Integer) (vn); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("component",9, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -785,7 +786,18 @@ class CUP$parser$actions {
 		int otleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
 		int otright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		Object ot = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
-		 System.out.println("--->" + (String) ot ); resComp =(String) ot; 
+
+String resultado;
+if (ot instanceof Integer) {
+    // Si es un Integer, lo convertimos a String
+    resultado = String.valueOf(ot);
+    resComp = resultado;
+} else if (ot instanceof String) {
+    // Si ya es un String, simplemente lo asignamos
+    resultado = (String) ot;
+    resComp = resultado;
+}
+
               CUP$parser$result = parser.getSymbolFactory().newSymbol("component",9, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-6)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -797,7 +809,8 @@ class CUP$parser$actions {
 		int otleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
 		int otright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		Object ot = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
-		 System.out.println("--->" + (String) ot ); opcionesComp =(String) ot; 
+		 System.out.println("--->" + (String) ot ); 
+     opcionesComp =(String) ot; 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("component",9, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-6)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -809,7 +822,9 @@ class CUP$parser$actions {
 		int vnleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int vnright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Object vn = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 System.out.println("--->" + (String) vn ); filasComp = Integer.parseInt(vn.toString()); 
+
+     
+     filasComp = (Integer )vn;
               CUP$parser$result = parser.getSymbolFactory().newSymbol("component",9, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -821,7 +836,8 @@ class CUP$parser$actions {
 		int vnleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int vnright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Object vn = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 System.out.println("--->" + (String) vn ); columnasComp = Integer.parseInt(vn.toString());
+		
+      columnasComp = (Integer) vn;
               CUP$parser$result = parser.getSymbolFactory().newSymbol("component",9, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1146,7 +1162,7 @@ class CUP$parser$actions {
 		int vnleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int vnright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Object vn = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 puntReg  = Integer.parseInt(vn.toString());
+		 puntReg  = (Integer) vn;
 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("par_clave_reg",12, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
@@ -1159,7 +1175,7 @@ class CUP$parser$actions {
 		int vnleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int vnright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Object vn = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 tmpTotal = Integer.parseInt(vn.toString());
+		 tmpTotal = (Integer) vn;
               CUP$parser$result = parser.getSymbolFactory().newSymbol("par_clave_reg",12, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-4)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;

@@ -31,7 +31,7 @@ public class ListTriviasServlet extends HttpServlet {
         String idUser = (String) session.getAttribute("idUser");
 
         // Lógica para obtener las trivias del usuario
-        List<Trivia> trivias = new ArrayList<>();
+        List<Trivia> trivi = new ArrayList<>();
 
         ConexionDB conexionDB = new ConexionDB();
         conexionDB.recopilarArchivos();
@@ -40,16 +40,16 @@ public class ListTriviasServlet extends HttpServlet {
         for (Trivia trivia : conexionDB.getListaTriva()) {
 
             if (trivia.getUsuario().equals(idUser)) {
-                trivias.add(trivia);
+                trivi.add(trivia);
             }   
         }
 
         // Convertir la lista a JSON usando una librería como Gson
         Gson gson = new Gson();
-        String json = gson.toJson(trivias);
+        String trivias = gson.toJson(trivi);
 
         // Enviar la respuesta JSON
-        response.getWriter().write(json);
+        response.getWriter().write(trivias);
 
     }
 }

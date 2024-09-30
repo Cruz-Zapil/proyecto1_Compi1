@@ -19,6 +19,7 @@ com/app/gramaticas/xson/LexerXson.class
 com/app/SolicitudServlet$ResponseData.class
 com/app/recursosdb/registro/RegComponent.class
 com/app/gramaticas/db/LexerDB.class
+com/app/gramaticas/sqlkv/parser$CUP$parser$actions.class
 com/app/gramaticas/db/parserDB.class
 com/app/recursos/MetodoTrivia.class
 com/app/gramaticas/Errorx.class
@@ -27,7 +28,10 @@ com/app/gramaticas/Reporte.class
 com/app/recursos/util/JsonConverter.class
 com/app/recursosdb/trivia/Trivia.class
 com/app/zzz/Main.class
+com/app/gramaticas/sqlkv/parser.class
 com/app/gramaticas/xson/parserXson.class
+com/app/gramaticas/sqlkv/symbol.class
+com/app/gramaticas/sqlkv/LexerSQL.class
 com/app/recursos/MetodoRegistro.class
 com/app/recursosdb/registro/Registro.class
 com/app/recursos/MetodoComponente.class

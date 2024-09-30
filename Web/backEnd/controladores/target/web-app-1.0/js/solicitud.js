@@ -1,41 +1,44 @@
-document.querySelector("#realizarConsultaBtn").addEventListener("click", function() {
+document.querySelector("#realizarConsultaBtn").addEventListener("click", function(event) {
     // Prevenir el comportamiento por defecto del formulario
-    const form = document.getElementById('consultaForm');
-    const formData = new FormData(form);
-    const textoIngresado = formData.get('textoIngresado');
-    
-    // Realizar una solicitud GET al servlet
-    fetch('solicitud?textoIngresado=' + encodeURIComponent(textoIngresado)) 
-        .then(response => response.json())  
-        .then(data => {
-         
+    event.preventDefault();
 
-            // mensaje para mostrar 
-            console.log(data.mensaje); // También puedes mostrarlo en el HTML si deseas
-            
-            // Mostrar errores en la tabla
-            mostrarErrores(data.errores);
+    // Obtener el valor del textarea
+    const textoIngresado = document.getElementById('codeArea').value;
+
+    // Verificar si el valor se obtiene correctamente
+    console.log('Texto ingresado:', textoIngresado);
+        // Construir la URL manualmente
+        const url = 'solicitud?textoIngresado=' + encodeURIComponent(textoIngresado); // Añade el parámetro de consulta
 
 
-            const mensajesList = document.getElementById('mensajesList');
-            mensajesList.innerHTML = '';
-    
-            // Mostrar los mensajes en el offcanvas
-            data.mensajes.forEach(mensaje => {
-                const li = document.createElement('li');
-                li.classList.add('list-group-item');
-                li.textContent = mensaje;
-                mensajesList.appendChild(li);
-            });
-    
-            // Abrir el offcanvas de mensajes
-            const mensajesCanvas = new bootstrap.Offcanvas(document.getElementById('mensajesCanvas'));
-            mensajesCanvas.show();
 
-        })
-        .catch(error => console.error('Error al obtener los errores:', error));
+    fetch(url, {
+        method: 'GET'
+    })
+    .then(response => response.json())  
+    .then(data => {
+        console.log(data.mensaje); 
+
+        mostrarErrores(data.errores);
+        mostrarMensajes(data.mensajes);  
+
+        // Mostrar los mensajes en el offcanvas
+        const mensajesList = document.getElementById('mensajesList');
+        mensajesList.innerHTML = '';  // Limpiar mensajes previos
+
+        data.mensajes.forEach(mensaje => {
+            const li = document.createElement('li');
+            li.classList.add('list-group-item');
+            li.textContent = mensaje;
+            mensajesList.appendChild(li);
+        });
+
+        // Mostrar el offcanvas de mensajes
+        const mensajesCanvas = new bootstrap.Offcanvas(document.getElementById('mensajesCanvas'));
+        mensajesCanvas.show();
+    })
+    .catch(error => console.error('Error al obtener los errores:', error));
 });
-
 
 
 
@@ -63,4 +66,3 @@ function mostrarErrores(errores) {
       offcanvas.show();
     
 }
-

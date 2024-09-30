@@ -47,7 +47,7 @@
                     </div>
     
                     <div class="d-grid">
-                        <input type="submit" class="btn btn-primary" value="Ingresar">
+                        <input type="submit" class="btn btn-primary" value="INICIE SESION">
                     </div>
                 </form>
     

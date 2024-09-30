@@ -9,7 +9,7 @@ public class MainXson {
         System.out.println("Hello, World!");
         
         String xsonString = "<?xson version=\"1.0\" ?> <!realizar_solicitud: \"USUARIO_NUEVO\" >\n"
-                + "{ \"DATOS_USUARIO\":[{ \"USUARIO\": \"Crucito\", \"PASSWORD\": \"1*5678\", \"NOMBRE\": \"Cruz Quij\", \"INSTITUCION\": \"USAC\"\n }\n"
+                + "{ \"DATOS_USUARIO\":[{ \"USUARIO\": \"Cito\", \"PASSWORD\": \"1a5678\", \"NOMBRE\": \"Cruz Quij\", \"INSTITUCION\": \"USAC\"\n }\n"
                 + "]\n"
                 + "}\n"
                 + "<fin_solicitud_realizada!>";
@@ -39,7 +39,7 @@ public class MainXson {
                 
 
         ConexionXson conexionXson = new ConexionXson();
-        conexionXson.analizadorGeneral(modUsu);
+        conexionXson.analizadorGeneral(xsonString);
 
     }
     

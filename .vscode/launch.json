@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "MainXson",
+            "request": "launch",
+            "mainClass": "com.app.zzz.MainXson",
+            "projectName": "web-app"
+        },
+        {
+            "type": "java",
+            "name": "ManiComp",
+            "request": "launch",
+            "mainClass": "com.app.zzz.ManiComp",
+            "projectName": "web-app"
+        },
+        {
+            "type": "java",
             "name": "MetodoRegistro",
             "request": "launch",
             "mainClass": "com.app.recursos.MetodoRegistro",

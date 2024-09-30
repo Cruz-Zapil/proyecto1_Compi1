@@ -1,0 +1,366 @@
+
+import java_cup.runtime.*;
+import java.util.*;
+
+parser code{:
+
+    public void syntax_error(Symbol s){ 
+        System.out.println("Error Sintáctico en la Línea " + (s.left) +
+        " Columna "+s.right+ ". No se esperaba este componente: " +s.value+"."); 
+
+       // PanelReporte.agregarError(new Errores("Sintactico",String.valueOf(s.value),"no se esperaba: "+String.valueOf( s.value), s.left, s.right));
+    } 
+    /**
+     * Método al que se llama cuando se identifica un error sintáctico en el que 
+     * ya no es posible una recuperación de errores.
+     **/ 
+    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{ 
+        System.out.println("Error síntactico irrecuperable en la Línea " + 
+        (s.left)+ " Columna "+s.right+". Componente " + s.value + " no reconocido.");
+
+    } 
+
+    private List<Registro> registros = new ArrayList<Registro>();
+
+    // reportes a enviar
+    private List <String> reportes = new ArrayList<String>();
+
+    public List<Registro> getRegistro(){
+        return registro;
+    }
+
+    public void setRegistro(List<Registro> registro){
+        this.registros = registro;
+    }
+    
+    public List<String> getReportes(){
+        return reportes;
+    }
+
+:}
+
+
+
+
+// DEFINICON DE TERMINALES 
+terminal SELECCIONAR, REPORTE, FILTRAR, POR, ID, TIEMPO, USUARIO;
+terminal PUNTEO, TRIVIA, MENOR_QUE, MAYOR_QUE, IGUAL, MAYOR_IGUAL_QUE;
+terminal MENOR_IGUAL_QUE, AND, OR, NOT;
+terminal VALOR_NUMERICO, COMILLAS, VALOR_CADENA;
+
+// DEFINICION DE NO TERMINALE 
+non id,  operador, comparacion;
+non instruccion, campo, operador;
+ 
+
+
+
+
+
+
+start with instruccion;
+
+                    /// para todo los reportes
+instruccion::= SELECCIONAR REPORTE id FILTRAR POR campo:camp operador:oper comparacion:compar{:
+
+
+
+
+
+:}
+                 /// para un solo reporte
+             | SELECCIONAR REPORTE ID:id FILTRAR POR campo:camp operador:oper comparacion:compar{:
+
+switch (oper) {
+    case "<":
+
+    switch (camp) {
+
+        case "TIEMPO":
+        foreach(Registro r : registros){
+        
+            if(r.getTiempo() < compar){
+                reportes.add(r.getTiempo());
+            }
+        }
+          
+            break; 
+
+        case "USUARIO":
+    
+        foreach(Registro r : registros){
+
+            if(r.getUsuario() < compar){
+                reportes.add(r.getUsuario());
+            }}
+    
+            break; // Salir del switch
+
+        case "PUNTEO":
+           
+        foreach(Registro r : registros){
+
+            if(r.getPunteo() < compar){
+                reportes.add(r.getPunteo());
+            }}
+
+            break; // Salir del switch
+
+        case "TRIVIA":
+
+
+        foreach(Registro r : registros){
+
+            if(r.getTrivia() < compar){
+                reportes.add(r.getTrivia());
+            }}
+
+            break; // Salir del switch
+
+        default:
+            // Bloque de código si no coincide con ningún caso
+            break; // Opcional, pero recomendado
+    }
+    
+        break; 
+    case ">":
+
+        switch (camp) {
+
+        case "TIEMPO":
+        
+        foreach(Registro r : registros){
+
+            if(r.getTiempo() > compar){
+                reportes.add(r.getTiempo());
+            }}
+
+            break; // Salir del switch
+
+        case "USUARIO":
+
+        foreach(Registro r : registros){
+
+            if(r.getUsuario() > compar){
+                reportes.add(r.getUsuario());
+            }}
+            break; // Salir del switch
+
+        case "PUNTEO":
+
+        foreach(Registro r : registros){
+
+            if(r.getPunteo() > compar){
+                reportes.add(r.getPunteo());
+            }}
+            break; // Salir del switch
+
+        case "TRIVIA":
+
+            break; // Salir del switch
+
+        default:
+            // Bloque de código si no coincide con ningún caso
+            break; // Opcional, pero recomendado
+    }
+    
+
+        break; 
+    
+    case "=":
+        switch (camp) {
+
+        case "TIEMPO":
+            // Bloque de código para valor1
+            
+            break; // Salir del switch
+
+        case "USUARIO":
+            // Bloque de código para valor2
+            break; // Salir del switch
+
+        case "PUNTEO":
+            // Bloque de código para valor3
+            break; // Salir del switch
+
+        case "TRIVIA":
+
+            break; // Salir del switch
+
+        default:
+            // Bloque de código si no coincide con ningún caso
+            break; // Opcional, pero recomendado
+    }
+    
+        
+        break; 
+
+    case ">=":
+        switch (camp) {
+
+        case "TIEMPO":
+            // Bloque de código para valor1
+            break; // Salir del switch
+
+        case "USUARIO":
+            // Bloque de código para valor2
+            break; // Salir del switch
+
+        case "PUNTEO":
+            // Bloque de código para valor3
+            break; // Salir del switch
+
+        case "TRIVIA":
+
+            break; // Salir del switch
+
+        default:
+            // Bloque de código si no coincide con ningún caso
+            break; // Opcional, pero recomendado
+    }
+    
+        
+        break; 
+
+    case "<=":
+        switch (camp) {
+
+        case "TIEMPO":
+            // Bloque de código para valor1
+            break; // Salir del switch
+
+        case "USUARIO":
+            // Bloque de código para valor2
+            break; // Salir del switch
+
+        case "PUNTEO":
+            // Bloque de código para valor3
+            break; // Salir del switch
+
+        case "TRIVIA":
+
+            break; // Salir del switch
+
+        default:
+            // Bloque de código si no coincide con ningún caso
+            break; // Opcional, pero recomendado
+    }
+    
+
+        break; 
+
+    case "AND":
+        switch (camp) {
+
+        case "TIEMPO":
+            // Bloque de código para valor1
+            break; // Salir del switch
+
+        case "USUARIO":
+            // Bloque de código para valor2
+            break; // Salir del switch
+
+        case "PUNTEO":
+            // Bloque de código para valor3
+            break; // Salir del switch
+
+        case "TRIVIA":
+
+            break; // Salir del switch
+
+        default:
+            // Bloque de código si no coincide con ningún caso
+            break; // Opcional, pero recomendado
+    }
+    
+
+        break; 
+
+    case "OR":
+        switch (camp) {
+
+        case "TIEMPO":
+            // Bloque de código para valor1
+            break; // Salir del switch
+
+        case "USUARIO":
+            // Bloque de código para valor2
+            break; // Salir del switch
+
+        case "PUNTEO":
+            // Bloque de código para valor3
+            break; // Salir del switch
+
+        case "TRIVIA":
+
+            break; // Salir del switch
+
+        default:
+            // Bloque de código si no coincide con ningún caso
+            break; // Opcional, pero recomendado
+    }
+    
+        
+        break; 
+
+    case "NOT":
+        
+            switch (camp) {
+
+        case "TIEMPO":
+            // Bloque de código para valor1
+            break; // Salir del switch
+
+        case "USUARIO":
+            // Bloque de código para valor2
+            break; // Salir del switch
+
+        case "PUNTEO":
+            // Bloque de código para valor3
+            break; // Salir del switch
+
+        case "TRIVIA":
+
+            break; // Salir del switch
+
+        default:
+            // Bloque de código si no coincide con ningún caso
+            break; // Opcional, pero recomendado
+    }
+    
+        
+        break; // Salir del switch
+
+    
+
+    default:
+        // Bloque de código si no coincide con ningún caso
+        break; // Opcional, pero recomendado
+}
+
+                
+             
+
+
+             :};
+
+
+       
+
+campo ::= TIEMPO: tmp    {: RESUL=tmp ;:}
+        | USUARIO: usu   {: RESUL=usu ;:}
+        | PUNTEO: punt   {: RESUL=punt; :}
+        | TRIVIA: triv   {: RESUL=triv; :};
+
+operador ::= MENOR_QUE : me        {: RESULT=me; :}  
+            | MAYOR_QUE : ma      {: RESULT=ma; :} 
+            | IGUAL : ig           {: RESULT=ig; :} 
+            | MAYOR_IGUAL_QUE : maq {: RESULT=maq; :} 
+            | MENOR_IGUAL_QUE : meq {: RESULT=meq; :} 
+            | AND : and            {: RESULT=and; :} 
+            | OR : or              {: RESULT=or; :} 
+            | NOT : not            {: RESULT= not; :};
+
+
+comparacion::=| VALOR_NUMERICO : ab {: RESULT= ab:}
+              | COMILLAS VALOR_CADENA  COMILLAS : ns {: RESULT= ns:};

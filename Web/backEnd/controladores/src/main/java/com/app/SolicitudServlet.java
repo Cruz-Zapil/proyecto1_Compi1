@@ -30,7 +30,8 @@ public class SolicitudServlet extends HttpServlet {
         List<Errorx> listaErrores = new ArrayList<>();
         /// lista para almacenar mensajes
         String mensaje="hola muhndo ";
-
+        mensaje+=textoIngresado;
+ 
         // Verificar si se ha recibido el valor o es null
         if (textoIngresado != null) {
             
@@ -42,7 +43,8 @@ public class SolicitudServlet extends HttpServlet {
                 ConexionXson conexionXson = new ConexionXson();
                 conexionXson.analizadorGeneral(textoIngresado);
                 listaErrores =  Reporte.getListaErrores();
-                
+                mensaje += listaErrores.size();
+                mensaje += " se esta procesando";
 
             } catch (Exception e) {
                 
@@ -59,15 +61,15 @@ public class SolicitudServlet extends HttpServlet {
 
         // Convertir la respuesta a JSON usando Gson
         Gson gson = new Gson();
-        String jsonResponse = gson.toJson(responseData);
+        String data = gson.toJson(responseData);
 
         // Configurar la respuesta
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
 
-        PrintWriter out = response.getWriter();
-        out.print(jsonResponse);
-        out.flush();
+       PrintWriter out = response.getWriter();
+       out.print(data);
+       out.flush();
 
 
     }

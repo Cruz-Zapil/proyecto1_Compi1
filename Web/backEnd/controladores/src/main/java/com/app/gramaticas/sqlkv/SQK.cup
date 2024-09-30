@@ -1,0 +1,131 @@
+
+package compi1.sqlemulator.lexer_parser;
+
+import java_cup.runtime.*;
+import java.util.*;
+
+/*-----------------------------------------------------------
+  CUP Specification for the Parser Class
+  -----------------------------------------------------------*/
+parser code {:
+    //fields
+    Lexer lex;
+    private List<String> syntaxErrors;
+
+
+    //conect the parser with the lexer
+    public parser(Lexer lex){
+        super(lex);
+        syntaxErrors = new LinkedList<>();
+    }
+
+    //getters
+    public Lexer getLexer(){
+        return this.lex;
+    }
+    public List<String> getSyntaxErrors(){
+        return this.syntaxErrors;
+    }
+    
+    /*SOBREESCRIBIENDO LOS METODOS DE ERROR*/
+    public void syntax_error(Symbol cur_token) {
+        String mss = "Simbolo: " + symbl_name_from_id(cur_token.sym)
+                    + ", linea: " + cur_token.left
+                    + ", columna: " + cur_token.right;
+        if (expected_token_ids().isEmpty()) {
+            mss += " -- ya no se esperaba ningun simbolo";
+        }
+        syntaxErrors.add(mss);
+    }
+    public void unrecovered_syntax_error(Symbol cur_token) {
+        syntaxErrors.add("Errores de sintaxis severos detectados, revisa municiosamente el codigo");
+    }
+:}
+
+/* Terminals (tokens returned by the scanner). */
+terminal        SELECCIONAR, FILTRAR, INSERTAR, ACTUALIZAR, ASIGNAR, ELIMINAR, EN,
+                PUNTO, ASTERISCO, PARENTESIS_L, PARENTESIS_R, FIN_INSTRUCCION, 
+                IGUAL, MAYOR_QUE, MENOR_QUE, MAYOR_IGUAL_QUE, MENOR_IGUAL_QUE, DIFERENTE,
+                AND, OR, IDENTIFICADOR, VALORES, COMA, LEXER_ERROR;
+terminal Integer    ENTERO;
+terminal Float      DECIMAL;
+terminal String     CADENA;
+
+/* Non-terminals */
+non terminal    relational_operator, values, instruccion, select_stm, insert_stm, update_stm,
+                delete_stm, columns, path, filtros_opt, columns_opt, asignations, 
+                more_columns, carpetas, filtros, conditions, condition, logic, and_stm, or_stm,
+                insertables, more_insertables, more_asignations,
+                and_stm2, or_stm2, selects, instrucciones, more_instruccions,
+                number_values, relational_complete_operator, comparative;
+
+
+/* The grammar */
+
+
+start with instrucciones;
+
+/* no terminales que derivan en terminales*/
+relational_complete_operator ::= IGUAL | DIFERENTE;
+relational_operator ::= MAYOR_QUE | MENOR_QUE | MAYOR_IGUAL_QUE | MENOR_IGUAL_QUE ;
+number_values ::= ENTERO | DECIMAL;
+values ::= CADENA | number_values;
+
+instrucciones ::= instruccion FIN_INSTRUCCION more_instruccions;
+
+more_instruccions ::= instrucciones | /*empty*/;
+
+instruccion ::= select_stm     
+                | insert_stm
+               
+
+select_stm ::= SELECCIONAR REPORTE ids FILTRAR POR nombreCap path filtros_opt;
+
+selects ::= ASTERISCO 
+            | columns ;
+
+            
+columns ::= IDENTIFICADOR more_columns ;
+more_columns ::= COMA columns 
+            | /*empty*/ ;
+
+path ::= IDENTIFICADOR carpetas;
+carpetas ::= PUNTO path 
+            | /*empty*/;
+
+filtros_opt ::= filtros 
+            | /*empty*/;
+filtros ::= FILTRAR conditions;
+
+conditions ::= condition logic;
+logic ::= and_stm 
+            | or_stm
+            | /*empty*/;
+
+and_stm ::= AND condition and_stm2 ;
+and_stm2 ::= AND condition and_stm2
+            | /*empty*/;
+
+or_stm ::= OR condition or_stm2 ;
+or_stm2 ::= OR condition or_stm2
+            | /*empty*/;
+
+
+
+            
+condition ::= IDENTIFICADOR comparative;
+
+comparative ::= relational_complete_operator values
+            | relational_operator number_values;
+
+
+insertables ::= values more_insertables;
+more_insertables ::= COMA insertables 
+            | /*empty*/;
+
+columns_opt ::= PARENTESIS_L columns PARENTESIS_R 
+            | /*empty*/;
+
+asignations ::= IDENTIFICADOR IGUAL values more_asignations;
+more_asignations ::= COMA asignations 
+            | /*empty*/;

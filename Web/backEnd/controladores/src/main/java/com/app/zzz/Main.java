@@ -141,8 +141,24 @@ public class Main {
         "}\n" +
         "<fin_solicitud_realizada!>\n" +
         "<!fin_solicitudes_realizada>";
+
+
+        String xsonString = "<?xson version=\"1.0\" ?>\n" +
+                    "<!realizar_solicitud: \"AGREGAR_COMPONENTE\" >\n" +
+                    "{\n" +
+                    "\"PARAMETROS_COMPONENTE\":[\n" +
+                    "{\n" +
+                    "\"ID\":\"$trivs\",\n" +
+                    "\"TRIVIA\":\"_trivUsac\",\n" +
+                    "\"CLASE\": \"CAMPO_TEXTO\",\n" +
+                    "\"TEXTO_VISIBLE\":\"nuevo componente\",\n" +
+                    "\"RESPUESTA\":\"v2\"\n" +
+                    "}\n" +
+                    "]\n" +
+                    "}<fin_solicitud_realizada!>";
+
         
-        conexionXson.analizadorGeneral(componet);
+        conexionXson.analizadorGeneral(xsonString);
 
 
 
