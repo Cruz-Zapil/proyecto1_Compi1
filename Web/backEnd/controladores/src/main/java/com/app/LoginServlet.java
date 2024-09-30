@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.app.gramaticas.Reporte;
 import com.app.recursos.ConexionXson;
 
 @WebServlet("/LoginServlet")
@@ -26,6 +27,9 @@ public class LoginServlet extends HttpServlet {
         if (!textoIngresado.isEmpty()) {
 
             try {
+
+                /// limiar errores
+                Reporte.limpiarErrores();
                 // usar el analizador Xson
                 ConexionXson conexionXson = new ConexionXson();
                 String resultado = conexionXson.analizarLogin(textoIngresado);

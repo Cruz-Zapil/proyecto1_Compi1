@@ -3,8 +3,6 @@ package com.app.recursos;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import javax.servlet.http.HttpSession;
-
 import com.app.gramaticas.Errorx;
 import com.app.gramaticas.Reporte;
 import com.app.recursos.util.GuardarInfo;
@@ -116,10 +114,11 @@ public class MetodoTrivia {
 
                         GuardarInfo guardar = new GuardarInfo();
                         guardar.guardarDatoTrivia(db.getListaTriva());
+                        Reporte.agregarMensaje("CREAR_TRIVIA", "Trivia creada correctamente");
 
                     } else {
-                        System.out.println("Trivia ya existe");
-                        System.out.println("Cabia de ID: ");
+                       
+                        Reporte.agregarMensaje("CREAR_TRIVIA", "Trivia ya existe cambia de ID");
                     }
 
                 } else {
@@ -189,6 +188,7 @@ public class MetodoTrivia {
         } else {
 
             System.out.println(" No hay datos en la DB");
+            Reporte.agregarMensaje("CREAR_TRIVIA", "No hay datos en la DB");
         }
 
     }
@@ -254,6 +254,7 @@ public class MetodoTrivia {
                                 //// lectura del archivo y escritura
                                 GuardarInfo guardar = new GuardarInfo();
                                 guardar.guardarDatoTrivia(db.getListaTriva());
+                                Reporte.agregarMensaje("MODIFICAR_TRIVIA", "Trivia modificada correctamente");
 
                             } else {
                                 System.out.println("Error Sintáctico: Se esperaba un parametro para modificar");
@@ -282,6 +283,7 @@ public class MetodoTrivia {
                         }
                     } else {
                         System.out.println("No se encontro la trivia en la DB");
+                        Reporte.agregarMensaje("MODIFICAR_TRIVIA", "No se encontro la trivia en la DB");
 
                     }
                 } else {
@@ -298,6 +300,7 @@ public class MetodoTrivia {
             }
         } else {
             System.out.println(" No hay datos de trivia en la DB");
+            Reporte.agregarMensaje("MODIFICAR_TRIVIA", "No hay datos en la DB");
         }
 
     }
@@ -330,9 +333,11 @@ public class MetodoTrivia {
                         /// la lectura del archivo y la nueva escritura
                         GuardarInfo guardar = new GuardarInfo();
                         guardar.guardarDatoTrivia(db.getListaTriva());
+                        Reporte.agregarMensaje("ELIMINAR_TRIVIA", "Trivia eliminada");
 
                     } else {
                         System.out.println("Trivia no existe en la DB");
+                        Reporte.agregarMensaje("ELIMINAR_TRIVIA", "No existe la trivia en la DB");
                     }
 
                 } else {
@@ -351,6 +356,7 @@ public class MetodoTrivia {
 
         } else {
             System.out.println(" No hy datos en la DB");
+            Reporte.agregarMensaje("ELIMINAR_TRIVIA", "No hay datos en la DB");
         }
     }
 

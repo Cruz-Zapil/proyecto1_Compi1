@@ -49,7 +49,7 @@ public class Main {
                 "}" +
                 "<fin_solicitud_realizada!>";
 
-                conexionXson.analizarLogin(login);
+           //     conexionXson.analizarLogin(login);
 
    
 
@@ -142,7 +142,7 @@ public class Main {
         "<fin_solicitud_realizada!>\n" +
         "<!fin_solicitudes_realizada>";
         
-  //      conexionXson.analizadorGeneral(componet);
+        conexionXson.analizadorGeneral(componet);
 
 
 

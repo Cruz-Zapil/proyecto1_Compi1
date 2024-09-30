@@ -211,7 +211,6 @@ public class MetodoUsuario {
 
             } else {
                 System.out.println("No hay usuarios en la base de datos");
-
                 Reporte.agregarMensaje("MODIFICAR_USUARIO", "No hay usuarios en la base de datos");
                 
             }
@@ -261,7 +260,6 @@ public class MetodoUsuario {
             }
         } else {
             System.out.println("No hay usuarios en la base de datos");
-
             Reporte.agregarMensaje("ELIMINAR_USUARIO", "No hay usuarios en la base de datos");
 
         }
@@ -402,7 +400,6 @@ public class MetodoUsuario {
             }
         } else {
             System.out.println("No hay usuarios en la base de datos");
-
             Reporte.agregarMensaje("NUEVO_USUARIO", "No hay usuarios en la base de datos");
 
         }

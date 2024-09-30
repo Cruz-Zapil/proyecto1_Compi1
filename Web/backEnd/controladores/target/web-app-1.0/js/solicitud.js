@@ -6,7 +6,7 @@ document.querySelector("#realizarConsultaBtn").addEventListener("click", functio
     
     // Realizar una solicitud GET al servlet
     fetch('solicitud?textoIngresado=' + encodeURIComponent(textoIngresado)) 
-        .then(response => response.json())  // Convertir la respuesta en JSON
+        .then(response => response.json())  
         .then(data => {
          
 
@@ -15,6 +15,23 @@ document.querySelector("#realizarConsultaBtn").addEventListener("click", functio
             
             // Mostrar errores en la tabla
             mostrarErrores(data.errores);
+
+
+            const mensajesList = document.getElementById('mensajesList');
+            mensajesList.innerHTML = '';
+    
+            // Mostrar los mensajes en el offcanvas
+            data.mensajes.forEach(mensaje => {
+                const li = document.createElement('li');
+                li.classList.add('list-group-item');
+                li.textContent = mensaje;
+                mensajesList.appendChild(li);
+            });
+    
+            // Abrir el offcanvas de mensajes
+            const mensajesCanvas = new bootstrap.Offcanvas(document.getElementById('mensajesCanvas'));
+            mensajesCanvas.show();
+
         })
         .catch(error => console.error('Error al obtener los errores:', error));
 });

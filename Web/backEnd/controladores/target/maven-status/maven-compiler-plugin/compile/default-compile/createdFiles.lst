@@ -1,7 +1,6 @@
 com/app/recursos/MetodoUsuario.class
 com/app/recursos/ConexionDB.class
 com/app/ListTriviasServlet.class
-com/app/gramaticas/ReporteError.class
 com/app/gramaticas/db/parserDB$CUP$parser$actions.class
 com/app/recursosdb/trivia/Componente.class
 com/app/ConsultaServlet.class
@@ -24,6 +23,7 @@ com/app/gramaticas/db/parserDB.class
 com/app/recursos/MetodoTrivia.class
 com/app/gramaticas/Errorx.class
 com/app/zzz/MainXson.class
+com/app/gramaticas/Reporte.class
 com/app/recursos/util/JsonConverter.class
 com/app/recursosdb/trivia/Trivia.class
 com/app/zzz/Main.class

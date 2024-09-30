@@ -103,19 +103,19 @@ public class MetodoComponente {
                             triviaSelect = trivia;
 
                             triviaExistente = true;
-                            
-                            if (triviaSelect.getComponentes() != null) {
-                            
-                            for (Componente component : triviaSelect.getComponentes()) {
 
-                                if (component.getIdComp().equals(idComp)) {
-                                    compExistente = true;
-                                    System.out.println("Error, el componente ya existe");
-                                    break;
+                            if (triviaSelect.getComponentes() != null) {
+
+                                for (Componente component : triviaSelect.getComponentes()) {
+
+                                    if (component.getIdComp().equals(idComp)) {
+                                        compExistente = true;
+                                        System.out.println("Error, el componente ya existe");
+
+                                        break;
+                                    }
                                 }
                             }
-                        }
-
 
                         }
                     }
@@ -128,19 +128,19 @@ public class MetodoComponente {
                             String textoVisible = parametros.get("TEXTO_VISIBLE").iterator().next();
                             String clase = parametros.get("CLASE").iterator().next();
                             String opciones = "";
-                            String columna="";
-                            String fila="";
-                            if (exiOpciones){
-                                 opciones = parametros.get("OPCIONES").iterator().next();
+                            String columna = "";
+                            String fila = "";
+                            if (exiOpciones) {
+                                opciones = parametros.get("OPCIONES").iterator().next();
                             }
 
                             String respuesta = parametros.get("RESPUESTA").iterator().next();
 
                             if (exiFila) {
-                               fila= parametros.get("FILAS").iterator().next();
+                                fila = parametros.get("FILAS").iterator().next();
                             }
                             if (exiColumna) {
-                               columna =  parametros.get("COLUMNAS").iterator().next();
+                                columna = parametros.get("COLUMNAS").iterator().next();
                             }
 
                             if (clase.equals("CHECKBOX") || clase.equals("RADIO") || clase.equals("COMBO")) {
@@ -155,6 +155,7 @@ public class MetodoComponente {
                                     GuardarInfo guardar = new GuardarInfo();
                                     guardar.guardarDatoTrivia(db.getListaTriva());
                                     System.out.println(" componente agregado");
+                                    Reporte.agregarMensaje("AGREGAR_COMPONENTE", "Componente agregado exitosamente");
 
                                 } else {
                                     System.out.println("Error Sintactico: El componente debe tener opciones");
@@ -164,7 +165,6 @@ public class MetodoComponente {
                                 }
 
                             } else if (clase.equals("CAMPO_TEXTO") || clase.equals("AREA_TEXTO")) {
-
 
                                 if (!fila.isEmpty() && !columna.isEmpty()) {
                                     Componente componente = new Componente(idCompo, idTrivia, clase, textoVisible,
@@ -176,6 +176,7 @@ public class MetodoComponente {
                                     GuardarInfo guardar = new GuardarInfo();
                                     guardar.guardarDatoTrivia(db.getListaTriva());
                                     System.out.println(" Componente Agreagado");
+                                    Reporte.agregarMensaje("AGREGAR_COMPONENTE", "Componente agregado exitosamente");
 
                                 } else {
                                     System.out.println("Error Sintactico: El componente debe tener fila y columna");
@@ -188,9 +189,11 @@ public class MetodoComponente {
 
                         } else {
                             System.out.println("El componente ya existe cambie de ID");
+                            Reporte.agregarMensaje("CREAR_COMPONENTE", "El componente ya existe cambie de ID");
                         }
                     } else {
                         System.out.println("No existe la trivia en la DB");
+                        Reporte.agregarMensaje("CREAR_COMPONENTE", "No existe la trivia en la DB");
                     }
                 } else {
                     if (!sizeIdComp) {
@@ -207,7 +210,8 @@ public class MetodoComponente {
 
                     if (!sizeTipoComp) {
                         System.out.println("Error Semantico: El tipo de componente ya fue declarado");
-                        Errorx error = new Errorx("Semántico", "TIPO_COMPONENTE", "TIPO_COMPONENTE ya fue declarado", 0, 0);
+                        Errorx error = new Errorx("Semántico", "TIPO_COMPONENTE", "TIPO_COMPONENTE ya fue declarado", 0,
+                                0);
                         Reporte.agregarError(error);
                     }
 
@@ -222,8 +226,6 @@ public class MetodoComponente {
                         Errorx error = new Errorx("Semántico", "RESPUESTA", "RESPUESTA ya fue declarado", 0, 0);
                         Reporte.agregarError(error);
                     }
-
-                    
 
                 }
             } else {
@@ -240,7 +242,8 @@ public class MetodoComponente {
                 }
                 if (!exiTipoComp) {
                     System.out.println("Error Sintactico: Se esperaba el tipo de componente");
-                    Errorx error = new Errorx("Sintáctico", "TIPO_COMPONENTE", "TIPO_COMPONENTE no fue declarado", 0, 0);
+                    Errorx error = new Errorx("Sintáctico", "TIPO_COMPONENTE", "TIPO_COMPONENTE no fue declarado", 0,
+                            0);
                     Reporte.agregarError(error);
                 }
                 if (!exiTextoVisible) {
@@ -255,6 +258,9 @@ public class MetodoComponente {
                 }
 
             }
+        } else {
+            System.out.println("No hay trivias en la DB");
+            Reporte.agregarMensaje("CREAR_COMPONENTE", "No hay trivias en la DB");
         }
     }
 
@@ -282,7 +288,6 @@ public class MetodoComponente {
 
                     String idTrivia = parametros.get("TRIVIA").iterator().next();
                     String idComp = parametros.get("ID").iterator().next();
-                
 
                     for (Trivia trivia : db.getListaTriva()) {
 
@@ -305,8 +310,8 @@ public class MetodoComponente {
                     if (triviaExistente) {
                         if (compExistente) {
 
-                            if (sizeTipoComp || sizeTextoVisible || sizeRespuesta || sizeOpciones || sizeFila
-                                    || sizeColumna) {
+                            if (sizeTipoComp && sizeTextoVisible && sizeRespuesta && sizeOpciones && sizeFila
+                                    && sizeColumna) {
 
                                 if (exiTipoComp) {
                                     String clase = parametros.get("CLASE").iterator().next();
@@ -358,6 +363,9 @@ public class MetodoComponente {
                                     guardar.guardarDatoTrivia(db.getListaTriva());
                                     System.out.println(" datos ya actualizados");
 
+                                    Reporte.agregarMensaje("MODIFICAR_COMPONENTE",
+                                            "Componente modificado exitosamente");
+
                                 } else {
                                     System.out.println("Error Sintactico: No hay parametros para modificar");
                                     Errorx error = new Errorx("Sintáctico", "PARAMETROS",
@@ -367,17 +375,63 @@ public class MetodoComponente {
 
                             } else {
 
+                                if (!sizeTipoComp) {
+                                    System.out.println("Error Semantico: El tipo de componente ya fue declarado");
+                                    Errorx error = new Errorx("Semántico", "TIPO_COMPONENTE",
+                                            "Parámetro ya fue declarado", 0, 0);
+                                    Reporte.agregarError(error);
 
+                                }
+
+                                if (!sizeTextoVisible) {
+                                    System.out.println("Error Semantico: El texto visible ya fue declarado");
+                                    Errorx error = new Errorx("Semántico", "TEXTO_VISIBLE",
+                                            "Parámetro ya fue declarado", 0, 0);
+                                    Reporte.agregarError(error);
+
+                                }
+                                if (!sizeRespuesta) {
+                                    System.out.println("Error Semantico: La respuesta ya fue declarado");
+                                    Errorx error = new Errorx("Semántico", "RESPUESTA", "Parámetro ya fue declarado", 0,
+                                            0);
+                                    Reporte.agregarError(error);
+
+                                }
+
+                                if (!sizeOpciones) {
+                                    System.out.println("Error Semantico: Las opciones ya fue declarado");
+                                    Errorx error = new Errorx("Semántico", "OPCIONES", "Parámetro ya fue declarado", 0,
+                                            0);
+                                    Reporte.agregarError(error);
+
+                                }
+
+                                if (!sizeFila) {
+                                    System.out.println("Error Semantico: La fila ya fue declarado");
+                                    Errorx error = new Errorx("Semántico", "FILA", "Parámetro ya fue declarado", 0, 0);
+                                    Reporte.agregarError(error);
+
+                                }
+
+                                if (!sizeColumna) {
+                                    System.out.println("Error Semantico: La columna ya fue declarado");
+                                    Errorx error = new Errorx("Semántico", "COLUMNA", "Parámetro ya fue declarado", 0,
+                                            0);
+                                    Reporte.agregarError(error);
+
+                                }
 
                             }
 
                         } else {
 
                             System.out.println("No existe el componente en la DB");
+                            Reporte.agregarMensaje("MODIFICAR_COMPONENTE", "No existe el componente en la TRIVIA");
                         }
 
                     } else {
                         System.out.println("No existe la trivia en la DB");
+                        Reporte.agregarMensaje("MODIFICAR_COMPONENTE", "No existe la trivia en la DB");
                     }
 
                 } else {
@@ -394,7 +448,6 @@ public class MetodoComponente {
                     }
                 }
             } else {
-               
 
                 if (!exiIdTriv) {
                     System.out.println("Error Sintacico: Se esperaba el ID de la trivia");
@@ -408,8 +461,9 @@ public class MetodoComponente {
                 }
 
             }
-        }else {
+        } else {
             System.out.println("No hay trivias en la DB");
+            Reporte.agregarMensaje("MODIFICAR_COMPONENTE", "No hay trivias en la DB");
         }
     }
 
@@ -454,11 +508,17 @@ public class MetodoComponente {
                         if (compExistente) {
                             System.out.println("Componente eliminado");
                             /// guradar la info
+
+                            GuardarInfo guardar = new GuardarInfo();
+                            guardar.guardarDatoTrivia(db.getListaTriva());
+                            Reporte.agregarMensaje("ELIMINAR_COMPONENTE", "Componente eliminado exitosamente");
                         } else {
                             System.out.println("No existe el componente en la DB");
+                            Reporte.agregarMensaje("ELIMINAR_COMPONENTE", "No existe el componente en la TRIVIA");
                         }
                     } else {
                         System.out.println("No existe la trivia en la DB");
+                        Reporte.agregarMensaje("ELIMINAR_COMPONENTE", "No existe la trivia en la DB");
                     }
                 } else {
 
@@ -488,6 +548,7 @@ public class MetodoComponente {
             }
         } else {
             System.out.println("No hay trivias en la DB");
+            Reporte.agregarMensaje("ELIMINAR_COMPONENTE", "No hay trivias en la DB");
         }
     }
 }

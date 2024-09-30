@@ -28,18 +28,20 @@ public class SolicitudServlet extends HttpServlet {
         
         /// lista para almacenar erorres 
         List<Errorx> listaErrores = new ArrayList<>();
+        /// lista para almacenar mensajes
         String mensaje="hola muhndo ";
 
         // Verificar si se ha recibido el valor o es null
         if (textoIngresado != null) {
             
             try {
+                Reporte.limpiarErrores();
+                Reporte.limpiarMensajes();
                 
                 // Procesar el texto recibido
                 ConexionXson conexionXson = new ConexionXson();
                 conexionXson.analizadorGeneral(textoIngresado);
                 listaErrores =  Reporte.getListaErrores();
-                
                 
 
             } catch (Exception e) {
@@ -53,7 +55,7 @@ public class SolicitudServlet extends HttpServlet {
         }
         
                // Crear un objeto para enviar como respuesta
-        ResponseData responseData = new ResponseData(mensaje, listaErrores);
+        ResponseData responseData = new ResponseData(mensaje, listaErrores, Reporte.getListaMensajes());
 
         // Convertir la respuesta a JSON usando Gson
         Gson gson = new Gson();
@@ -74,10 +76,13 @@ public class SolicitudServlet extends HttpServlet {
     private static class ResponseData {
         private String mensaje;
         private List<Errorx> errores;
+        private List<String> mensajes;
 
-        public ResponseData(String mensaje, List<Errorx> errores) {
+        public ResponseData(String mensaje, List<Errorx> errores, List<String> mensajes) {
+
             this.mensaje = mensaje;
             this.errores = errores;
+            this.mensajes = mensajes;
         }
 
         public String getMensaje() {
@@ -86,6 +91,10 @@ public class SolicitudServlet extends HttpServlet {
 
         public List<Errorx> getErrores() {
             return errores;
+        }
+        
+        public List<String> getMensajes() {
+            return mensajes;
         }
     }
 
